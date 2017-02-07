@@ -4,7 +4,7 @@
 	<path>res/a320.wings.ac</path>
 	
 	<model>
-		<name>Engine.iae.Left</name>
+		<name>Engine.IAE.Left</name>
 		<path>Aircraft/A320Family/Models/Engines/XMLs/a320.engine.iae.left.xml</path>
 		<offsets>
 			<x-m>-1.6387912</x-m>
@@ -14,7 +14,7 @@
 	</model>
 	
 	<model>
-		<name>Engine.iae.Right</name>
+		<name>Engine.IAE.Right</name>
 		<path>Aircraft/A320Family/Models/Engines/XMLs/a320.engine.iae.right.xml</path>
 		<offsets>
 			<x-m>-1.6387912</x-m>
