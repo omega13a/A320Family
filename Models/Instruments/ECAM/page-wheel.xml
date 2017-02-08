@@ -719,6 +719,141 @@
 				</and>
 			</condition>
 		</layer>
+		
+		<!-- ################################## Autobrake Indicator  #################################-->
+		<layer>
+			<type>text</type>
+			<name>AUTO BRK</name>
+			<color>
+				<red>0.1</red>
+				<green>1.0</green>
+				<blue>0.1</blue>
+			</color>
+			<font>helvetica_bold</font>
+			<point-size>10</point-size>
+			<chunks>
+				<chunk>
+					<type type="string">literal</type>
+					<text type="string">AUTO BRK</text>
+				</chunk>
+			</chunks>
+			<transformations>
+				<transformation>
+					<type>y-shift</type>
+					<offset>-44</offset> <!--greater = further down-->
+				</transformation>
+				<transformation>
+					<type>x-shift</type>
+					<offset>-30</offset> <!--greater = further right-->
+				</transformation>
+			</transformations>
+			<condition>
+				<greater-than>
+				<property>hydraulics/brakes/autobrake-setting</property>
+				<value>0</value>
+				</greater-than>
+			</condition>
+		</layer>
+		
+		<!--show LO when LO, MED when MED, MAX, when MAX-->
+		<layer>
+			<type>text</type>
+			<name>AUTO BRK LO</name>
+			<color>
+				<red>0</red>
+				<green>1.0</green>
+				<blue>0</blue>
+			</color>
+			<font>helvetica_bold</font>
+			<chunks>
+				<chunk>
+					<type>literal</type>
+					<text>LO</text>
+				</chunk>
+			</chunks>
+			<transformations>
+				<transformation>
+					<type>y-shift</type>
+					<offset>-60</offset>
+				</transformation>
+				<transformation>
+					<type>x-shift</type>
+					<offset>-10</offset>
+				</transformation>
+			</transformations>
+			<condition>
+				<equals>
+				<property>hydraulics/brakes/autobrake-setting</property>
+				<value>1</value>
+				</equals>
+			</condition>
+		</layer>
+		
+		<layer>
+			<type>text</type>
+			<name>AUTO BRK MED</name>
+			<color>
+				<red>0</red>
+				<green>1.0</green>
+				<blue>0</blue>
+			</color>
+			<font>helvetica_bold</font>
+			<chunks>
+				<chunk>
+					<type>literal</type>
+					<text>MED</text>
+				</chunk>
+			</chunks>
+			<transformations>
+				<transformation>
+					<type>y-shift</type>
+					<offset>-60</offset>
+				</transformation>
+				<transformation>
+					<type>x-shift</type>
+					<offset>-13</offset>
+				</transformation>
+			</transformations>
+			<condition>
+				<equals>
+				<property>hydraulics/brakes/autobrake-setting</property>
+				<value>2</value>
+				</equals>
+			</condition>
+		</layer>
+		
+		<layer>
+			<type>text</type>
+			<name>AUTO BRK MAX</name>
+			<color>
+				<red>0</red>
+				<green>1.0</green>
+				<blue>0</blue>
+			</color>
+			<font>helvetica_bold</font>
+			<chunks>
+				<chunk>
+					<type>literal</type>
+					<text>MAX</text>
+				</chunk>
+			</chunks>
+			<transformations>
+				<transformation>
+					<type>y-shift</type>
+					<offset>-60</offset>
+				</transformation>
+				<transformation>
+					<type>x-shift</type>
+					<offset>-13</offset>
+				</transformation>
+			</transformations>
+			<condition>
+				<equals>
+				<property>hydraulics/brakes/autobrake-setting</property>
+				<value>3</value>
+				</equals>
+			</condition>
+		</layer>
 
 <!-- ################################## A/SKID #################################-->
 		<layer>
