@@ -113,7 +113,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 	BSCU_timer.start();
 	print("LGCIU System ... OK!");
 	print("BSCU System ... OK!");
-	var pkbrk = getprop("controls/parking-brake"
+	var pkbrk = getprop("controls/parking-brake");
 	if (pkbrk == 0) {
 	setprop("/controls/BSCU/brakes/mode","0"); #0 is norm, 1 is altn, 3 is altn no askid 4 is parkbrake
 	} else if (pkbrk == 1) {
