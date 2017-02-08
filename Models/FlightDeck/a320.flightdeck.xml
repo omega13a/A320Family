@@ -757,7 +757,7 @@
 		</action>
 	</animation>
 	
-	<animation>
+	<!--<animation>
 		<type>pick</type>
 		<object-name>thr_b.001</object-name>
 		<action>
@@ -784,7 +784,7 @@
 				setprop("/it-autoflight/output/athrsw",0);</script>
 			</binding>
 		</action>
-	</animation>
+	</animation>-->
 	
 	<!-- FCU Screen Power On -->
 	
@@ -1999,6 +1999,7 @@
 		<name>Engine 1 throttle lever</name>
 		<type>rotate</type>
 		<object-name>thr_l</object-name>
+		<object-name>thr_b</object-name>
 		<property>controls/engines/engine[0]/throttle</property>
 		<interpolation>
 			<entry><ind>0.00000</ind><dep>10</dep></entry>
@@ -2056,6 +2057,7 @@
 		<name>Engine 2 throttle lever</name>
 		<type>rotate</type>
 		<object-name>thr_r</object-name>
+		<object-name>thr_b.001</object-name>
 		<property>controls/engines/engine[1]/throttle</property>
 		<interpolation>
 			<entry><ind>0.00000</ind><dep>10</dep></entry>
