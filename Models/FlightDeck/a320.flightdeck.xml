@@ -757,6 +757,35 @@
 		</action>
 	</animation>
 	
+	<animation>
+		<type>pick</type>
+		<object-name>thr_b.001</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				setprop("/systems/thrust/manathroff",1);
+				setprop("/it-autoflight/output/athrsw",0);</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>thr_b</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+				setprop("/systems/thrust/manathroff",1);
+				setprop("/it-autoflight/output/athrsw",0);</script>
+			</binding>
+		</action>
+	</animation>
+	
 	<!-- FCU Screen Power On -->
 	
 	<animation>

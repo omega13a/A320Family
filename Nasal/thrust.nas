@@ -7,8 +7,9 @@ setlistener("/sim/signals/fdm-initialized", func {
 	setprop("/systems/thrust/state2", "IDLE");
 	setprop("/systems/thrust/lvrclb", "0");
 	setprop("/systems/thrust/clbreduc-ft", "1500");
+	setprop("/systems/thrust/manathroff",0); #this is for pushing the AT off btn on thr levers
 	lvrclb();
-	print("Thrust System ... Done!")
+	print("Thrust System ... OK!")
 });
 
 setlistener("/controls/engines/engine[0]/throttle", func {
@@ -61,11 +62,12 @@ setlistener("/controls/engines/engine[1]/throttle", func {
 	}
 });
 
-# Checks if all throttles are in the IDLE position, before tuning off the A/THR.
+# Checks if all throttles are in the IDLE position, before tuning off the A/THR. Now includes manual disconnection with THR LEV buttons
 var atoff_request = func {
 	var state1 = getprop("/systems/thrust/state1");
 	var state2 = getprop("/systems/thrust/state2");
-	if ((state1 == "IDLE") and (state2 == "IDLE")) {
+	var manoff = getprop("/systems/thrust/manathroff");
+	if (((state1 == "IDLE") and (state2 == "IDLE")) or (manoff == 1)) {
 		setprop("/it-autoflight/input/athr", 0);
 		setprop("/systems/thrust/at1", 0);
 		setprop("/systems/thrust/at2", 0);
