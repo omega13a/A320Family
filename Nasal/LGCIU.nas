@@ -73,7 +73,8 @@ var BSCU_init = func {
 setprop("/controls/BSCU/hyd/greensupply",0);
 setprop("/controls/BSCU/nws/ruddlim","6");
 setprop("/controls/BSCU/nws/tilllim","70");
-setprop("/controls/BSCU/nws/enabled",0);
+setprop("/controls/BSCU/nws/switch",1);
+setprop("/controls/BSCU/nws/enabled",1);
 setprop("/controls/BSCU/nws/pedalsdisc",0);
 setprop("/controls/BSCU/fail/nws",0);
 setprop("/controls/BSCU/fail/askid",0);
@@ -82,9 +83,13 @@ setprop("/controls/BSCU/brakes/hydsupp","0"); #0 is off, 1 is grn, 2 is altn yel
 setprop("/controls/BSCU/brakes/mlgltemp","0"); #in celsius
 setprop("/controls/BSCU/brakes/mlgrtemp","0"); #in celsius
 setprop("/controls/BSCU/brakes/coolfans",0); #0 off 1 on
-setprop("/controls/BSCU/brakes/loverheatplug",0); #0 off 1 on
-setprop("/controls/BSCU/brakes/roverheatplug",0); #0 off 1 on
+setprop("/controls/BSCU/brakes/l1overheatplug",0); #0 off 1 on
+setprop("/controls/BSCU/brakes/l2overheatplug",0); #0 off 1 on
+setprop("/controls/BSCU/brakes/r1overheatplug",0); #0 off 1 on
+setprop("/controls/BSCU/brakes/r2overheatplug",0); #0 off 1 on
 setprop("/controls/BSCU/brakes/mode","4"); #0 is norm, 1 is altn, 3 is altn no askid 4 is parkbrake
+setprop("/controls/BSCU/askid/ready",1);
+setprop("/controls/BSCU/askid/display",0); #controls ECAM display
 }
 
 # for now like this. later try to do a jsbsim table
@@ -108,6 +113,13 @@ setlistener("/sim/signals/fdm-initialized", func {
 	BSCU_timer.start();
 	print("LGCIU System ... OK!");
 	print("BSCU System ... OK!");
+	var pkbrk = getprop("controls/parking-brake"
+	if (pkbrk == 0) {
+	setprop("/controls/BSCU/brakes/mode","0"); #0 is norm, 1 is altn, 3 is altn no askid 4 is parkbrake
+	} else if (pkbrk == 1) {
+	setprop("/controls/BSCU/brakes/mode","4"); #0 is norm, 1 is altn, 3 is altn no askid 4 is parkbrake
+	}
+	print("Parking Brake ... Set!");
 });
 
 
@@ -271,6 +283,18 @@ setprop("/controls/lgciu[1]/gearlever",1); #0 = retracted, 1 = extended
 } 
 );
 
+setlistener("/controls/lgciu[0]/wow/isongroundl", func {
+var wow = getprop("/controls/lgciu[0]/wow/isongroundl");
+var askidrdy = getprop("/controls/BSCU/askid/ready");
+var askiddsp = getprop("/controls/BSCU/askid/display");
+if (wow == 1) {
+if (askidrdy == 1) {
+setprop("/controls/BSCU/askid/display",1);
+}
+} else {
+setprop("/controls/BSCU/askid/display",0);
+}
+});
 
 # No 1 failed
 setlistener("/controls/lgciu[0]/fail", func {
