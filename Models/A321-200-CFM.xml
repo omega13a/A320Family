@@ -18,7 +18,7 @@
 	<!-- Separate Flightdeck to fit the modified nose -->
 	<model>
 		<name>Flightdeck</name>
-		<path>Aircraft/A320Family/Models/FlightDeck/a320.flightdeck.iae.xml</path>
+		<path>Aircraft/A320Family/Models/FlightDeck/a320.flightdeck.cfm.xml</path>
 		<offsets>
             <x-m>0.55</x-m>
             <z-m>0.27</z-m>
@@ -60,7 +60,7 @@
 	</model>
 
 	<model>
-		<path>Aircraft/A320Family/Models/Wings/a320.wings.iae.xml</path>
+		<path>Aircraft/A320Family/Models/Wings/a320.wings.cfm.xml</path>
 		<offsets>
 			<x-m>15.280</x-m>
 			<z-m>-1.06019</z-m>
