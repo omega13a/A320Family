@@ -3,9 +3,9 @@ MATERIAL "ac3dmat1" rgb 1 1 1  amb 1 1 1  emis 0 0 0  spec 0 0 0  shi 50  trans 
 OBJECT world
 kids 2
 OBJECT poly
-name "choke"
+name "chock"
 loc 3.52186 -5.34978 -4.81643
-texture "yellow-black.png"
+texture "yellow.png"
 crease 45.000000
 numvert 16
 0.68047 0.195222 8.83094
@@ -125,9 +125,9 @@ refs 4
 8 0.979703 0.92048
 kids 0
 OBJECT poly
-name "choke"
+name "chock"
 loc 6.84041 -5.33333 -4.81643
-texture "yellow-black.png"
+texture "yellow.png"
 crease 45.000000
 numvert 16
 0.644194 0.20445 10.3956

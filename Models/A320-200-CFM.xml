@@ -345,14 +345,12 @@
         </offsets>
     </model>
     
-    <!-- Chokes -->
-    
-    <model>
-        <name>choke_nose</name>
-        <path>Aircraft/A320Family/Models/Services/Chokes/choke_nose.ac</path>
+   <model>
+        <name>chock_nose</name>
+        <path>Aircraft/A320Family/Models/Services/Chocks/chock_nose.ac</path>
         <condition>
             <equals>
-                <property>/services/chokes/nose</property>
+                <property>/services/Chocks/nose</property>
                 <value>1</value>
             </equals>
         </condition>
@@ -363,11 +361,11 @@
     </model>
     
     <model>
-        <name>choke_left</name>
-        <path>Aircraft/A320Family/Models/Services/Chokes/choke_left.ac</path>
+        <name>chock_left</name>
+        <path>Aircraft/A320Family/Models/Services/Chocks/chock_left.ac</path>
         <condition>
             <equals>
-                <property>/services/chokes/left</property>
+                <property>/services/Chocks/left</property>
                 <value>1</value>
             </equals>
         </condition>
@@ -379,11 +377,11 @@
     </model>
     
     <model>
-        <name>choke_right</name>
-        <path>Aircraft/A320Family/Models/Services/Chokes/choke_right.ac</path>
+        <name>chock_right</name>
+        <path>Aircraft/A320Family/Models/Services/Chocks/chock_right.ac</path>
         <condition>
             <equals>
-                <property>/services/chokes/right</property>
+                <property>/services/Chocks/right</property>
                 <value>1</value>
             </equals>
         </condition>
