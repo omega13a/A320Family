@@ -4,41 +4,55 @@
 
 	<path>resCFM/eicasCFM.ac</path>
 	
-	<!--<animation>
+	<animation>
 		<type>select</type>
+		<object-name>XX.1</object-name>
 		<object-name>XX1</object-name>
 		<condition>
-			<and>
-				<not-equals>
-					<property>controls/engines/engine-start-switch</property>
-					<value>2</value>
-				</not-equals>
-				<less-than>
-					<property>engines/engine[0]/n2</property>
-					<value>5</value>
-				</less-than>
-			</and>
+			<less-than>
+				<property>engines/engine[0]/n1</property>
+				<value>0.1</value>
+			</less-than>
 		</condition>
 	</animation>
 	
 	<animation>
 		<type>select</type>
+		<object-name>XX.2</object-name>
 		<object-name>XX2</object-name>
 		<condition>
-			<and>
-				<not-equals>
-					<property>controls/engines/engine-start-switch</property>
-					<value>2</value>
-				</not-equals>
-				<less-than>
-					<property>engines/engine[1]/n2</property>
-					<value>5</value>
-				</less-than>
-			</and>
+			<less-than>
+				<property>engines/engine[1]/n1</property>
+				<value>0.1</value>
+			</less-than>
 		</condition>
-	</animation>-->
+	</animation>
 	
-	<!--<animation>
+	<animation>
+		<type>select</type>
+		<object-name>osgtext-green3</object-name>
+		<object-name>n11</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>engines/engine[0]/n1</property>
+				<value>0.1</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>osgtext-green4</object-name>
+		<object-name>n12</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>engines/engine[1]/n1</property>
+				<value>0.1</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+	
+	<animation>
 		<type>select</type>
 		<object-name>osgtext-green1</object-name>
 		<object-name>egt1</object-name>
@@ -51,7 +65,7 @@
 				</equals>
 				<greater-than-equals>
 					<property>engines/engine[0]/n2</property>
-					<value>5</value>
+					<value>0.1</value>
 				</greater-than-equals>
 			</or>
 		</condition>
@@ -70,11 +84,11 @@
 				</equals>
 				<greater-than-equals>
 					<property>engines/engine[1]/n2</property>
-					<value>5</value>
+					<value>0.1</value>
 				</greater-than-equals>
 			</or>
 		</condition>
-	</animation>-->
+	</animation>
 	
 	<animation>
 		<type>select</type>
@@ -185,8 +199,8 @@
 		</emission>
 	</animation>
 	
-	<!--<animation>
-		<type>material</type>  Orange 
+	<animation>
+		<type>material</type>  <!-- Orange -->
 		<object-name>XX.1</object-name>
 		<object-name>XX.2</object-name>
 		<object-name>XX.3</object-name>
@@ -211,7 +225,7 @@
 			<green>0.5</green>
 			<blue>0</blue>
 		</emission>
-	</animation>-->
+	</animation>
 	
 	<animation>
 		<type>material</type> <!-- Yellow -->
@@ -266,7 +280,7 @@
 
 	<!-- OSGText -->
 	
-	<!-- EPR -->
+	<!-- N1 -->
 	
 	<text>
 		<name>osgtext-green3</name>
@@ -452,6 +466,99 @@
 		<type type="string">number-value</type>
 		<format type="string">%4.0f</format>
 		<property>engines/engine[1]/egt-actual</property>
+		<truncate type="bool">false</truncate>
+		<font type="string">helvetica_bold.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.005</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	<text>
+		<name>XX.1</name>
+		<offsets>
+			<x-m>0.0004</x-m>
+			<y-m>-0.0580</y-m>
+			<z-m>0.0562</z-m>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>yz-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">XX</format>
+		<property>autopilot/serviceable</property>
+		<truncate type="bool">false</truncate>
+		<font type="string">helvetica_bold.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.005</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	<text>
+		<name>XX.2</name>
+		<offsets>
+			<x-m>0.0004</x-m>
+			<y-m>-0.0025</y-m>
+			<z-m>0.0562</z-m>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>yz-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string">XX</format>
+		<property>autopilot/serviceable</property>
+		<truncate type="bool">false</truncate>
+		<font type="string">helvetica_bold.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.005</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	<text>
+		<name>XX.1</name>
+		<offsets>
+			<x-m>0.0004</x-m>
+			<y-m>-0.0575</y-m>
+			<z-m>0.0280</z-m>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>yz-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string"> XX</format>
+		<property>autopilot/serviceable</property>
+		<truncate type="bool">false</truncate>
+		<font type="string">helvetica_bold.txf</font>
+		<draw-text type="bool">true</draw-text>
+		<draw-alignment type="bool">false</draw-alignment>
+		<draw-boundingbox type="bool">false</draw-boundingbox>
+		<character-size>0.005</character-size>
+		<font-resolution>
+			<width type="int">32</width>
+			<height type="int">32</height>
+		</font-resolution>
+	</text>
+	
+	<text>
+		<name>XX.2</name>
+		<offsets>
+			<x-m>0.0004</x-m>
+			<y-m>-0.002</y-m>
+			<z-m>0.0280</z-m>
+		</offsets>
+		<alignment>center-center</alignment>
+		<axis-alignment>yz-plane</axis-alignment>
+		<type type="string">text-value</type>
+		<format type="string"> XX</format>
+		<property>autopilot/serviceable</property>
 		<truncate type="bool">false</truncate>
 		<font type="string">helvetica_bold.txf</font>
 		<draw-text type="bool">true</draw-text>
@@ -817,7 +924,7 @@
     	<center>
     		<x-m>0</x-m>
     		<y-m>-0.0598</y-m>
-    		<z-m>0.00205</z-m>
+    		<z-m>0.0588</z-m>
     	</center>
     	<axis>
     		<x>-1</x>
@@ -839,7 +946,7 @@
     	<center>
     		<x-m>0</x-m>
     		<y-m>-0.0042</y-m>
-    		<z-m>0.00205</z-m>
+    		<z-m>0.0588</z-m>
     	</center>
     	<axis>
     		<x>-1</x>
