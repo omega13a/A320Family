@@ -215,6 +215,7 @@ var initInputA = func(key) {
 					setprop("/FMGC/internal/dep-arpt", fromto[0]);
 					setprop("/FMGC/internal/arr-arpt", fromto[1]);
 					setprop("/FMGC/internal/tofrom-set", 1);
+					setprop("/MCDU[0]/scratchpad", "");
 					fmgc.updateARPT();
 				} else {
 					setprop("/MCDU[0]/scratchpad-msg", "1");
@@ -241,7 +242,7 @@ var initInputB = func(key) {
 			setprop("/MCDU[0]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
-			if (tfs == 3 or tfs == 4) {
+			if (tfs == 2 or tfs == 4) {
 				if (scratchpad >= 1.0 and scratchpad <= 45.0) {
 					setprop("/FMGC/internal/block", scratchpad);
 					setprop("/FMGC/internal/block-set", 1);
