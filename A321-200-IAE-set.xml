@@ -8,7 +8,7 @@
 			<path>Aircraft/A320Family/Sounds/v2500-sound.xml</path>
 		</sound>
 	
-		<description>Airbus A321-231 (IAE V2500)</description>
+		<description>Airbus A321-231 (IAE V2533-A5)</description>
 		<flight-model>jsb</flight-model>
 		<aero>A321-200-IAE</aero>
 		<model>
@@ -103,9 +103,10 @@
 		
 	</sim>
 	
-	<options>
+	<options n="0">
 		<EIS2 type="bool">0</EIS2>
 		<eng>IAE</eng>
+		<maxblock>52.0</maxblock>
 	</options>
 	
 	<sharklet type="bool">0</sharklet>
