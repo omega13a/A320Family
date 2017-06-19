@@ -672,8 +672,8 @@
 					</script>
 				</binding>
 			</key>
-			<key n="113">
-				<name>q</name>
+			<key n="257">
+				<name>F1</name>
 				<desc>Disengage/Decrease reversers</desc>
 				<binding>
 					<command>nasal</command>
@@ -682,8 +682,8 @@
 					</script>
 				</binding>
 			</key>
-			<key n="119">
-				<name>w</name>
+			<key n="258">
+				<name>F2</name>
 				<desc>Engage/Increase reversers</desc>
 				<binding>
 					<command>nasal</command>
@@ -764,7 +764,6 @@
 		<libraries>
 			<file>Aircraft/A320Family/Nasal/libraries.nas</file>
 			<file>Aircraft/A320Family/Nasal/PFD_FMA.nas</file>
-			<file>Aircraft/A320Family/Models/Instruments/ND/ND.nas</file>
 			<file>Aircraft/A320Family/Nasal/gpws.nas</file>
 			<file>Aircraft/A320Family/Nasal/efis.nas</file>
 			<file>Aircraft/A320Family/Nasal/ECAM.nas</file>
@@ -797,6 +796,9 @@
 		<mcdu2>
 			<file>Aircraft/A320Family/Nasal/MCDU/MCDU2.nas</file>
 		</mcdu2>
+		<canvas_nd>
+			<file>Aircraft/A320Family/Models/Instruments/ND/canvas/ND.nas</file>
+		</canvas_nd>
 	</nasal>
 
 </PropertyList>
