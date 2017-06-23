@@ -14,8 +14,8 @@
 	</sim>
 	
 	<options>
-		<steep-ils type="bool">0</steep-ils>
-		<steep-ils-avail type="bool">0</steep-ils-avail>
+		<steep-ils-avail type="bool">1</steep-ils-avail>
 	</options>
 	
 </PropertyList>
+
