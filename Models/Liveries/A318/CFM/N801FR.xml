@@ -4,11 +4,11 @@
 	<sim>
 		<model>
 			<livery>
-				<name>Suprise Aircraft</name>
-				<texture>Liveries/A318/CFM/Suprise.png</texture>
+				<name>Frontier Airlines (Grizwald the Grizzly Bear)</name>
+				<texture>Liveries/A318/CFM/N801FR.png</texture>
 			</livery>
 			<nose>
-				<texture>Liveries/A318/CFM/Suprise-nose.png</texture>
+				<texture>Liveries/A318/CFM/N801FR-nose.png</texture>
 			</nose>
 		</model>
 	</sim>
