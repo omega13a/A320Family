@@ -33,8 +33,10 @@ var FMGCinit = func {
 	setprop("/it-autoflight/settings/reduc-agl-ft", 3000);
 	setprop("/FMGC/internal/decel", 0);
 	setprop("/FMGC/internal/loc-source", "NAV0");
+	setprop("/FMGC/internal/optalt", 0);
 	phasecheck.start();
 	various.start();
+	various2.start();
 }
 
 #############
@@ -84,9 +86,9 @@ setlistener("/FMGC/internal/cruise-ft", func {
 	setprop("/autopilot/route-manager/cruise/altitude-ft", getprop("/FMGC/internal/cruise-ft"));
 });
 
-################
-# Flight Phase #
-################
+############################
+# Flight Phase and Various #
+############################
 
 var phasecheck = maketimer(0.2, func {
 	var n1_left = getprop("/engines/engine[0]/n1");
@@ -204,7 +206,7 @@ var phasecheck = maketimer(0.2, func {
 		setprop("/FMGC/internal/minspeed", 147);
 	} else if (flap == 5) {
 		setprop("/FMGC/internal/overspeed", 163);
-		setprop("/FMGC/internal/minspeed", 135);
+		setprop("/FMGC/internal/minspeed", 134);
 	}
 });
 
@@ -216,8 +218,15 @@ var various = maketimer(1, func {
 	} else {
 		setprop("/it-autoflight/settings/reduc-agl-ft", getprop("/FMGC/internal/reduc-agl-ft"));
 	}
+});
+
+var various2 = maketimer(0.5, func {
 	nav0();
 	nav1();
+	var latmode = getprop("/it-autoflight/output/lat");
+	if (latmode == 0) {
+		setprop("/it-autoflight/custom/show-hdg", 1);
+	}
 });
 
 var nav0 = func {
