@@ -73,6 +73,8 @@
 		<object-name>CFuelTank1Btn2O</object-name>
 		<object-name>CFuelTank2Btn1F</object-name>
 		<object-name>CFuelTank2Btn2O</object-name>
+		<object-name>ELAC1Btn1F</object-name>
+		<object-name>ELAC1Btn2O</object-name>
 		<object-name>Eng1AntiIceBtn1F</object-name>
 		<object-name>Eng1AntiIceBtn2O</object-name>
 		<object-name>Eng2AntiIceBtn1F</object-name>
@@ -83,6 +85,8 @@
 		<object-name>Eng2BleedBtn1F</object-name>
 		<object-name>Eng2BleedBtn2O</object-name>
 		<object-name>Eng2ManStartBtn2O</object-name>
+		<object-name>FAC1Btn1F</object-name>
+		<object-name>FAC1Btn2O</object-name>
 		<object-name>FuelModeBtn1F</object-name>
 		<object-name>FuelModeBtn2O</object-name>
 		<object-name>FuelXfeedBtn1A</object-name>
@@ -121,6 +125,8 @@
 		<object-name>RFuelTank1Btn2O</object-name>
 		<object-name>RFuelTank2Btn1F</object-name>
 		<object-name>RFuelTank2Btn2O</object-name>
+		<object-name>SEC1Btn1F</object-name>
+		<object-name>SEC1Btn2O</object-name>
 		<object-name>WingAntiIceBtn1F</object-name>
 		<object-name>WingAntiIceBtn2O</object-name>
 		<object-name>YellowElecPump1F</object-name>
@@ -839,6 +845,517 @@
 		</emission>
 	</animation>
 
+	<!-- ELAC 1 -->
+	<animation>
+		<type>pick</type>
+		<object-name>ELAC1Btn1</object-name>
+		<object-name>ELAC1Btn2</object-name>
+		<object-name>ELAC1Btn1F</object-name>
+		<object-name>ELAC1Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
+				<command>property-toggle</command>
+				<property>/controls/fctl/elac1</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>ELAC1Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<equals>
+						<property>/systems/failures/elac1</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/fctl/elac1</property>
+						<value>1</value>
+					</equals>
+				</and>
+				<equals>
+					<property>/controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>ELAC1Btn2O</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>/controls/fctl/elac1</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>/controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- SEC 1 -->
+	<animation>
+		<type>pick</type>
+		<object-name>SEC1Btn1</object-name>
+		<object-name>SEC1Btn2</object-name>
+		<object-name>SEC1Btn1F</object-name>
+		<object-name>SEC1Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
+				<command>property-toggle</command>
+				<property>/controls/fctl/sec1</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>SEC1Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<equals>
+						<property>/systems/failures/sec1</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/fctl/sec1</property>
+						<value>1</value>
+					</equals>
+				</and>
+				<equals>
+					<property>/controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>SEC1Btn2O</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>/controls/fctl/sec1</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>/controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- FAC 1 -->
+	<animation>
+		<type>pick</type>
+		<object-name>FAC1Btn1</object-name>
+		<object-name>FAC1Btn2</object-name>
+		<object-name>FAC1Btn1F</object-name>
+		<object-name>FAC1Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
+				<command>property-toggle</command>
+				<property>/controls/fctl/fac1</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>FAC1Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<equals>
+						<property>/systems/failures/fac1</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/fctl/fac1</property>
+						<value>1</value>
+					</equals>
+				</and>
+				<equals>
+					<property>/controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>FAC1Btn2O</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>/controls/fctl/fac1</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>/controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- ELAC 2 -->
+	<animation>
+		<type>pick</type>
+		<object-name>ELAC2Btn1</object-name>
+		<object-name>ELAC2Btn2</object-name>
+		<object-name>ELAC2Btn1F</object-name>
+		<object-name>ELAC2Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
+				<command>property-toggle</command>
+				<property>/controls/fctl/elac2</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>ELAC2Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<equals>
+						<property>/systems/failures/elac2</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/fctl/elac2</property>
+						<value>1</value>
+					</equals>
+				</and>
+				<equals>
+					<property>/controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>ELAC2Btn2O</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>/controls/fctl/elac2</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>/controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- SEC 3 -->
+	<animation>
+		<type>pick</type>
+		<object-name>SEC2Btn1</object-name>
+		<object-name>SEC2Btn2</object-name>
+		<object-name>SEC2Btn1F</object-name>
+		<object-name>SEC2Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
+				<command>property-toggle</command>
+				<property>/controls/fctl/sec2</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>SEC2Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<equals>
+						<property>/systems/failures/sec2</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/fctl/sec2</property>
+						<value>1</value>
+					</equals>
+				</and>
+				<equals>
+					<property>/controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>SEC2Btn2O</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>/controls/fctl/sec2</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>/controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- SEC 3 -->
+	<animation>
+		<type>pick</type>
+		<object-name>SEC3Btn1</object-name>
+		<object-name>SEC3Btn2</object-name>
+		<object-name>SEC3Btn1F</object-name>
+		<object-name>SEC3Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
+				<command>property-toggle</command>
+				<property>/controls/fctl/sec3</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>SEC3Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<equals>
+						<property>/systems/failures/sec3</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/fctl/sec3</property>
+						<value>1</value>
+					</equals>
+				</and>
+				<equals>
+					<property>/controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>SEC3Btn2O</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>/controls/fctl/sec3</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>/controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<!-- FAC 2 -->
+	<animation>
+		<type>pick</type>
+		<object-name>FAC2Btn1</object-name>
+		<object-name>FAC2Btn2</object-name>
+		<object-name>FAC2Btn1F</object-name>
+		<object-name>FAC2Btn2O</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<or>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc1</property>
+							<value>25</value>
+						</greater-than-equals>
+						<greater-than-equals>
+							<property>/systems/electrical/bus/dc2</property>
+							<value>25</value>
+						</greater-than-equals>
+					</or>
+				</condition>
+				<command>property-toggle</command>
+				<property>/controls/fctl/fac2</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>FAC2Btn1F</object-name>
+		<condition>
+			<or>
+				<and>
+					<equals>
+						<property>/systems/failures/fac2</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/fctl/fac2</property>
+						<value>1</value>
+					</equals>
+				</and>
+				<equals>
+					<property>/controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>FAC2Btn2O</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>/controls/fctl/fac2</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>/controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
 	<!-- GPWS -->
 	<!--animation>
 		<name>GPWS system pick</name>
@@ -878,10 +1395,16 @@
 		<object-name>GPWSTerrBtn1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/instrumentation/mk-viii/serviceable</property>
-					<value>0</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/instrumentation/mk-viii/serviceable</property>
+						<value>0</value>
+					</equals>
+					<equals>
+						<property>/instrumentation/mk-viii/inputs/discretes/terr-inhibit</property>
+						<value>0</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -945,10 +1468,16 @@
 		<object-name>GPWSBtn1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/instrumentation/mk-viii/serviceable</property>
-					<value>0</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/instrumentation/mk-viii/serviceable</property>
+						<value>0</value>
+					</equals>
+					<equals>
+						<property>/instrumentation/mk-viii/inputs/discretes/gpws-inhibit</property>
+						<value>0</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -1236,10 +1765,16 @@
 		<object-name>GreenEngPump1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/pump-green</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/pump-green</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/hydraulic/eng1-pump</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -1341,10 +1876,16 @@
 		<object-name>BlueElecPump1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/pump-blue</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/pump-blue</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/hydraulic/elec-pump-blue</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -1408,10 +1949,16 @@
 		<object-name>PTU1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/ptu</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/ptu</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/hydraulic/ptu</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -1475,10 +2022,16 @@
 		<object-name>YellowEngPump1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/pump-yellow-eng</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/pump-yellow-eng</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/hydraulic/eng2-pump</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -1542,10 +2095,16 @@
 		<object-name>YellowElecPump1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/pump-yellow-elec</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/pump-yellow-elec</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/hydraulic/elec-pump-yellow</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -2130,10 +2689,16 @@
 		<object-name>GalleyPwrBtn1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/elec-galley</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/elec-galley</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/electrical/switches/galley</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -2185,10 +2750,16 @@
 		<object-name>BatteryBtn11F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/elec-batt1</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/elec-batt1</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/electrical/switches/battery1</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -2240,10 +2811,16 @@
 		<object-name>BatteryBtn21F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/elec-batt2</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/elec-batt2</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/electrical/switches/battery2</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -2360,10 +2937,16 @@
 		<object-name>Gen1Btn1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/elec-gen1</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/elec-gen1</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/electrical/switches/gen1</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<and>
 					<equals>
 						<property>/controls/electrical/switches/gen1</property>
@@ -2436,10 +3019,16 @@
 		<object-name>ACESSFeedBtn1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/elec-ac-ess</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/elec-ac-ess</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/electrical/switches/ac-ess-feed</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -2510,10 +3099,16 @@
 		<object-name>APUGenBtn1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/elec-genapu</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/elec-genapu</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/electrical/switches/gen-apu</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -2725,10 +3320,16 @@
 		<object-name>Gen2Btn1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/elec-gen2</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/elec-gen2</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/electrical/switches/gen2</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<and>
 					<equals>
 						<property>/controls/electrical/switches/gen2</property>
@@ -2915,10 +3516,16 @@
 		<object-name>ACPack1Btn1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/pack1</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/pack1</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/pneumatic/switches/pack1</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<and>
 					<equals>
 						<property>/controls/pneumatic/switches/pack1</property>
@@ -2992,10 +3599,16 @@
 		<object-name>Eng1BleedBtn1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/bleed-eng1</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/bleed-eng1</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/pneumatic/switches/bleed1</property>
+						<value>0</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -3067,10 +3680,16 @@
 		<object-name>APUBleedBtn1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/bleed-apu</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/bleed-apu</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/pneumatic/switches/bleedapu</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -3134,10 +3753,16 @@
 		<object-name>Eng2BleedBtn1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/bleed-eng2</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/bleed-eng2</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/pneumatic/switches/bleed2</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<equals>
 					<property>/controls/switches/annun-test</property>
 					<value>1</value>
@@ -3275,10 +3900,16 @@
 		<object-name>ACPack2Btn1F</object-name>
 		<condition>
 			<or>
-				<equals>
-					<property>/systems/failures/pack2</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<equals>
+						<property>/systems/failures/pack2</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/controls/pneumatic/switches/pack2</property>
+						<value>1</value>
+					</equals>
+				</and>
 				<and>
 					<equals>
 						<property>/controls/pneumatic/switches/pack2</property>
