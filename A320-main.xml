@@ -642,13 +642,7 @@
 	
 		<efis n="0">
 			<ecam>
-				<display-mode type="string">FCTL</display-mode>
-			</ecam>
-		</efis>
-	
-		<efis n="1">
-			<ecam>
-				<display-mode type="string">FCTL</display-mode>
+				<display-mode type="string">ENG</display-mode>
 			</ecam>
 		</efis>
 		
@@ -815,7 +809,7 @@
 				<binding>
 					<command>property-assign</command>
 					<property>/sim/current-view/view-number</property>
-					<value>9</value>
+					<value>8</value>
 				</binding>
 			</key>
 			<key n="51">
@@ -824,7 +818,7 @@
 				<binding>
 					<command>property-assign</command>
 					<property>/sim/current-view/view-number</property>
-					<value>10</value>
+					<value>9</value>
 				</binding>
 			</key>
 			<key n="127">
