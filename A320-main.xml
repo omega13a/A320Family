@@ -121,9 +121,6 @@
             <autopilot n="7">
                 <path>Aircraft/A320Family/Systems/libraries.xml</path>
             </autopilot>
-			<autopilot n="8">
-				<path>Aircraft/A320Family/Systems/fl2070_sound.xml</path>
-			</autopilot>
 			<property-rule n="100">
 				<path>Aircraft/A320Family/Systems/pfd.xml</path>
 			</property-rule>
@@ -515,8 +512,16 @@
 				<eng2-n1 type="bool">0</eng2-n1>
 				<IDG1 type="bool">0</IDG1>
 				<IDG2 type="bool">0</IDG2>
+				<ramair type="bool">0</ramair>
 			</protectors>
 		</OH>
+		<pneumatic n="0">
+			<switches n="0">
+				<aft-temp type="double">0.5</aft-temp>
+				<cockpit-temp type="double">0.5</cockpit-temp>
+				<fwd-temp type="double">0.5</fwd-temp>
+			</switches>
+		</pneumatic>
 		<switches>
 			<!-- Smoking is bad :P -->
 			<no-smoking-sign type="bool">1</no-smoking-sign>
