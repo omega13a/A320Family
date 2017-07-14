@@ -1,6 +1,10 @@
 # A320 Main Libraries
 # Joshua Davidson (it0uchpods)
 
+##############################################################
+# Copyright (c) A3XX Development Team - All Rights Reserved. #
+##############################################################
+
 # :)
 print("          ____ ___   ___  ______              _ _       ");
 print("    /\   |___ \__ \ / _ \|  ____|            (_) |      ");
@@ -10,11 +14,10 @@ print(" / ____ \ ___) / /_| |_| | | | (_| | | | | | | | | |_| |");
 print("/_/    \_\____/____|\___/|_|  \__,_|_| |_| |_|_|_|\__, |");
 print("                                                   __/ |");
 print("                                                  |___/ ");
-print("-----------------------------------------------------------------------");
-print("(c) 2016-2017 Joshua Davidson, and Jonathan Redpath");
-print("Report all bugs on GitHub Issues tab, or the forums. :)");
-print("If you are reading this, you are awesome!");
-print("-----------------------------------------------------------------------");
+print("-----------------------------------------------------------------------------");
+print("(c) 2016-2017 A3XX Development Team - All Rights Reserved.");
+print("Any questions, please contact Joshua Davidson at joshuadavidson2000@gmail.com");
+print("-----------------------------------------------------------------------------");
 print(" ");
 
 # Dimmers
@@ -209,31 +212,15 @@ setlistener("/sim/signals/fdm-initialized", func {
 });
 
 var librariesLoop = maketimer(0.1, func {
-	var groundpwr = getprop("/controls/switches/cart");
-	var groundair = getprop("/controls/pneumatic/switches/groundair");
-	var gs = getprop("/velocities/groundspeed-kt");
-	var parkbrake = getprop("controls/gear/brake-parking");
-	
-	if ((groundair or groundpwr) and ((gs > 2) or !parkbrake)) {
+	if ((getprop("/controls/pneumatic/switches/groundair") or getprop("/controls/switches/cart")) and ((getprop("/velocities/groundspeed-kt") > 2) or getprop("controls/gear/brake-parking") == 0)) {
 		setprop("/controls/switches/cart", 0);
 		setprop("/controls/pneumatic/switches/groundair", 0);
 	}
 	
-	var V = getprop("/velocities/groundspeed-kt");
-
-	if (V > 15) {
+	if (getprop("/velocities/groundspeed-kt") > 15) {
 		setprop("/systems/shake/effect", 1);
 	} else {
 		setprop("/systems/shake/effect", 0);
-	}
-	
-	var trueSpeedKts = getprop("/instrumentation/airspeed-indicator/true-speed-kt");
-	if(trueSpeedKts > 420) {
-		setprop("/it-autoflight/internal/bank-limit", 15);
-	} else if(trueSpeedKts > 340) {
-		setprop("/it-autoflight/internal/bank-limit", 20);
-	} else {
-		setprop("/it-autoflight/internal/bank-limit", 25);
 	}
 	
 	if (getprop("/it-autoflight/custom/show-hdg") == 0 and getprop("/it-autoflight/output/lat") != 4) {
