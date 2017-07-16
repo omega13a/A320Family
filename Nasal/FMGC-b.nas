@@ -1,9 +1,9 @@
 # A3XX FMGC/Autoflight
 # Joshua Davidson (it0uchpods) and Jonathan Redpath (legoboyvdlp)
 
-##############################################################
-# Copyright (c) A3XX Development Team - All Rights Reserved. #
-##############################################################
+#######################################
+# Copyright (c) A3XX Development Team #
+#######################################
 
 #################################
 # IT-AUTOFLIGHT Based Autopilot #
@@ -561,7 +561,7 @@ setlistener("/it-autoflight/mode/lat", func {
 
 var toga_reduc = func {
 	if (getprop("/position/gear-agl-ft") >= getprop("/it-autoflight/settings/reduc-agl-ft")) {
-		setprop("/it-autoflight/input/vert", 8);
+		setprop("/it-autoflight/input/vert", 4);
 	}
 }
 
