@@ -72,6 +72,9 @@ setlistener("/sim/signals/fdm-initialized", func {
 	var eng1on = getprop("/controls/deice/eng1-on");
 	var eng2on = getprop("/controls/deice/eng2-on");
 	var total_psi_calc = 0;
+	var masks = getprop("/controls/oxygen/masksDeployMan");
+	var autoMasks = getprop("/controls/oxygen/masksDeploy");
+	var guard = getprop("/controls/oxygen/masksGuard");
 });
 
 var pneu_init = func {
@@ -97,6 +100,12 @@ var pneu_init = func {
 	setprop("/systems/pneumatic/startpsir", 0);
 	setprop("/systems/pneumatic/eng1-starter", 0);
 	setprop("/systems/pneumatic/eng2-starter", 0);
+	setprop("/systems/pneumatic/bleed1-fault", 0);
+	setprop("/systems/pneumatic/bleed2-fault", 0);
+	setprop("/systems/pneumatic/bleedapu-fault", 0);
+	setprop("/systems/pneumatic/hotair-fault", 0);
+	setprop("/systems/pneumatic/pack1-fault", 0);
+	setprop("/systems/pneumatic/pack2-fault", 0);
 	setprop("/FMGC/internal/dep-arpt", "");
 	altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
 	setprop("/systems/pressurization/mode", "GN");
@@ -127,6 +136,10 @@ var pneu_init = func {
 	setprop("/systems/ventilation/lavatory/extractvalve", "0");
 	setprop("/controls/deice/eng1-on", 0);
 	setprop("/controls/deice/eng2-on", 0);
+	setprop("/controls/oxygen/masksDeploy", 0);
+	setprop("/controls/oxygen/masksDeployMan", 0);
+	setprop("/controls/oxygen/masksReset", 0); # this is the TMR RESET pb on the maintenance panel, needs 3D model
+	setprop("/controls/oxygen/masksSys", 0);
 	pneu_timer.start();
 }
 
@@ -247,20 +260,6 @@ var master_pneu = func {
 		setprop("/controls/deice/rengine", 1);
 	}
 	
-	var flashfault1 = func {
-		setprop("/controls/deice/eng1-fault", 1);
-		settimer(func {
-			setprop("/controls/deice/eng1-fault", 0);
-		}, 0.5);
-	}
-	
-	var flashfault2 = func {
-		setprop("/controls/deice/eng2-fault", 1);
-		settimer(func {
-			setprop("/controls/deice/eng2-fault", 0);
-		}, 0.5);
-	}
-	
 	total_psi = getprop("/systems/pneumatic/total-psi");
 	
 	phase = getprop("/FMGC/status/phase");
@@ -322,7 +321,52 @@ var master_pneu = func {
 		setprop("/systems/ventilation/avionics/fan", 0);
 		setprop("/systems/ventilation/lavatory/extractfan", 0);
 	}
+	
+	# Fault lights
+	if (bleedeng1_fail and bleed1_sw) {
+		setprop("/systems/pneumatic/bleed1-fault", 1);
+	} else {
+		setprop("/systems/pneumatic/bleed1-fault", 0);
+	}
+	
+	if (bleedeng2_fail and bleed2_sw) {
+		setprop("/systems/pneumatic/bleed2-fault", 1);
+	} else {
+		setprop("/systems/pneumatic/bleed2-fault", 0);
+	}
+	
+	if (bleedapu_fail and bleedapu_sw) {
+		setprop("/systems/pneumatic/bleedapu-fault", 1);
+	} else {
+		setprop("/systems/pneumatic/bleedapu-fault", 0);
+	}
+	
+	if ((pack1_fail and pack1_sw) or (pack1_sw and pack1 <= 5)) {
+		setprop("/systems/pneumatic/pack1-fault", 1);
+	} else {
+		setprop("/systems/pneumatic/pack1-fault", 0);
+	}
+	
+	if ((pack2_fail and pack2_sw) or (pack2_sw and pack2 <= 5)) {
+		setprop("/systems/pneumatic/pack2-fault", 1);
+	} else {
+		setprop("/systems/pneumatic/pack2-fault", 0);
+	}
 }
+
+setlistener("/controls/pneumatic/switches/pack1", func {
+	pack1_sw = getprop("/controls/pneumatic/switches/pack1");
+	if (pack1_sw) {
+		setprop("/systems/pneumatic/pack1-fault", 1);
+	}
+});
+
+setlistener("/controls/pneumatic/switches/pack2", func {
+	pack2_sw = getprop("/controls/pneumatic/switches/pack2");
+	if (pack2_sw) {
+		setprop("/systems/pneumatic/pack2-fault", 1);
+	}
+});
 
 setlistener("/controls/deice/eng1-on", func {
 	eng1on = getprop("/controls/deice/eng1-on");
@@ -337,6 +381,40 @@ setlistener("/controls/deice/eng2-on", func {
 		flashfault2();
 	}
 });
+
+var flashfault1 = func {
+	setprop("/controls/deice/eng1-fault", 1);
+	settimer(func {
+		setprop("/controls/deice/eng1-fault", 0);
+	}, 0.5);
+}
+
+var flashfault2 = func {
+	setprop("/controls/deice/eng2-fault", 1);
+	settimer(func {
+		setprop("/controls/deice/eng2-fault", 0);
+	}, 0.5);
+	
+	# Oxygen (Cabin)
+
+	setlistener("/controls/oxygen/masksDeployMan", func {
+		if (guard and masks) {
+			setprop("/controls/oxygen/masksDeployMan", 0);
+		} else if (!guard and masks) {
+			setprop("/controls/oxygen/masksDeployMan", 1);
+			setprop("/controls/oxygen/masksDeploy", 1);
+			setprop("/controls/oxygen/masksSys", 1);
+		}
+	});
+
+	if (cabinalt > 13500) { 
+		setprop("/controls/oxygen/masksDeploy", 1);
+		setprop("/controls/oxygen/masksSys", 1);
+	}
+	
+}
+
+
 
 ###################
 # Update Function #
