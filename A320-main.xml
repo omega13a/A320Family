@@ -127,6 +127,9 @@
             <autopilot n="7">
                 <path>Aircraft/A320Family/Systems/libraries.xml</path>
             </autopilot>
+            <autopilot n="9">
+				<path>Aircraft/A320Family/Systems/lower-ecam.xml</path>
+            </autopilot>
 			<property-rule n="100">
 				<path>Aircraft/A320Family/Systems/pfd.xml</path>
 			</property-rule>
@@ -226,6 +229,16 @@
 						</binding>
 					</item>
 					<item>
+						<label>Announcements</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							var announce_dlg = gui.Dialog.new("sim/gui/dialogs/announce/dialog", "Aircraft/A320Family/AircraftConfig/announce.xml");
+							announce_dlg.open();
+							</script>
+						</binding>
+					</item>
+					<item>
 						<label>Pushback</label>
 						<binding>
 							<command>dialog-show</command>
@@ -259,7 +272,7 @@
 						</binding>
 					</item>
 					<item>
-						<label>Captain's ND</label>
+						<label>Show Captain's ND</label>
 						<binding>
 							<command>nasal</command>
 							<script>
@@ -268,11 +281,29 @@
 						</binding>
 					</item>
 					<item>
-						<label>First Officer's ND</label>
+						<label>Show First Officer's ND</label>
 						<binding>
 							<command>nasal</command>
 							<script>
 							canvas_nd.showNd('right');
+							</script>
+						</binding>
+					</item>
+					<!--item>
+						<label>First Upper ECAM</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							canvas_ecam.showUpperECAM();
+							</script>
+						</binding>
+					</item-->
+					<item>
+						<label>Show Lower ECAM</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							canvas_ecam.showLowerECAM();
 							</script>
 						</binding>
 					</item>
@@ -1043,6 +1074,8 @@
 			<file>Aircraft/A320Family/Nasal/MCDU1/PERFDES.nas</file>
 			<file>Aircraft/A320Family/Nasal/MCDU1/PERFTO.nas</file>
 			<file>Aircraft/A320Family/Nasal/MCDU1/RADNAV.nas</file>
+			<file>Aircraft/A320Family/Nasal/MCDU1/DATA.nas</file>
+			<file>Aircraft/A320Family/Nasal/MCDU1/STATUS.nas</file>
 		</mcdu1>
 		<mcdu2>
 			<file>Aircraft/A320Family/Nasal/MCDU2/MCDU.nas</file>
@@ -1054,10 +1087,15 @@
 			<file>Aircraft/A320Family/Nasal/MCDU2/PERFDES.nas</file>
 			<file>Aircraft/A320Family/Nasal/MCDU2/PERFTO.nas</file>
 			<file>Aircraft/A320Family/Nasal/MCDU2/RADNAV.nas</file>
+			<file>Aircraft/A320Family/Nasal/MCDU2/DATA.nas</file>
+			<file>Aircraft/A320Family/Nasal/MCDU2/STATUS.nas</file>
 		</mcdu2>
 		<canvas_nd>
 			<file>Aircraft/A320Family/Models/Instruments/ND/canvas/ND.nas</file>
 		</canvas_nd>
+		<canvas_ecam>
+			<file>Aircraft/A320Family/Models/Instruments/Lower-ECAM/Lower-ECAM.nas</file>
+		</canvas_ecam>
 		<icing>
 			<file>Aircraft/A320Family/Nasal/icing.nas</file>
 		</icing>
