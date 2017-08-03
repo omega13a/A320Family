@@ -71,20 +71,28 @@ var MCDU_reset = func {
 	setprop("/FMGC/print/mcdu/page2/R2req", 0);
 	setprop("/FMGC/print/mcdu/page2/R3req", 0);
 	setprop("/FMGC/print/mcdu/page2/R4req", 0);
+	setprop("/FMGC/internal/tropo", 36090);
+	setprop("/FMGC/internal/tropo-set", 0);
 }
 
 var lskbutton = func(btn) {
 	if (btn == "1") {
-		if (getprop("/MCDU[0]/page") == "MCDU" and getprop("/MCDU[0]/active") != 2) {
-			setprop("/MCDU[0]/scratchpad-msg", "1");
-			setprop("/MCDU[0]/scratchpad", "WAIT FOR SYSTEM RESPONSE");
-			setprop("/MCDU[0]/active", 1);
-			settimer(func(){
+		if (getprop("/MCDU[0]/page") == "MCDU") {
+			if (getprop("/MCDU[0]/active") != 2) {
+				setprop("/MCDU[0]/scratchpad-msg", "1");
+				setprop("/MCDU[0]/scratchpad", "WAIT FOR SYSTEM RESPONSE");
+				setprop("/MCDU[0]/active", 1);
+				settimer(func(){
+					setprop("/MCDU[0]/page", getprop("/MCDU[0]/last-fmgc-page"));
+					setprop("/MCDU[0]/scratchpad", "");
+					setprop("/MCDU[0]/scratchpad-msg", "0");
+					setprop("/MCDU[0]/active", 2);
+				}, 2);
+			} else {
 				setprop("/MCDU[0]/page", getprop("/MCDU[0]/last-fmgc-page"));
 				setprop("/MCDU[0]/scratchpad", "");
 				setprop("/MCDU[0]/scratchpad-msg", "0");
-				setprop("/MCDU[0]/active", 2);
-			}, 2);
+			}
 		} else if (getprop("/MCDU[0]/page") == "TO") {
 			perfTOInput("L1");
 		} else if (getprop("/MCDU[0]/page") == "RADNAV") {
@@ -303,6 +311,8 @@ var rskbutton = func(btn) {
 			}
 			setprop("/MCDU[0]/scratchpad-msg", "1");
 			setprop("/MCDU[0]/scratchpad", "AOC DISABLED");
+		} else if (getprop("/MCDU[0]/page") == "INITA") {
+			initInputA("R6");
 		} else {
 			if (getprop("/MCDU[0]/scratchpad") != "NOT ALLOWED") {
 				setprop("/MCDU[0]/last-scratchpad", getprop("/MCDU[0]/scratchpad"));
