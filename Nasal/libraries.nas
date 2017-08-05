@@ -20,9 +20,13 @@ print("-------------------------------------------------------------------------
 print(" ");
 
 # Dimmers
-setprop("/controls/lighting/ndl-norm", 0);
-setprop("/controls/lighting/ndr-norm", 0);
-setprop("/controls/lighting/upper-norm", 0);
+setprop("/controls/lighting/ndl-norm", 1);
+setprop("/controls/lighting/ndr-norm", 1);
+setprop("/controls/lighting/upper-norm", 1);
+
+# Lights
+setprop("/sim/model/lights/nose-lights", 0);
+setprop("/sim/model/lights/turnoffsw", 0);
 
 # Oil Qty
 var qty1 = math.round((rand() * 5 ) + 20, 0.1);
@@ -37,29 +41,42 @@ var beacon_switch = props.globals.getNode("/controls/switches/beacon", 2);
 var beacon = aircraft.light.new("/sim/model/lights/beacon", [0.015, 3], "/controls/lighting/beacon");
 var strobe_switch = props.globals.getNode("/controls/switches/strobe", 2);
 var strobe = aircraft.light.new("/sim/model/lights/strobe", [0.025, 1.5], "/controls/lighting/strobe");
+var logo_lights = getprop("/sim/model/lights/logo-lights");
+var setting = getprop("/controls/lighting/nav-lights-switch");
+var wow = getprop("/gear/gear[2]/wow");
+var slats = getprop("/controls/flight/slats");
 
 setlistener("controls/lighting/nav-lights-switch", func {
 	var nav_lights = props.globals.getNode("/sim/model/lights/nav-lights");
-	var logo_lights = props.globals.getNode("/sim/model/lights/logo-lights");
 	var setting = getprop("/controls/lighting/nav-lights-switch");
 	if (setting == 1) {
 		nav_lights.setBoolValue(1);
-		logo_lights.setBoolValue(0);
 	} else if (setting == 2) {
 		nav_lights.setBoolValue(1);
-		logo_lights.setBoolValue(1);
 	} else {
 		nav_lights.setBoolValue(0);
-		logo_lights.setBoolValue(0);
 	}
 });
- 
+
+setlistener("controls/lighting/taxi-light-switch", func {
+	var nose_lights = getprop("/sim/model/lights/nose-lights");
+	var settingT = getprop("/controls/lighting/taxi-light-switch");
+	var gear = getprop("/gear/gear[0]/position-norm");
+	if (settingT == 0) {
+		setprop("/sim/model/lights/nose-lights", 0);
+	} else if (settingT == 0.5 and gear > 0.9) {
+		setprop("/sim/model/lights/nose-lights", 0.85);
+	} else if (settingT == 1 and gear > 0.9) {
+		setprop("/sim/model/lights/nose-lights", 1);
+	}
+}, 1, 0);
+
 setlistener("controls/lighting/landing-lights[1]", func {
 	var landl = getprop("/controls/lighting/landing-lights[1]");
 	if (landl == 1) {
-		setprop("/sim/rendering/als-secondary-lights/alt-landing-light",1);
+		setprop("/sim/rendering/als-secondary-lights/use-landing-light",1);
 	} else {
-		setprop("/sim/rendering/als-secondary-lights/alt-landing-light",0);
+		setprop("/sim/rendering/als-secondary-lights/use-landing-light",0);
 	}
 });
 
@@ -208,6 +225,8 @@ setlistener("/sim/signals/fdm-initialized", func {
 	setprop("/it-autoflight/input/fd2", 1);
 	libraries.ECAMinit();
 	libraries.variousReset();
+	logoTimer.start();
+	noseLoop.start();
 });
 
 var librariesLoop = maketimer(0.1, func {
@@ -355,5 +374,43 @@ var flaptimer = maketimer(0.5, func {
 		setprop("/controls/flight/flap-pos", 1);
 		setprop("/controls/flight/flap-txt", "1");
 		flaptimer.stop();
+	}
+});
+
+var logoTimer = maketimer(0.1, func {
+	logo_lights = getprop("/sim/model/lights/logo-lights");
+	setting = getprop("/controls/lighting/nav-lights-switch");
+	wow = getprop("/gear/gear[2]/wow");
+	slats = getprop("/controls/flight/slats");
+	if (setting == 0 and logo_lights == 1) {
+		 setprop("/sim/model/lights/logo-lights", 1);
+	} else if (setting == 1 or setting == 2) {
+		if (wow or slats == 1) {
+			setprop("/sim/model/lights/logo-lights", 1);
+		} else if (!wow and slats < 1) {
+			setprop("/sim/model/lights/logo-lights", 1);
+		} else {
+			setprop("/sim/model/lights/logo-lights", 0);
+			print("Logo Lights: Unknown Condition on line 390"); # this is important for debugging
+		}
+	} else {
+	 # do nothing
+	}
+});
+
+var noseLoop = maketimer(0.1, func {
+	var gear = getprop("/gear/gear[0]/position-norm");
+	var nose_lights = getprop("/sim/model/lights/nose-lights");
+	var settingT = getprop("/controls/lighting/taxi-light-switch");
+	if (gear < 1) { 
+		setprop("/sim/model/lights/nose-lights", 0);
+	} else if (settingT == 0) {
+		setprop("/sim/model/lights/nose-lights", 0);
+	} else if (settingT == 0.5 and gear > 0.9) {
+		setprop("/sim/model/lights/nose-lights", 0.85);
+	} else if (settingT == 1 and gear > 0.9) {
+		setprop("/sim/model/lights/nose-lights", 1);
+	} else {
+		# do nothing
 	}
 });
