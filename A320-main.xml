@@ -19,6 +19,11 @@
 			<cockpit type="int">4</cockpit>
 			<model type="int">4</model>
 		</rating>
+		
+		<hud n="0">
+			<enable3d n="0">false</enable3d>
+			<enable3d n="1">false</enable3d>
+		</hud>
 
 		<model>
 			<pushback>
@@ -548,9 +553,9 @@
 				<man-start type="bool">0</man-start>
 				<starter type="bool">0</starter>
 				<starter-switch type="bool">0</starter-switch>
-				<max-athr-thrust type="float">0.94</max-athr-thrust>
-				<throttle-output type="float">0</throttle-output>
-				<throttle-fdm type="float">0</throttle-fdm>
+				<max-athr-thrust type="double">0.94</max-athr-thrust>
+				<throttle-output type="double">0</throttle-output>
+				<throttle-fdm type="double">0</throttle-fdm>
 			</engine>
 			<engine n="1">
 				<cutoff type="bool">true</cutoff>
@@ -561,9 +566,9 @@
 				<man-start type="bool">0</man-start>
 				<starter type="bool">0</starter>
 				<starter-switch type="bool">0</starter-switch>
-				<max-athr-thrust type="float">0.94</max-athr-thrust>
-				<throttle-output type="float">0</throttle-output>
-				<throttle-fdm type="float">0</throttle-fdm>
+				<max-athr-thrust type="double">0.94</max-athr-thrust>
+				<throttle-output type="double">0</throttle-output>
+				<throttle-fdm type="double">0</throttle-fdm>
 			</engine>
 		</engines>
 		<flight>
