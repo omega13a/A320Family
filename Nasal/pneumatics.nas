@@ -44,6 +44,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 	var pack_psi = getprop("/systems/pneumatic/pack-psi");
 	var start_psi = getprop("/systems/pneumatic/start-psi");
 	var total_psi = getprop("/systems/pneumatic/total-psi");
+	var xbleed = getprop("/systems/pneumatic/xbleed", 0);
 	var phase = getprop("/FMGC/status/phase");
 	var pressmode = getprop("/systems/pressurization/mode");
 	var state1 = getprop("/systems/thrust/state1");
@@ -87,7 +88,7 @@ var pneu_init = func {
 	setprop("/controls/pneumatic/switches/hot-air", 1);
 	setprop("/controls/pneumatic/switches/ram-air", 0);
 	setprop("/controls/pneumatic/switches/pack-flo", 9); # LO: 7, NORM: 9, HI: 11.
-	setprop("/controls/pneumatic/switches/xbleed", 1); # SHUT: 0, AUTO: 1, OPEN: 2. # I will simulate later. -JD
+	setprop("/controls/pneumatic/switches/xbleed", 1); # SHUT: 0, AUTO: 1, OPEN: 2.
 	setprop("/systems/pneumatic/bleed1", 0);
 	setprop("/systems/pneumatic/bleed2", 0);
 	setprop("/systems/pneumatic/bleedapu", 0);
@@ -106,6 +107,7 @@ var pneu_init = func {
 	setprop("/systems/pneumatic/hotair-fault", 0);
 	setprop("/systems/pneumatic/pack1-fault", 0);
 	setprop("/systems/pneumatic/pack2-fault", 0);
+	setprop("/systems/pneumatic/xbleed", 0);
 	setprop("/FMGC/internal/dep-arpt", "");
 	altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
 	setprop("/systems/pressurization/mode", "GN");
@@ -180,6 +182,23 @@ var master_pneu = func {
 		setprop("/systems/pneumatic/bleedapu", 0);
 	}
 	
+	ground = getprop("/systems/pneumatic/groundair");
+	bleedapu = getprop("/systems/pneumatic/bleedapu");
+	
+	if (xbleed_sw == 0) {
+		setprop("/systems/pneumatic/xbleed", 0);
+	} else if (xbleed_sw == 1) {
+		if (bleedapu >= 11) {
+			setprop("/systems/pneumatic/xbleed", 1);
+		} else {
+			setprop("/systems/pneumatic/xbleed", 0);
+		}
+	} else if (xbleed_sw == 2) {
+		setprop("/systems/pneumatic/xbleed", 1);
+	}
+	
+	xbleed = getprop("/systems/pneumatic/xbleed", 0);
+	
 	if (stateL == 3 and bleed1_sw and !bleedeng1_fail) {
 		setprop("/systems/pneumatic/bleed1", 31);
 	} else {
@@ -194,8 +213,17 @@ var master_pneu = func {
 	
 	bleed1 = getprop("/systems/pneumatic/bleed1");
 	bleed2 = getprop("/systems/pneumatic/bleed2");
-	bleedapu = getprop("/systems/pneumatic/bleedapu");
-	ground = getprop("/systems/pneumatic/groundair");
+	
+	if (bleed1 >= 11 and (stateR != 3 or !bleed2_sw or bleedeng2_fail) and xbleed == 1) {
+		setprop("/systems/pneumatic/bleed2", 31);
+	}
+	
+	if (bleed2 >= 11 and (stateL != 3 or !bleed1_sw or bleedeng1_fail) and xbleed == 1) {
+		setprop("/systems/pneumatic/bleed1", 32);
+	}
+	
+	bleed1 = getprop("/systems/pneumatic/bleed1");
+	bleed2 = getprop("/systems/pneumatic/bleed2");
 	
 	if (stateL == 1 or stateR == 1) {
 		setprop("/systems/pneumatic/start-psi", 18);
@@ -203,13 +231,13 @@ var master_pneu = func {
 		setprop("/systems/pneumatic/start-psi", 0);
 	}
 	
-	if (pack1_sw == 1 and (bleed1 >= 20 or bleedapu >= 20 or ground >= 20) and eng1_starter == 0 and eng2_starter == 0 and !pack1_fail) {
+	if (pack1_sw == 1 and (bleed1 >= 11 or bleedapu >= 11 or ground >= 11) and eng1_starter == 0 and eng2_starter == 0 and !pack1_fail) {
 		setprop("/systems/pneumatic/pack1", pack_flo_sw);
 	} else {
 		setprop("/systems/pneumatic/pack1", 0);
 	}
 	
-	if (pack2_sw == 1 and (bleed2 >= 20 or bleedapu >= 20) and eng1_starter == 0 and eng2_starter == 0 and !pack2_fail) {
+	if (pack2_sw == 1 and (bleed2 >= 11 or bleedapu >= 11) and eng1_starter == 0 and eng2_starter == 0 and !pack2_fail) {
 		setprop("/systems/pneumatic/pack2", pack_flo_sw);
 	} else {
 		setprop("/systems/pneumatic/pack2", 0);

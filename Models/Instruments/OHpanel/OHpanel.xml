@@ -21,6 +21,8 @@
 		<object-name>ACPack2Btn2O</object-name>
 		<object-name>APUBleedBtn1F</object-name>
 		<object-name>APUBleedBtn2O</object-name>
+		<object-name>APUFireAgtBtn1S</object-name>
+		<object-name>APUFireAgtBtn2D</object-name>
 		<object-name>APUGenBtn1F</object-name>
 		<object-name>APUGenBtn2O</object-name>
 		<object-name>APUMasterBtn1F</object-name>
@@ -33,6 +35,15 @@
 		<object-name>BatteryBtn22O</object-name>
 		<object-name>BusTieBtn2O</object-name>
 		<object-name>DitchBtn2O</object-name>
+		<object-name>EmerExtLtBtn2O</object-name>
+		<object-name>Eng1FireAgt1Btn1S</object-name>
+		<object-name>Eng1FireAgt1Btn2D</object-name>
+		<object-name>Eng1FireAgt2Btn1S</object-name>
+		<object-name>Eng1FireAgt2Btn2D</object-name>
+		<object-name>Eng2FireAgt1Btn1S</object-name>
+		<object-name>Eng2FireAgt1Btn2D</object-name>
+		<object-name>Eng2FireAgt2Btn1S</object-name>
+		<object-name>Eng2FireAgt2Btn2D</object-name>
 		<object-name>ExtPwrBtn2O</object-name>
 		<object-name>Gen1Btn1F</object-name>
 		<object-name>Gen1Btn2O</object-name>
@@ -71,11 +82,15 @@
 		<object-name>ADR2Btn2O</object-name>
 		<object-name>ADR3Btn1F</object-name>
 		<object-name>ADR3Btn2O</object-name>
+		<object-name>AftCargoIsoBtn1F</object-name>
+		<object-name>AftCargoIsoBtn2O</object-name>
 		<object-name>BlueElecPump1F</object-name>
 		<object-name>BlueElecPump2O</object-name>
 		<object-name>CabinPressModeBtn1F</object-name>
 		<object-name>CabinPressModeBtn2M</object-name>
 		<object-name>CabinFansBtn2O</object-name>
+		<object-name>CargoHotAirBtn1F</object-name>
+		<object-name>CargoHotAirBtn2O</object-name>
 		<object-name>CFuelTank1Btn1F</object-name>
 		<object-name>CFuelTank1Btn2O</object-name>
 		<object-name>CFuelTank2Btn1F</object-name>
@@ -87,7 +102,6 @@
 		<object-name>ELAC2Btn2O</object-name>
 		<object-name>EmerCallBtn1C</object-name>
 		<object-name>EmerCallBtn2O</object-name>
-		<object-name>EmerElecManOnBtn2O</object-name>
 		<object-name>EmerGenInd1F</object-name>
 		<object-name>Eng1AntiIceBtn1F</object-name>
 		<object-name>Eng1AntiIceBtn2O</object-name>
@@ -137,7 +151,6 @@
 		<object-name>LFuelTank2Btn1F</object-name>
 		<object-name>LFuelTank2Btn2O</object-name>
 		<object-name>IrsOnBatLightOB</object-name>
-		<object-name>MaskManOnBtn2O</object-name>
 		<object-name>PassOxyInd1S</object-name>
 		<object-name>PrbWinHeatBtn2O</object-name>
 		<object-name>PTU1F</object-name>
@@ -154,6 +167,10 @@
 		<object-name>SEC2Btn2O</object-name>
 		<object-name>SEC3Btn1F</object-name>
 		<object-name>SEC3Btn2O</object-name>
+		<object-name>VentBlowBtn1F</object-name>
+		<object-name>VentBlowBtn2O</object-name>
+		<object-name>VentExtractBtn1F</object-name>
+		<object-name>VentExtractBtn2O</object-name>
 		<object-name>WingAntiIceBtn1F</object-name>
 		<object-name>WingAntiIceBtn2O</object-name>
 		<object-name>YellowElecPump1F</object-name>
@@ -174,18 +191,35 @@
 		</condition>
 	</animation>
 	
-	<!-- These are not simulated yet, so they only illuminate when the test is on. Remove once you simulate these buttons. -JD -->
+	<!-- These are not simulated yet, so they only illuminate when the test is on. Remove each light/button once you add its select animation. -JD -->
 	<animation>
 		<type>select</type>
+		<object-name>AftCargoIsoBtn1F</object-name>
+		<object-name>AftCargoIsoBtn2O</object-name>
+		<object-name>APUFireAgtBtn1S</object-name>
+		<object-name>APUFireAgtBtn2D</object-name>
+		<object-name>CargoHotAirBtn1F</object-name>
+		<object-name>CargoHotAirBtn2O</object-name>
 		<object-name>EmerCallBtn1C</object-name>
 		<object-name>EmerCallBtn2O</object-name>
-		<object-name>EmerElecManOnBtn2O</object-name>
 		<object-name>EmerGenInd1F</object-name>
+		<object-name>Eng1FireAgt1Btn1S</object-name>
+		<object-name>Eng1FireAgt1Btn2D</object-name>
+		<object-name>Eng1FireAgt2Btn1S</object-name>
+		<object-name>Eng1FireAgt2Btn2D</object-name>
+		<object-name>Eng2FireAgt1Btn1S</object-name>
+		<object-name>Eng2FireAgt1Btn2D</object-name>
+		<object-name>Eng2FireAgt2Btn1S</object-name>
+		<object-name>Eng2FireAgt2Btn2D</object-name>
 		<object-name>EvacCommandBtn1E</object-name>
 		<object-name>EvacCommandBtn2O</object-name>
 		<object-name>Gen1LineBtn1S</object-name>
 		<object-name>Gen1LineBtn2O</object-name>
 		<object-name>RcdrGndCtlBtn2O</object-name>
+		<object-name>VentBlowBtn1F</object-name>
+		<object-name>VentBlowBtn2O</object-name>
+		<object-name>VentExtractBtn1F</object-name>
+		<object-name>VentExtractBtn2O</object-name>
 		<condition>
 			<equals>
 				<property>controls/switches/annun-test</property>
@@ -1653,24 +1687,30 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/battery1-amps</property>
-							<value>120</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/battery2-amps</property>
-							<value>120</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
+					<and>
+						<equals>
+							<property>controls/OH/protectors/ratman</property>
+							<value>1</value>
+						</equals>
+						<or>
+							<greater-than-equals>
+								<property>systems/electrical/battery1-amps</property>
+								<value>120</value>
+							</greater-than-equals>
+							<greater-than-equals>
+								<property>systems/electrical/battery2-amps</property>
+								<value>120</value>
+							</greater-than-equals>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc1</property>
+								<value>25</value>
+							</greater-than-equals>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc2</property>
+								<value>25</value>
+							</greater-than-equals>
+						</or>
+					</and>
 				</condition>
 				<command>property-toggle</command>
 				<property>controls/hydraulic/rat-man</property>
@@ -1680,6 +1720,45 @@
 				<script>setprop("/sim/sounde/oh-btn", 1);</script>
 			</binding>
 		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>RATManGuard</object-name>
+		<action>
+			<button>1</button>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/OH/protectors/ratman</property>
+				<value>1</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/OH/protectors/ratman</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>setprop("/sim/sounde/oh-cover", 1);</script>
+				</binding>
+			</mod-up>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>RATManGuard</object-name>
+		<property>controls/OH/protectors/ratman</property>
+		<factor>-145</factor>
+		<axis>
+			<x1-m>-0.0086</x1-m>
+			<y1-m>-0.05506</y1-m>
+			<z1-m>0.14462</z1-m>
+			<x2-m>-0.0086</x2-m>
+			<y2-m>-0.04306</y2-m>
+			<z2-m>0.14462</z2-m>
+		</axis>
 	</animation>
 	
 	<animation>
@@ -5548,6 +5627,64 @@
 		</center>
 	</animation>
 	
+	<animation>
+		<name>Emer Lights pick</name>
+		<type>pick</type>
+		<object-name>EmerExtLtSwtch</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-cycle</command>
+				<property>controls/switches/emer-lights</property>
+				<value>0.0</value>
+				<value>0.5</value>
+				<value>1.0</value>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("/sim/sounde/switch1", 1);</script>
+			</binding>
+		</action>
+	</animation>
+	<animation>
+		<name>Emer Lights rotate</name>
+		<type>rotate</type>
+		<object-name>EmerExtLtSwtch</object-name>
+		<property>controls/switches/emer-lights</property>
+		<interpolation>
+			<entry><ind>0</ind><dep>35</dep></entry>
+			<entry><ind>1</ind><dep>-35</dep></entry>
+		</interpolation>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+		<center>
+			<x-m>-0.01</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.3037</z-m>
+		</center>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>EmerExtLtBtn2O</object-name>
+		<condition>
+			<or>
+				<equals>
+					<property>controls/switches/emer-lights</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	
 	<!-- Texts -->
 	<text>
 		<name>Battery-volt</name>
@@ -6101,7 +6238,7 @@
 		</action>
 	</animation>
 	
-	<animation>
+	<!--animation>
 		<type>rotate</type>
 		<object-name>LeftWiperKnb</object-name>
 		<property>controls/switches/wiperLspd</property>
@@ -6141,7 +6278,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>RightWiperKnb</object-name>
-		<property>controls/switches/wiperLspd</property>
+		<property>controls/switches/wiperRspd</property>
 		<interpolation>
 			<entry><ind>-1</ind><dep>-50</dep></entry>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -6173,7 +6310,7 @@
 				<value>2</value>
 			</binding>
 		</action>
-	</animation>
+	</animation-->
 	
 	<animation>
 		<type>pick</type>
@@ -6212,54 +6349,6 @@
 			<or>
 				<equals>
 					<property>controls/oxygen/masksSys</property>
-					<value>1</value>
-				</equals>
-				<equals>
-					<property>controls/switches/annun-test</property>
-					<value>1</value>
-				</equals>
-			</or>
-		</condition>
-	</animation>
-	
-	<animation>
-		<type>pick</type>
-		<object-name>MaskManOnBtn2O</object-name>
-		<object-name>MaskManOnBtn2</object-name>
-		<object-name>MaskManOnBtn1</object-name>
-		<action>
-			<button>0</button>
-			<repeatable>false</repeatable>
-			<binding>
-				<condition>
-					<or>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc1</property>
-							<value>25</value>
-						</greater-than-equals>
-						<greater-than-equals>
-							<property>systems/electrical/bus/dc2</property>
-							<value>25</value>
-						</greater-than-equals>
-					</or>
-				</condition>
-				<command>property-toggle</command>
-				<property>controls/oxygen/masksDeployMan</property>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>setprop("/sim/sounde/oh-btn", 1);</script>
-			</binding>
-		</action>
-	</animation>
-	
-	<animation>
-		<type>select</type>
-		<object-name>MaskManOnBtn2O</object-name>
-		<condition>
-			<or>
-				<equals>
-					<property>controls/oxygen/masksDeployMan</property>
 					<value>1</value>
 				</equals>
 				<equals>
@@ -6319,7 +6408,42 @@
 	
 	<animation>
 		<type>pick</type>
-		<object-name>MaskManOnGaurd</object-name>
+		<object-name>MaskManOnBtn</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>controls/OH/protectors/maskman</property>
+							<value>1</value>
+						</equals>
+						<or>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc1</property>
+								<value>25</value>
+							</greater-than-equals>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc2</property>
+								<value>25</value>
+							</greater-than-equals>
+						</or>
+					</and>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/oxygen/masksDeployMan</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>MaskManOnGuard</object-name>
 		<action>
 			<button>1</button>
 			<binding>
@@ -6343,7 +6467,7 @@
 	
 	<animation>
 		<type>rotate</type>
-		<object-name>MaskManOnGaurd</object-name>
+		<object-name>MaskManOnGuard</object-name>
 		<property>controls/OH/protectors/maskman</property>
 		<factor>-145</factor>
 		<axis>
