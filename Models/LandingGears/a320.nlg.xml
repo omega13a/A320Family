@@ -12,7 +12,7 @@
 	
 	<model>
 		<name>Nose Tires</name>
-		<path>Aircraft/A320Family/Models/LandingGears/a320.nlg.tires.xml</path>
+		<path>Aircraft/IDG-A32X/Models/LandingGears/a320.nlg.tires.xml</path>
 		<offsets>
 			<x-m>-0.3061469</x-m>
 			<z-m>-1.9329357</z-m>
@@ -216,8 +216,8 @@
 		<object-name>OLEO</object-name>
 		<object-name>LINK.01</object-name>
 		<object-name>LINK.02</object-name>
-		<property>gear/gear[0]/steering-norm</property>
-		<factor>75</factor>
+		<property>sim/multiplay/generic/float[1]</property>
+		<factor>70</factor>
 		<axis>
 			<x1-m>0</x1-m>
 			<y1-m>0</y1-m>

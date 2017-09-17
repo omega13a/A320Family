@@ -81,11 +81,11 @@ var canvas_lowerECAM_base = {
 					lowerECAM_eng.page.hide();
 				}
 				lowerECAM_fctl.page.hide();
-                        } else if (page == "fctl") {
-                                lowerECAM_eng1.page.hide();
+			} else if (page == "fctl") {
+				lowerECAM_eng1.page.hide();
 				lowerECAM_eng.page.hide();
 				lowerECAM_apu.page.hide();
-                                lowerECAM_fctl.page.show();
+				lowerECAM_fctl.page.show();
 			} else {
 				lowerECAM_apu.page.hide();
 				lowerECAM_eng1.page.hide();
@@ -373,13 +373,9 @@ var canvas_lowerECAM_fctl = {
 		if (blue_psi < 1500 and green_psi < 1500) {
 			me["ailL"].setColor(1,0.6,0);
 			me["ailR"].setColor(1,0.6,0);
-			me["ailLscale"].setColor(1,0.6,0);
-			me["ailRscale"].setColor(1,0.6,0);
 		} else {
 			me["ailL"].setColor(0,1,0);
 			me["ailR"].setColor(0,1,0);
-			me["ailLscale"].setColor(1,1,1);
-			me["ailRscale"].setColor(1,1,1);
 		}
 		
 		# Elevators
@@ -734,10 +730,10 @@ setlistener("sim/signals/fdm-initialized", func {
 	var groupEng = lowerECAM_display.createGroup();
 	var groupFctl = lowerECAM_display.createGroup();
 
-	lowerECAM_apu = canvas_lowerECAM_apu.new(groupApu, "Aircraft/A320Family/Models/Instruments/Lower-ECAM/res/apu.svg");
-	lowerECAM_eng1 = canvas_lowerECAM_eng1.new(groupEng1, "Aircraft/A320Family/Models/Instruments/Lower-ECAM/res/eng-eis1.svg");
-	lowerECAM_eng = canvas_lowerECAM_eng.new(groupEng, "Aircraft/A320Family/Models/Instruments/Lower-ECAM/res/eng-eis2.svg");
-	lowerECAM_fctl = canvas_lowerECAM_fctl.new(groupFctl, "Aircraft/A320Family/Models/Instruments/Lower-ECAM/res/fctl.svg");
+	lowerECAM_apu = canvas_lowerECAM_apu.new(groupApu, "Aircraft/IDG-A32X/Models/Instruments/Lower-ECAM/res/apu.svg");
+	lowerECAM_eng1 = canvas_lowerECAM_eng1.new(groupEng1, "Aircraft/IDG-A32X/Models/Instruments/Lower-ECAM/res/eng-eis1.svg");
+	lowerECAM_eng = canvas_lowerECAM_eng.new(groupEng, "Aircraft/IDG-A32X/Models/Instruments/Lower-ECAM/res/eng-eis2.svg");
+	lowerECAM_fctl = canvas_lowerECAM_fctl.new(groupFctl, "Aircraft/IDG-A32X/Models/Instruments/Lower-ECAM/res/fctl.svg");
 
 	lowerECAM_apu.update();
 	lowerECAM_eng1.update();

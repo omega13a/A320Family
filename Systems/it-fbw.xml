@@ -456,7 +456,7 @@
 					</equals>
 				</or>
 			</condition>
-			<property>/controls/flight/aileron-input</property>
+			<property>/controls/flight/aileron-input-fast</property>
 		</input>
 		<input>
 			<condition>
@@ -468,14 +468,6 @@
 			<value>0</value>
 		</input>
 		<output>/controls/flight/roll-fbw</output>
-	</filter>
-	
-	<filter>
-		<name>IT-FBW: AILERON</name>
-		<type>gain</type>
-		<gain>1</gain>
-		<input>/controls/flight/roll-fbw</input>
-		<output>/controls/flight/aileron-fbw</output>
 	</filter>
 	
 	<filter>
@@ -1002,7 +994,7 @@
 					</less-than-equals>
 				</or>
 			</condition>
-			<property>/controls/flight/elevator-input</property>
+			<property>/controls/flight/elevator-input-fast</property>
 		</input>
 		<input>
 			<condition>
