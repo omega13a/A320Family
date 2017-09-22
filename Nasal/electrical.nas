@@ -206,7 +206,6 @@ var master_elec = func {
 		setprop("/systems/electrical/gen-apu", 0);
 	}
 	
-	
 	gen_apu = getprop("/systems/electrical/gen-apu");
 	gen_ext = getprop("/systems/electrical/gen-ext");
 	
@@ -430,7 +429,7 @@ var master_elec = func {
 	}
 	
 	if ((dc1 > 25 or dc2 > 25) and battery2_sw and !batt2_fail) {
-		decharge1.stop();
+		decharge2.stop();
 		charge2.start();
 	}
 
