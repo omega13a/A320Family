@@ -44,7 +44,14 @@
 			
 			<text>
 				<halign>left</halign>
-				<label>The goal of the A320Family by it0uchpods is to provide FlightGear with authentic, realistic, Airbus A320 series Aircraft.</label>
+				<label>IDG A32X Professional Pre V1.0</label>
+			</text>
+			
+			<hrule/>
+			
+			<text>
+				<halign>left</halign>
+				<label>Keyboard Mode: Maps flight controls to number pad, and number rows, instead of view shortucts.</label>
 			</text>
 			
 			<hrule/>

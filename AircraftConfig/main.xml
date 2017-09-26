@@ -67,6 +67,15 @@
 				</button>
 				<button>
 					<halign>center</halign>
+					<legend>Pushback</legend>
+					<pref-width>140</pref-width>
+					<binding>
+						<command>dialog-show</command>
+						<dialog-name>pushback</dialog-name>
+					</binding>
+				</button>
+				<button>
+					<halign>center</halign>
 					<legend>Aircraft Help</legend>
 					<pref-width>140</pref-width>
 					<binding>
@@ -350,9 +359,6 @@
 			<checkbox>
 				<label>Keyboard Mode (See Aircraft Help)</label>
 				<halign>left</halign>
-				<enable>
-					<property>/systems/acconfig/unused</property>
-				</enable>
 				<property>/options/system/keyboard-mode</property>
 				<binding>
 					<command>property-toggle</command>
