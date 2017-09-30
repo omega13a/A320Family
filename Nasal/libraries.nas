@@ -213,6 +213,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 	var autopilot = gui.Dialog.new("sim/gui/dialogs/autopilot/dialog", "Aircraft/IDG-A32X/Systems/autopilot-dlg.xml");
 	setprop("/it-autoflight/input/fd1", 1);
 	setprop("/it-autoflight/input/fd2", 1);
+	setprop("/sim/model/lights/floor-light", 0);
 	libraries.ECAMinit();
 	libraries.variousReset();
 	logoTimer.start();
@@ -246,7 +247,7 @@ setlistener("/options/steep-ils", func {
 
 var aglgears = func {
     var agl = getprop("/position/altitude-agl-ft") or 0;
-    var aglft = agl - 11.101;  # is the position from the Airbus A320 above ground
+    var aglft = agl - 14.001;  # is the position from the Airbus A320 above ground
     var aglm = aglft * 0.3048;
     setprop("/position/gear-agl-ft", aglft);
     setprop("/position/gear-agl-m", aglm);
@@ -262,7 +263,7 @@ canvas.Text.setText = func (text) {
 	me._lastText = text;
 	me.set("text", typeof(text) == 'scalar' ? text : "");
 };
-canvas.Element._lastVisible = 1;
+canvas.Element._lastVisible = nil;
 canvas.Element.show = func () {
 	if (1 == me._lastVisible) {return me;}
 	me._lastVisible = 1;
@@ -398,13 +399,12 @@ var logoTimer = maketimer(0.1, func {
 	if (setting == 0 and logo_lights == 1) {
 		 setprop("/sim/model/lights/logo-lights", 0);
 	} else if (setting == 1 or setting == 2) {
-		if (wow or slats == 1) {
+		if (wow) {
 			setprop("/sim/model/lights/logo-lights", 1);
-		} else if (!wow and slats < 1) {
+		} else if (!wow and slats > 1) {
 			setprop("/sim/model/lights/logo-lights", 1);
 		} else {
 			setprop("/sim/model/lights/logo-lights", 0);
-			print("Logo Lights: Unknown Condition on line 390"); # this is important for debugging
 		}
 	} else {
 	 # do nothing
