@@ -13,7 +13,7 @@
 		<sound>
 			<path>Aircraft/IDG-A32X/Sounds/cfm56-sound.xml</path>
 		</sound>
-                <checklists include="A3XX-Checklists.xml"/>
+		<checklists include="A3XX-Checklists.xml"/>
 		<description>Airbus A318-112 (CFM56-5B9)</description>
 		<flight-model>jsb</flight-model>
 		<aero>A318-100-CFM</aero>
@@ -125,13 +125,13 @@
 		
 	</sim>
         
-        <limits>
-            <mass-and-balance> <!--Data source: https://en.wikipedia.org/wiki/Airbus_A320_family#Specifications-->
-                    <maximum-takeoff-mass-lbs>150000</maximum-takeoff-mass-lbs>
-                    <maximum-landing-mass-lbs>127000</maximum-landing-mass-lbs>
-                    <maximum-zero-fuel-mass-lbs>120000</maximum-zero-fuel-mass-lbs>
-            </mass-and-balance>
-        </limits>
+	<limits>
+		<mass-and-balance> <!--Data source: https://en.wikipedia.org/wiki/Airbus_A320_family#Specifications-->
+			<maximum-takeoff-mass-lbs>172000</maximum-takeoff-mass-lbs>
+			<maximum-landing-mass-lbs>146000</maximum-landing-mass-lbs>
+			<maximum-zero-fuel-mass-lbs>138000</maximum-zero-fuel-mass-lbs>
+		</mass-and-balance>
+	</limits>
 	
 	<options n="0">
 		<EIS2 type="bool">1</EIS2>
