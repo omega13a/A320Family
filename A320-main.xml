@@ -415,6 +415,7 @@
 
 	<it-fbw n="0">
 		<alpha-hld type="bool">0</alpha-hld>
+		<law type="int">0</law>
 	</it-fbw>
 
 	<apu>
@@ -582,6 +583,7 @@
 			</switches>
 		</pneumatic>
 		<switches>
+			<cart type="bool">0</cart>
 			<!-- Smoking is bad :P -->
 			<no-smoking-sign type="bool">1</no-smoking-sign>
 			<seatbelt-sign type="bool">0</seatbelt-sign>
@@ -591,6 +593,7 @@
 		<tray n="0">
 			<lefttrayext type="double">0</lefttrayext>
 			<righttrayext type="double">0</righttrayext>
+			<suprise userarchive="y" type="bool">0</suprise>
 		</tray>
 	</controls>
 	

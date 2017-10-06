@@ -1122,10 +1122,13 @@
 			<mode>once</mode>
 			<path>Aircraft/IDG-A32X/Sounds/Cockpit/700hz.wav</path>
 			<condition>
-				<equals>
-					<property>controls/CVR/tone</property>
-					<value>1</value>
-				</equals>
+				<and>
+					<property>sim/current-view/internal</property>
+					<equals>
+						<property>controls/CVR/tone</property>
+						<value>1</value>
+					</equals>
+				</and>
 			</condition>
 			<volume>
 				<factor>0.60</factor>
@@ -1135,7 +1138,7 @@
 		<relay>
 			<name>RelayBatt1</name>
 			<mode>once</mode>
-			<path>Aircraft/IDG-A32X/Sounds/Cockpit/relay2.wav</path>
+			<path>Aircraft/IDG-A33X/Sounds/Cockpit/relay2.wav</path>
 			<condition>
 				<greater-than>
 					<property>/systems/electrical/battery1-amps</property>
@@ -1150,7 +1153,7 @@
 		<relay>
 			<name>RelayBatt2</name>
 			<mode>once</mode>
-			<path>Aircraft/IDG-A32X/Sounds/Cockpit/relay2.wav</path>
+			<path>Aircraft/IDG-A33X/Sounds/Cockpit/relay2.wav</path>
 			<condition>
 				<greater-than>
 					<property>/systems/electrical/battery2-amps</property>
@@ -1165,7 +1168,7 @@
 		<relay>
 			<name>RelayEXT</name>
 			<mode>once</mode>
-			<path>Aircraft/IDG-A32X/Sounds/Cockpit/relay4.wav</path>
+			<path>Aircraft/IDG-A33X/Sounds/Cockpit/relay4.wav</path>
 			<condition>
 				<and>
 					<equals>
@@ -1186,7 +1189,7 @@
 		<relay>
 			<name>RelayAPU</name>
 			<mode>once</mode>
-			<path>Aircraft/IDG-A32X/Sounds/Cockpit/relay4.wav</path>
+			<path>Aircraft/IDG-A33X/Sounds/Cockpit/relay4.wav</path>
 			<condition>
 				<equals>
 					<property>/systems/electrical/gen-apu</property>
@@ -1197,22 +1200,25 @@
 				<factor>0.60</factor>
 			</volume>
 		</relay>
-		
+	
 		<relay>
 			<name>Avionics</name>
 			<mode>looped</mode>
 			<path>Aircraft/IDG-A32X/Sounds/FL2070/320efis.wav</path>
 			<condition>
-				<or>
-					<greater-than>
-						<property>/systems/electrical/bus/ac1</property>
-						<value>110</value>
-					</greater-than>
-					<greater-than>
-						<property>/systems/electrical/bus/ac2</property>
-						<value>110</value>
-					</greater-than>
-				</or>
+				<and>
+					<property>sim/current-view/internal</property>
+					<or>
+						<greater-than>
+							<property>/systems/electrical/bus/ac1</property>
+							<value>110</value>
+						</greater-than>
+						<greater-than>
+							<property>/systems/electrical/bus/ac2</property>
+							<value>110</value>
+						</greater-than>
+					</or>
+				</and>
 			</condition>
 			<volume>
 				<factor>0.60</factor>

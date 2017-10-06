@@ -14,6 +14,9 @@ setprop("/controls/lighting/ndl-norm", 1);
 setprop("/controls/lighting/ndr-norm", 1);
 setprop("/controls/lighting/upper-norm", 1);
 
+# Surprise
+setprop("/controls/tray/surprise", 1);
+
 # Lights
 setprop("/sim/model/lights/nose-lights", 0);
 setprop("/sim/model/lights/turnoffsw", 0);
@@ -222,7 +225,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 });
 
 var librariesLoop = maketimer(0.1, func {
-	if ((getprop("/controls/pneumatic/switches/groundair") or getprop("/controls/switches/cart")) and ((getprop("/velocities/groundspeed-kt") > 2) or getprop("controls/gear/brake-parking") == 0)) {
+	if ((getprop("/controls/pneumatic/switches/groundair") or getprop("/controls/switches/cart")) and ((getprop("/velocities/groundspeed-kt") > 2) or getprop("/controls/gear/brake-parking") == 0)) {
 		setprop("/controls/switches/cart", 0);
 		setprop("/controls/pneumatic/switches/groundair", 0);
 	}

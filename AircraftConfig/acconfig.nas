@@ -99,7 +99,7 @@ var error_mismatch = gui.Dialog.new("sim/gui/dialogs/acconfig/error/mismatch/dia
 spinning.start();
 init_dlg.open();
 
-http.load("https://raw.githubusercontent.com/it0uchpods/A320Family/master/revision.txt").done(func(r) setprop("/systems/acconfig/new-revision", r.response));
+http.load("https://raw.githubusercontent.com/it0uchpods/IDG-A32X/master/revision.txt").done(func(r) setprop("/systems/acconfig/new-revision", r.response));
 var revisionFile = (getprop("/sim/aircraft-dir")~"/revision.txt");
 var current_revision = io.readfile(revisionFile);
 
@@ -143,7 +143,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 });
 
 var saveSettings = func {
-	aircraft.data.add("/options/system/keyboard-mode", "/controls/adirs/skip");
+	aircraft.data.add("/options/system/keyboard-mode", "/controls/adirs/skip", "/controls/tray/surprise");
 	aircraft.data.save();
 }
 
@@ -178,6 +178,8 @@ var colddark = func {
 	spinning.start();
 	ps_load_dlg.open();
 	setprop("/systems/acconfig/autoconfig-running", 1);
+	setprop("/controls/gear/brake-left", 1);
+	setprop("/controls/gear/brake-right", 1);
 	# Initial shutdown, and reinitialization.
 	setprop("/controls/engines/engine-start-switch", 1);
 	setprop("/controls/engines/engine[0]/cutoff-switch", 1);
@@ -211,6 +213,8 @@ var colddark_b = func {
 	setprop("/controls/bleed/OHP/bleedapu", 0);
 	setprop("/controls/electrical/switches/battery1", 0);
 	setprop("/controls/electrical/switches/battery2", 0);
+	setprop("/controls/gear/brake-left", 0);
+	setprop("/controls/gear/brake-right", 0);
 	setprop("/systems/acconfig/autoconfig-running", 0);
 	ps_load_dlg.close();
 	ps_loaded_dlg.open();
@@ -222,6 +226,8 @@ var beforestart = func {
 	spinning.start();
 	ps_load_dlg.open();
 	setprop("/systems/acconfig/autoconfig-running", 1);
+	setprop("/controls/gear/brake-left", 1);
+	setprop("/controls/gear/brake-right", 1);
 	# First, we set everything to cold and dark.
 	setprop("/controls/engines/engine-start-switch", 1);
 	setprop("/controls/engines/engine[0]/cutoff-switch", 1);
@@ -284,6 +290,8 @@ var beforestart_b = func {
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/lighting/beacon", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
+	setprop("/controls/gear/brake-left", 0);
+	setprop("/controls/gear/brake-right", 0);
 	setprop("/systems/acconfig/autoconfig-running", 0);
 	ps_load_dlg.close();
 	ps_loaded_dlg.open();
@@ -295,6 +303,8 @@ var taxi = func {
 	spinning.start();
 	ps_load_dlg.open();
 	setprop("/systems/acconfig/autoconfig-running", 1);
+	setprop("/controls/gear/brake-left", 1);
+	setprop("/controls/gear/brake-right", 1);
 	# First, we set everything to cold and dark.
 	setprop("/controls/engines/engine-start-switch", 1);
 	setprop("/controls/engines/engine[0]/cutoff-switch", 1);
@@ -360,31 +370,21 @@ var taxi_b = func {
 }
 var taxi_c = func {
 	setprop("/controls/engines/engine-start-switch", 2);
+	setprop("/controls/engines/engine[0]/cutoff-switch", 0);
 	setprop("/controls/engines/engine[1]/cutoff-switch", 0);
-	var eng_two_chk = setlistener("/engines/engine[1]/state", func {
-		if (getprop("/engines/engine[1]/state") == 3) {
-			removelistener(eng_two_chk);
-			taxi_d();
-		}
-	});
+	settimer(func {
+		taxi_d();
+	}, 10);
 }
 var taxi_d = func {
-	# Start engine 1.
-	setprop("/controls/engines/engine[0]/cutoff-switch", 0);
-	var eng_one_chk = setlistener("/engines/engine[0]/n2", func {
-		if (getprop("/engines/engine[0]/n2") >= 58.0) {
-			removelistener(eng_one_chk);
-			taxi_e();
-		}
-	});
-}
-var taxi_e = func {
 	# After Start items.
 	setprop("/controls/engines/engine-start-switch", 1);
 	setprop("/controls/APU/master", 0);
 	setprop("/controls/APU/start", 0);
 	setprop("/controls/pneumatic/switches/bleedapu", 0);
 	setprop("/controls/lighting/taxi-light-switch", 1);
+	setprop("/controls/gear/brake-left", 0);
+	setprop("/controls/gear/brake-right", 0);
 	setprop("/systems/acconfig/autoconfig-running", 0);
 	ps_load_dlg.close();
 	ps_loaded_dlg.open();
