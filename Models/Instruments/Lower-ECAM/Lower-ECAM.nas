@@ -17,6 +17,10 @@ var blue_psi = 0;
 var green_psi = 0;
 var yellow_psi = 0;
 var autobrakemode = 0;
+var nosegear = 0;
+var leftgear = 0;
+var rightgear = 0;
+
 setprop("/systems/electrical/extra/apu-load", 0);
 setprop("/systems/electrical/extra/apu-volts", 0);
 setprop("/systems/electrical/extra/apu-hz", 0);
@@ -681,7 +685,7 @@ var canvas_lowerECAM_fctl = {
 		}
 		
 		# Hydraulic Indicators
-		if (getprop("/systems/hydraulic/blue-psi") > 1500) {
+		if (getprop("/systems/hydraulic/blue-psi") >= 1500) {
 			me["ailLblue"].setColor(0.0667,0.7294,0.3137);
 			me["ailRblue"].setColor(0.0667,0.7294,0.3137);
 			me["elevLblue"].setColor(0.0667,0.7294,0.3137);
@@ -697,7 +701,7 @@ var canvas_lowerECAM_fctl = {
 			me["spdbrkblue"].setColor(0.7333,0.3803,0);
 		}
 		
-		if (getprop("/systems/hydraulic/green-psi") > 1500) {
+		if (getprop("/systems/hydraulic/green-psi") >= 1500) {
 			me["ailLgreen"].setColor(0.0667,0.7294,0.3137);
 			me["ailRgreen"].setColor(0.0667,0.7294,0.3137);
 			me["elevLgreen"].setColor(0.0667,0.7294,0.3137);
@@ -713,7 +717,7 @@ var canvas_lowerECAM_fctl = {
 			me["spdbrkgreen"].setColor(0.7333,0.3803,0);
 		}
 		
-		if (getprop("/systems/hydraulic/yellow-psi") > 1500) {
+		if (getprop("/systems/hydraulic/yellow-psi") >= 1500) {
 			me["elevRyellow"].setColor(0.0667,0.7294,0.3137);
 			me["rudderyellow"].setColor(0.0667,0.7294,0.3137);
 			me["PTyellow"].setColor(0.0667,0.7294,0.3137);
@@ -737,15 +741,67 @@ var canvas_lowerECAM_wheel = {
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","autobrk","autobrkind","NWSyellowrect","altnbrkyellow","normbrkgreen","spoiler1Rex","spoiler1Rrt","spoiler2Rex","spoiler2Rrt","spoiler3Rex","spoiler3Rrt","spoiler4Rex","spoiler4Rrt","spoiler5Rex","spoiler5Rrt","spoiler1Lex",
-		"spoiler1Lrt","spoiler2Lex","spoiler2Lrt","spoiler3Lex","spoiler3Lrt","spoiler4Lex","spoiler4Lrt","spoiler5Lex","spoiler5Lrt","spoiler1Rf","spoiler2Rf","spoiler3Rf","spoiler4Rf","spoiler5Rf","spoiler1Lf","spoiler2Lf","spoiler3Lf","spoiler4Lf",
-		"spoiler5Lf","braketemp1","braketemp2","braketemp3","braketemp4"];
+		return ["TAT","SAT","GW","leftdoor","autobrk","autobrkind","NWS","altnbrk","normbrk","spoiler1Rex","spoiler1Rrt","spoiler2Rex","spoiler2Rrt","spoiler3Rex","spoiler3Rrt","spoiler4Rex","spoiler4Rrt","spoiler5Rex","spoiler5Rrt","spoiler1Lex","spoiler1Lrt",
+		"spoiler2Lex","spoiler2Lrt","spoiler3Lex","spoiler3Lrt","spoiler4Lex","spoiler4Lrt","spoiler5Lex","spoiler5Lrt","spoiler1Rf","spoiler2Rf","spoiler3Rf","spoiler4Rf","spoiler5Rf","spoiler1Lf","spoiler2Lf","spoiler3Lf","spoiler4Lf","spoiler5Lf",
+		"braketemp1","braketemp2","braketemp3","braketemp4","Triangle-Left1","Triangle-Left2","Triangle-Nose1","Triangle-Nose2","Triangle-Right1","Triangle-Right2"];
 	},
 	update: func() {
 		blue_psi = getprop("/systems/hydraulic/blue-psi");
 		green_psi = getprop("/systems/hydraulic/green-psi");
 		yellow_psi = getprop("/systems/hydraulic/yellow-psi");
 		autobrakemode = getprop("/controls/autobrake/mode");
+		nosegear = getprop("gear/gear[0]/position-norm");
+		leftgear = getprop("gear/gear[1]/position-norm");
+		rightgear = getprop("gear/gear[2]/position-norm");
+		
+		# Triangles
+		if (leftgear == 0) {
+			me["Triangle-Left1"].hide();
+			me["Triangle-Left2"].hide();
+		} else {
+			me["Triangle-Left1"].show();
+			me["Triangle-Left2"].show();
+		}
+		
+		if (leftgear == 1) {
+			me["Triangle-Left1"].setColor(0.0667,0.7294,0.3137);
+			me["Triangle-Left2"].setColor(0.0667,0.7294,0.3137);
+		} else {
+			me["Triangle-Left1"].setColor(1,0,0);
+			me["Triangle-Left2"].setColor(1,0,0);
+		}
+		
+		if (nosegear == 0) {
+			me["Triangle-Nose1"].hide();
+			me["Triangle-Nose2"].hide();
+		} else {
+			me["Triangle-Nose1"].show();
+			me["Triangle-Nose2"].show();
+		}
+		
+		if (nosegear == 1) {
+			me["Triangle-Nose1"].setColor(0.0667,0.7294,0.3137);
+			me["Triangle-Nose2"].setColor(0.0667,0.7294,0.3137);
+		} else {
+			me["Triangle-Nose1"].setColor(1,0,0);
+			me["Triangle-Nose2"].setColor(1,0,0);
+		}
+		
+		if (rightgear == 0) {
+			me["Triangle-Right1"].hide();
+			me["Triangle-Right2"].hide();
+		} else {
+			me["Triangle-Right1"].show();
+			me["Triangle-Right2"].show();
+		}
+		
+		if (rightgear == 1) {
+			me["Triangle-Right1"].setColor(0.0667,0.7294,0.3137);
+			me["Triangle-Right2"].setColor(0.0667,0.7294,0.3137);
+		} else {
+			me["Triangle-Right1"].setColor(1,0,0);
+			me["Triangle-Right2"].setColor(1,0,0);
+		}
 		
 		# Autobrake
 		if (autobrakemode == 0) {
@@ -990,18 +1046,18 @@ var canvas_lowerECAM_wheel = {
 		}
 		
 		# Hydraulic Boxes
-		if (getprop("/systems/hydraulic/green-psi") > 1500) {
-			me["normbrkgreen"].setColor(0.0667,0.7294,0.3137);
+		if (getprop("/systems/hydraulic/green-psi") >= 1500) {
+			me["normbrk"].hide();
 		} else {
-			me["normbrkgreen"].setColor(0.7333,0.3803,0);
+			me["normbrk"].setColor(0.7333,0.3803,0);
 		}
 		
-		if (getprop("/systems/hydraulic/yellow-psi") > 1500) {
-			me["altnbrkyellow"].setColor(0.0667,0.7294,0.3137);
-			me["NWSyellowrect"].setColor(0.0667,0.7294,0.3137);
+		if (getprop("/systems/hydraulic/yellow-psi") >= 1500) {
+			me["altnbrk"].hide();
+			me["NWS"].hide();
 		} else {
-			me["altnbrkyellow"].setColor(0.7333,0.3803,0);
-			me["NWSyellowrect"].setColor(0.7333,0.3803,0);
+			me["altnbrk"].setColor(0.7333,0.3803,0);
+			me["NWS"].setColor(0.7333,0.3803,0);
 		}
 		
 		# Hide not yet implemented stuff
