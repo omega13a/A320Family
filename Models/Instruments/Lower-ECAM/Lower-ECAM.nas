@@ -6,7 +6,6 @@
 #########################################
 
 var lowerECAM_apu = nil;
-var lowerECAM_eng1 = nil;
 var lowerECAM_eng = nil;
 var lowerECAM_fctl = nil;
 var lowerECAM_wheel = nil;
@@ -27,6 +26,10 @@ setprop("/systems/electrical/extra/apu-hz", 0);
 setprop("/systems/pneumatic/bleedapu", 0);
 setprop("/engines/engine[0]/oil-psi-actual", 0);
 setprop("/engines/engine[1]/oil-psi-actual", 0);
+setprop("/ECAM/Lower/door-left", 0);
+setprop("/ECAM/Lower/door-right", 0);
+setprop("/ECAM/Lower/door-nose-left", 0);
+setprop("/ECAM/Lower/door-nose-right", 0);
 setprop("/ECAM/Lower/APU-N", 0);
 setprop("/ECAM/Lower/APU-EGT", 0);
 setprop("/ECAM/Lower/Oil-QT[0]", 0);
@@ -77,48 +80,36 @@ var canvas_lowerECAM_base = {
 			page = getprop("/ECAM/Lower/page");
 			if (page == "apu") {
 				lowerECAM_apu.page.show();
-				lowerECAM_eng1.page.hide();
 				lowerECAM_eng.page.hide();
 				lowerECAM_fctl.page.hide();
 				lowerECAM_wheel.page.hide();
 				lowerECAM_apu.update();
 			} else if (page == "eng") {
 				lowerECAM_apu.page.hide();
-				if (getprop("/options/EIS2") == 1) {
-					lowerECAM_eng1.page.hide();
-					lowerECAM_eng.page.show();
-					lowerECAM_eng.update();
-				} else {
-					lowerECAM_eng1.page.show();
-					lowerECAM_eng.page.hide();
-					lowerECAM_eng1.update();
-				}
+				lowerECAM_eng.page.show();
+				lowerECAM_eng.update();
 				lowerECAM_fctl.page.hide();
 				lowerECAM_wheel.page.hide();
 			} else if (page == "fctl") {
-				lowerECAM_eng1.page.hide();
-				lowerECAM_eng.page.hide();
 				lowerECAM_apu.page.hide();
+				lowerECAM_eng.page.hide();
 				lowerECAM_fctl.page.show();
 				lowerECAM_wheel.page.hide();
 				lowerECAM_fctl.update();
 			} else if (page == "wheel") {
-				lowerECAM_eng1.page.hide();
-				lowerECAM_eng.page.hide();
 				lowerECAM_apu.page.hide();
+				lowerECAM_eng.page.hide();
 				lowerECAM_fctl.page.hide();
 				lowerECAM_wheel.page.show();
 				lowerECAM_wheel.update();
 			} else {
 				lowerECAM_apu.page.hide();
-				lowerECAM_eng1.page.hide();
 				lowerECAM_eng.page.hide();
 				lowerECAM_fctl.page.hide();
 				lowerECAM_wheel.page.hide();
 			}
 		} else {
 			lowerECAM_apu.page.hide();
-			lowerECAM_eng1.page.hide();
 			lowerECAM_eng.page.hide();
 			lowerECAM_fctl.page.hide();
 			lowerECAM_wheel.page.hide();
@@ -133,7 +124,7 @@ var canvas_lowerECAM_base = {
 
 var canvas_lowerECAM_apu = {
 	new: func(canvas_group, file) {
-		var m = { parents: [canvas_lowerECAM_apu , canvas_lowerECAM_base] };
+		var m = {parents: [canvas_lowerECAM_apu, canvas_lowerECAM_base]};
 		m.init(canvas_group, file);
 
 		return m;
@@ -252,56 +243,9 @@ var canvas_lowerECAM_apu = {
 	},
 };
 
-var canvas_lowerECAM_eng1 = {
-	new: func(canvas_group, file) {
-		var m = { parents: [canvas_lowerECAM_eng1 , canvas_lowerECAM_base] };
-		m.init(canvas_group, file);
-		
-		return m;
-	},
-	getKeys: func() {
-		return ["TAT","SAT","GW","OilQT1-needle","OilQT2-needle","OilQT1","OilQT2","OilQT1-decimal","OilQT2-decimal","OilPSI1-needle","OilPSI2-needle","OilPSI1","OilPSI2"];
-	},
-	update: func() {
-		# Oil Quantity
-		me["OilQT1"].setText(sprintf("%s", math.round(getprop("/engines/engine[0]/oil-qt-actual"))));
-		me["OilQT2"].setText(sprintf("%s", math.round(getprop("/engines/engine[1]/oil-qt-actual"))));
-		me["OilQT1-decimal"].setText(sprintf("%s", int(10*math.mod(getprop("/engines/engine[0]/oil-qt-actual"),1))));
-		me["OilQT2-decimal"].setText(sprintf("%s", int(10*math.mod(getprop("/engines/engine[1]/oil-qt-actual"),1))));
-		
-		me["OilQT1-needle"].setRotation((getprop("/ECAM/Lower/Oil-QT[0]") + 90)*D2R);
-		me["OilQT2-needle"].setRotation((getprop("/ECAM/Lower/Oil-QT[1]") + 90)*D2R);
-		
-		# Oil Pressure
-		if (getprop("/engines/engine[0]/oil-psi-actual") >= 20) {
-			me["OilPSI1"].setColor(0.0667,0.7294,0.3137);
-			me["OilPSI1-needle"].setColorFill(0.0667,0.7294,0.3137);
-		} else {
-			me["OilPSI1"].setColor(1,0,0);
-			me["OilPSI1-needle"].setColorFill(1,0,0);
-		}
-		
-		if (getprop("/engines/engine[1]/oil-psi-actual") >= 20) {
-			me["OilPSI2"].setColor(0.0667,0.7294,0.3137);
-			me["OilPSI2-needle"].setColorFill(0.0667,0.7294,0.3137);
-		} else {
-			me["OilPSI2"].setColor(1,0,0);
-			me["OilPSI2-needle"].setColorFill(1,0,0);
-		}
-		
-		me["OilPSI1"].setText(sprintf("%s", math.round(getprop("/engines/engine[0]/oil-psi-actual"))));
-		me["OilPSI2"].setText(sprintf("%s", math.round(getprop("/engines/engine[1]/oil-psi-actual"))));
-		
-		me["OilPSI1-needle"].setRotation((getprop("/ECAM/Lower/Oil-PSI[0]") + 90)*D2R);
-		me["OilPSI2-needle"].setRotation((getprop("/ECAM/Lower/Oil-PSI[1]") + 90)*D2R);
-		
-		me.updateBottomStatus();
-	},     
-};
-
 var canvas_lowerECAM_eng = {
 	new: func(canvas_group, file) {
-		var m = { parents: [canvas_lowerECAM_eng , canvas_lowerECAM_base] };
+		var m = {parents: [canvas_lowerECAM_eng, canvas_lowerECAM_base]};
 		m.init(canvas_group, file);
 		
 		return m;
@@ -349,7 +293,7 @@ var canvas_lowerECAM_eng = {
 
 var canvas_lowerECAM_fctl = {
 	new: func(canvas_group, file) {
-		var m = { parents: [canvas_lowerECAM_fctl , canvas_lowerECAM_base] };
+		var m = {parents: [canvas_lowerECAM_fctl, canvas_lowerECAM_base]};
 		m.init(canvas_group, file);
 
 		return m;
@@ -735,15 +679,15 @@ var canvas_lowerECAM_fctl = {
 
 var canvas_lowerECAM_wheel = {
 	new: func(canvas_group, file) {
-		var m = { parents: [canvas_lowerECAM_wheel , canvas_lowerECAM_base] };
+		var m = {parents: [canvas_lowerECAM_wheel, canvas_lowerECAM_base]};
 		m.init(canvas_group, file);
 		
 		return m;
 	},
 	getKeys: func() {
-		return ["TAT","SAT","GW","leftdoor","autobrk","autobrkind","NWS","altnbrk","normbrk","spoiler1Rex","spoiler1Rrt","spoiler2Rex","spoiler2Rrt","spoiler3Rex","spoiler3Rrt","spoiler4Rex","spoiler4Rrt","spoiler5Rex","spoiler5Rrt","spoiler1Lex","spoiler1Lrt",
+		return ["TAT","SAT","GW","leftdoor","rightdoor","nosegeardoorL","nosegeardoorR","autobrk","autobrkind","NWS","altnbrk","normbrk","spoiler1Rex","spoiler1Rrt","spoiler2Rex","spoiler2Rrt","spoiler3Rex","spoiler3Rrt","spoiler4Rex","spoiler4Rrt","spoiler5Rex","spoiler5Rrt","spoiler1Lex","spoiler1Lrt",
 		"spoiler2Lex","spoiler2Lrt","spoiler3Lex","spoiler3Lrt","spoiler4Lex","spoiler4Lrt","spoiler5Lex","spoiler5Lrt","spoiler1Rf","spoiler2Rf","spoiler3Rf","spoiler4Rf","spoiler5Rf","spoiler1Lf","spoiler2Lf","spoiler3Lf","spoiler4Lf","spoiler5Lf",
-		"braketemp1","braketemp2","braketemp3","braketemp4","Triangle-Left1","Triangle-Left2","Triangle-Nose1","Triangle-Nose2","Triangle-Right1","Triangle-Right2"];
+		"braketemp1","braketemp2","braketemp3","braketemp4","leftuplock","noseuplock","rightuplock","Triangle-Left1","Triangle-Left2","Triangle-Nose1","Triangle-Nose2","Triangle-Right1","Triangle-Right2"];
 	},
 	update: func() {
 		blue_psi = getprop("/systems/hydraulic/blue-psi");
@@ -753,9 +697,16 @@ var canvas_lowerECAM_wheel = {
 		nosegear = getprop("gear/gear[0]/position-norm");
 		leftgear = getprop("gear/gear[1]/position-norm");
 		rightgear = getprop("gear/gear[2]/position-norm");
+		leftdoor = getprop("/systems/hydraulic/gear/door-left");
+		
+		# Gear Doors
+		me["leftdoor"].setRotation(getprop("/ECAM/Lower/door-left")*D2R);
+		me["rightdoor"].setRotation(getprop("/ECAM/Lower/door-right")*D2R);
+		me["nosegeardoorL"].setRotation(getprop("/ECAM/Lower/door-nose-left")*D2R);
+		me["nosegeardoorR"].setRotation(getprop("/ECAM/Lower/door-nose-right")*D2R);
 		
 		# Triangles
-		if (leftgear == 0) {
+		if (leftgear < 0.2 or leftgear > 0.8) {
 			me["Triangle-Left1"].hide();
 			me["Triangle-Left2"].hide();
 		} else {
@@ -771,7 +722,7 @@ var canvas_lowerECAM_wheel = {
 			me["Triangle-Left2"].setColor(1,0,0);
 		}
 		
-		if (nosegear == 0) {
+		if (nosegear < 0.2 or nosegear > 0.8) {
 			me["Triangle-Nose1"].hide();
 			me["Triangle-Nose2"].hide();
 		} else {
@@ -787,7 +738,7 @@ var canvas_lowerECAM_wheel = {
 			me["Triangle-Nose2"].setColor(1,0,0);
 		}
 		
-		if (rightgear == 0) {
+		if (rightgear < 0.2 or rightgear > 0.8) {
 			me["Triangle-Right1"].hide();
 			me["Triangle-Right2"].hide();
 		} else {
@@ -1065,6 +1016,9 @@ var canvas_lowerECAM_wheel = {
 		me["braketemp2"].hide();
 		me["braketemp3"].hide();
 		me["braketemp4"].hide();
+		me["leftuplock"].hide();
+		me["noseuplock"].hide();
+		me["rightuplock"].hide();
 		
 		me.updateBottomStatus();
 	},
@@ -1079,13 +1033,11 @@ setlistener("sim/signals/fdm-initialized", func {
 	});
 	lowerECAM_display.addPlacement({"node": "lecam.screen"});
 	var groupApu = lowerECAM_display.createGroup();
-	var groupEng1 = lowerECAM_display.createGroup();
 	var groupEng = lowerECAM_display.createGroup();
 	var groupFctl = lowerECAM_display.createGroup();
 	var groupWheel = lowerECAM_display.createGroup();
 
 	lowerECAM_apu = canvas_lowerECAM_apu.new(groupApu, "Aircraft/IDG-A32X/Models/Instruments/Lower-ECAM/res/apu.svg");
-	lowerECAM_eng1 = canvas_lowerECAM_eng1.new(groupEng1, "Aircraft/IDG-A32X/Models/Instruments/Lower-ECAM/res/eng-eis1.svg");
 	lowerECAM_eng = canvas_lowerECAM_eng.new(groupEng, "Aircraft/IDG-A32X/Models/Instruments/Lower-ECAM/res/eng-eis2.svg");
 	lowerECAM_fctl = canvas_lowerECAM_fctl.new(groupFctl, "Aircraft/IDG-A32X/Models/Instruments/Lower-ECAM/res/fctl.svg");
 	lowerECAM_wheel = canvas_lowerECAM_wheel.new(groupWheel, "Aircraft/IDG-A32X/Models/Instruments/Lower-ECAM/res/wheel.svg");

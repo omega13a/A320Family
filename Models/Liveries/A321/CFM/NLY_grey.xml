@@ -4,15 +4,16 @@
 	<sim>
 		<model>
 			<livery>
-				<name>Jetstar (sharkets)</name>
-				<texture>Liveries/A320/IAE/VH-VFI.png</texture>
+				<name>Niki</name>
+				<texture>Liveries/A321/CFM/NLY_grey.png</texture>
 			</livery>
 		</model>
 	</sim>
 	
 	<options>
-		<EIS2 type="bool">1</EIS2>
+		<EIS2 type="bool">0</EIS2>
 	</options>
 	
-	<sharklet type="bool">1</sharklet>
+	<sharklet type="bool">0</sharklet>
 </PropertyList>
+ 
