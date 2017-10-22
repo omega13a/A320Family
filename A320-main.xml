@@ -144,8 +144,6 @@
 			</autopilot>
 		</systems>
 
-		<chase-distance-m>-85</chase-distance-m>
-
 		<sounde>
 			<seatbelt-sign type="bool">0</seatbelt-sign>
 			<no-smoking-sign type="bool">0</no-smoking-sign>
@@ -1212,7 +1210,7 @@
 			<file>Aircraft/IDG-A32X/Nasal/engines.nas</file>
 			<file>Aircraft/IDG-A32X/Nasal/ADIRS.nas</file>
 			<file>Aircraft/IDG-A32X/Nasal/fire.nas</file>
-			<file>Aircraft/IDG-A32X/Nasal/autobrake.nas</file>
+			<file>Aircraft/IDG-A32X/Nasal/brakes.nas</file>
 		</systems>
 		<thrust>
 			<file>Aircraft/IDG-A32X/Nasal/fadec-common.nas</file>

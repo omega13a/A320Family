@@ -206,7 +206,6 @@
 		<type>rotate</type>
 		<object-name>FairingL1</object-name>
 		<object-name>staticDisch5</object-name>
-		<object-name>staticDisch6</object-name>
 		<property>surface-positions/flap-pos-norm</property>
 		<factor>20</factor>
 		<axis>
@@ -261,7 +260,6 @@
 		<type>rotate</type>
 		<object-name>FairingR1</object-name>
 		<object-name>staticDisch4</object-name>
-		<object-name>staticDisch3</object-name>
 		<property>surface-positions/flap-pos-norm</property>
 		<factor>20</factor>
 		<axis>
