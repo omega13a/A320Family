@@ -15,6 +15,7 @@ setprop("/it-autoflight/output/ap2", 0);
 setprop("/it-autoflight/output/fd1", 0);
 setprop("/it-autoflight/output/fd2", 0);
 setprop("/it-autoflight/output/athr", 0);
+setprop("/instrumentation/pfd/horizon-pitch", 0);
 var ASI = 0;
 var ASItrgt = 0;
 var alt = 0;
@@ -77,6 +78,11 @@ var canvas_PFD_base = {
 		
 		me.AI_horizon_trans = me["AI_horizon"].createTransform();
 		me.AI_horizon_rot = me["AI_horizon"].createTransform();
+		
+		me.AI_horizon_ground_trans = me["AI_horizon_ground"].createTransform();
+		me.AI_horizon_ground_rot = me["AI_horizon_ground"].createTransform();
+		
+		me.AI_horizon_sky_rot = me["AI_horizon_sky"].createTransform();
 
 		me.page = canvas_group;
 
@@ -105,7 +111,7 @@ var canvas_PFD_1 = {
 	getKeys: func() {
 		return ["FMA_man","FMA_manmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap","FMA_fd","FMA_athr",
 		"FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box","FMA_athr_box","FMA_Middle1",
-		"FMA_Middle2","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_ten_sec","AI_center","AI_bank","AI_slipskid","AI_horizon","FD_roll","FD_pitch","ALT_digits","ALT_tens","VS_pointer","QNH_setting","LOC_pointer","LOC_scale","GS_scale","GS_pointer","HDG_target"];
+		"FMA_Middle2","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_ten_sec","AI_center","AI_bank","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","FD_roll","FD_pitch","ALT_digits","ALT_tens","VS_pointer","QNH_setting","LOC_pointer","LOC_scale","GS_scale","GS_pointer","HDG_target"];
 	},
 	update: func() {
 		state1 = getprop("/systems/thrust/state1");
@@ -285,7 +291,7 @@ var canvas_PFD_1 = {
 		if ((state1 == "MAN" or state1 == "CL") and (state2 == "MAN" or state2 == "CL")) {
 			me["FMA_athr"].setColor(0.8078,0.8039,0.8078);
 		} else {
-			me["FMA_athr"].setColor(0.1372,0.5372,0.5843);
+			me["FMA_athr"].setColor(0.0862,0.5176,0.6470);
 		}
 		
 		if (getprop("/modes/pfd/fma/ap-mode-box") == 1 and getprop("/modes/pfd/fma/ap-mode") != " ") {
@@ -332,9 +338,9 @@ var canvas_PFD_1 = {
 		}
 		
 		if (getprop("/it-autoflight/input/spd-managed") == 1) {
-			me["ASI_target"].setColor(0.6745,0.3529,0.6823);
+			me["ASI_target"].setColor(0.6901,0.3333,0.7450);
 		} else {
-			me["ASI_target"].setColor(0.1372,0.5372,0.5843);
+			me["ASI_target"].setColor(0.0862,0.5176,0.6470);
 		}
 		
 		if (getprop("/FMGC/internal/target-ias-pfd") <= 30) {
@@ -354,6 +360,9 @@ var canvas_PFD_1 = {
 		
 		me.AI_horizon_trans.setTranslation(0, pitch * 11.825);
 		me.AI_horizon_rot.setRotation(-roll * D2R, me["AI_center"].getCenter());
+		me.AI_horizon_ground_trans.setTranslation(0, getprop("/instrumentation/pfd/horizon-ground") * 11.825);
+		me.AI_horizon_ground_rot.setRotation(-roll * D2R, me["AI_center"].getCenter());
+		me.AI_horizon_sky_rot.setRotation(-roll * D2R, me["AI_center"].getCenter());
 		
 		me["AI_slipskid"].setTranslation(getprop("/instrumentation/slip-skid-ball/indicated-slip-skid") * -15, 0);
 		me["AI_bank"].setRotation(-roll * D2R);
