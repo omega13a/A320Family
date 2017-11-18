@@ -9,11 +9,13 @@
 # IT-AUTOFLIGHT Based Autopilot #
 #################################
 
-setprop("/it-autoflight/internal/heading-deg", 0);
-setprop("/it-autoflight/internal/track-deg", 0);
+setprop("/it-autoflight/internal/heading-deg", getprop("/orientation/heading-magnetic-deg"));
+setprop("/it-autoflight/internal/track-deg", getprop("/orientation/track-magnetic-deg"));
 setprop("/it-autoflight/internal/vert-speed-fpm", 0);
+setprop("/it-autoflight/internal/heading-error-deg", 0);
 setprop("/it-autoflight/internal/heading-5-sec-ahead", 0);
 setprop("/it-autoflight/internal/altitude-5-sec-ahead", 0);
+setprop("/it-autoflight/internal/lnav-advance-nm", 1);
 
 setlistener("/sim/signals/fdm-initialized", func {
 	var trueSpeedKts = getprop("/instrumentation/airspeed-indicator/true-speed-kt");
@@ -77,7 +79,6 @@ var APinit = func {
 	setprop("/it-autoflight/input/spd-kts", 100);
 	setprop("/it-autoflight/input/spd-mach", 0.50);
 	setprop("/it-autoflight/custom/show-hdg", 0);
-	setprop("/it-autoflight/internal/heading-error-deg", 0);
 	trkfpa_off();
 	ap_varioust.start();
 	thrustmode();
@@ -535,7 +536,7 @@ var ap_various = func {
 	}
 	
 	if (getprop("/autopilot/route-manager/route/num") > 0 and getprop("/autopilot/route-manager/active") == 1) {
-		if (getprop("/autopilot/route-manager/wp/dist") <= 1.0) {
+		if (getprop("/autopilot/route-manager/wp/dist") <= getprop("/it-autoflight/internal/lnav-advance-nm")) {
 			if ((getprop("/autopilot/route-manager/current-wp") + 1) < getprop("/autopilot/route-manager/route/num")) {
 				setprop("/autopilot/route-manager/current-wp", getprop("/autopilot/route-manager/current-wp") + 1);
 			}
@@ -543,7 +544,7 @@ var ap_various = func {
 	}
 	
 	if (getprop("/it-autoflight/output/ap1") == 1 or getprop("/it-autoflight/output/ap2") == 1) {
-		if (getprop("/controls/flight/aileron") > 0.3 or getprop("/controls/flight/aileron") < -0.3 or getprop("/controls/flight/elevator") > 0.3 or getprop("/controls/flight/elevator") < -0.3) {
+		if (getprop("/controls/flight/aileron") > 0.3 or getprop("/controls/flight/aileron") < -0.2 or getprop("/controls/flight/elevator") > 0.3 or getprop("/controls/flight/elevator") < -0.2) {
 			setprop("/it-autoflight/input/ap1", 0);
 			setprop("/it-autoflight/input/ap2", 0);
 		}
@@ -723,7 +724,7 @@ var altcapt = func {
 		setprop("/it-autoflight/internal/captvs", 1500);
 		setprop("/it-autoflight/internal/captvsneg", -1500);
 	}
-	if (getprop("/it-autoflight/output/fd1") == 1 or getprop("/it-autoflight/output/fd2") == 1 or getprop("/it-autoflight/output/ap1") == 1 or getprop("/it-autoflight/output/ap2") == 1) {
+	if ((getprop("/it-autoflight/output/fd1") == 1 or getprop("/it-autoflight/output/fd2") == 1 or getprop("/it-autoflight/output/ap1") == 1 or getprop("/it-autoflight/output/ap2") == 1) and getprop("/it-autoflight/output/vert") != 9) {
 		var calt = getprop("/instrumentation/altimeter/indicated-altitude-ft");
 		var alt = getprop("/it-autoflight/internal/alt");
 		var dif = calt - alt;
