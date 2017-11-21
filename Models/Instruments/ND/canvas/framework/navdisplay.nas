@@ -1,3 +1,11 @@
+# A3XX ND Canvas
+# Joshua Davidson (it0uchpods)
+# Based on work by artix
+
+##############################################
+# Copyright (c) Joshua Davidson (it0uchpods) #
+##############################################
+
 # Override FGDATA/Nasal/canvas/map/navdisplay.mfd
 
 var default_hash = canvas.default_hash;
@@ -401,8 +409,8 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 	}
 
 	# Hide heading bug 10 secs after change
-	var vhdg_bug = getprop("autopilot/settings/heading-bug-deg") or 0;
-	var hdg_bug_active = getprop("autopilot/settings/heading-bug-active");
+	var vhdg_bug = getprop("/it-autoflight/input/hdg") or 0;
+	var hdg_bug_active = getprop("/it-autoflight/custom/show-hdg");
 	if (hdg_bug_active == nil)
 		hdg_bug_active = 1;
 
@@ -419,8 +427,7 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.curHdgPtr.setRotation(0);
 		me.symbols.curHdgPtr2.setRotation(0);
 	}
-	if(!me.in_mode("toggle_display_mode", ["PLAN"]))
-	{
+	if(!me.in_mode("toggle_display_mode", ["PLAN"])) {
 		var hdgBugRot = (vhdg_bug-userHdgTrk)*D2R;
 		me.symbols.selHdgLine.setRotation(hdgBugRot);
 		me.symbols.hdgBug.setRotation(hdgBugRot);
@@ -498,15 +505,20 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.selHdgLine2.hide();
 		me.symbols.curHdgPtr.setVisible(staPtrVis);
 		me.symbols.HdgBugCRT.setVisible(staPtrVis and !dispLCD);
-		if(me.get_switch("toggle_track_heading"))
-		{
+		if (me.get_switch("toggle_track_heading")) {
 			me.symbols.HdgBugLCD.hide();
-			me.symbols.TrkBugLCD.setVisible(staPtrVis and dispLCD);
-		}
-		else
-		{
+			if (hdg_bug_active) {
+				me.symbols.TrkBugLCD.setVisible(staPtrVis and dispLCD);
+			} else {
+				me.symbols.TrkBugLCD.hide();
+			}
+		} else {
 			me.symbols.TrkBugLCD.hide();
-			me.symbols.HdgBugLCD.setVisible(staPtrVis and dispLCD);
+			if (hdg_bug_active) {
+				me.symbols.HdgBugLCD.setVisible(staPtrVis and dispLCD);
+			} else {
+				me.symbols.HdgBugLCD.hide();
+			}
 		}
 		me.symbols.selHdgLine.setVisible(staPtrVis and hdg_bug_active);
 	} else {
@@ -546,15 +558,20 @@ canvas.NavDisplay.update = func() # FIXME: This stuff is still too aircraft spec
 		me.symbols.selHdgLine.hide();
 		me.symbols.curHdgPtr2.setVisible(staPtrVis);
 		me.symbols.HdgBugCRT2.setVisible(staPtrVis and !dispLCD);
-		if(me.get_switch("toggle_track_heading"))
-		{
+		if (me.get_switch("toggle_track_heading")) {
 			me.symbols.HdgBugLCD2.hide();
-			me.symbols.TrkBugLCD2.setVisible(staPtrVis and dispLCD);
-		}
-		else
-		{
+			if (hdg_bug_active) {
+				me.symbols.TrkBugLCD2.setVisible(staPtrVis and dispLCD);
+			} else {
+				me.symbols.TrkBugLCD2.hide();
+			}
+		} else {
 			me.symbols.TrkBugLCD2.hide();
-			me.symbols.HdgBugLCD2.setVisible(staPtrVis and dispLCD);
+			if (hdg_bug_active) {
+				me.symbols.HdgBugLCD2.setVisible(staPtrVis and dispLCD);
+			} else {
+				me.symbols.HdgBugLCD2.hide();
+			}
 		}
 		me.symbols.selHdgLine2.setVisible(staPtrVis and hdg_bug_active);
 	}
