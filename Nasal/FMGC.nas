@@ -270,7 +270,7 @@ var masterFMGC = maketimer(0.2, func {
 	
 	flap = getprop("/controls/flight/flap-pos");
 	if (flap == 0) { # 0
-		setprop("/FMGC/internal/maxspeed", 350);
+		setprop("/FMGC/internal/maxspeed", getprop("/it-fbw/speeds/vmo-mmo"));
 		setprop("/FMGC/internal/minspeed", 202);
 	} else if (flap == 1) { # 1
 		setprop("/FMGC/internal/maxspeed", 230);
