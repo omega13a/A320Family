@@ -133,20 +133,23 @@
 			<autopilot n="7">
 				<path>Aircraft/IDG-A32X/Systems/fmgc-pitch.xml</path>
 			</autopilot>
-            <autopilot n="8">
-                <path>Aircraft/IDG-A32X/Systems/fmgc-thrust.xml</path>
-            </autopilot>
-            <autopilot n="9">
-                <path>Aircraft/IDG-A32X/Systems/libraries.xml</path>
-            </autopilot>
-            <autopilot n="11">
+			<autopilot n="8">
+				<path>Aircraft/IDG-A32X/Systems/fmgc-thrust.xml</path>
+			</autopilot>
+			<autopilot n="9">
+				<path>Aircraft/IDG-A32X/Systems/libraries.xml</path>
+			</autopilot>
+			<autopilot n="11">
 				<path>Aircraft/IDG-A32X/Systems/upper-ecam.xml</path>
-            </autopilot>
-            <autopilot n="12">
+			</autopilot>
+			<autopilot n="12">
 				<path>Aircraft/IDG-A32X/Systems/lower-ecam.xml</path>
-            </autopilot>
+			</autopilot>
 			<autopilot n="13">
 				<path>Aircraft/IDG-A32X/Systems/pfd.xml</path>
+			</autopilot>
+			<autopilot n="14">
+				<path>Aircraft/IDG-A32X/Systems/zoom-views.xml</path>
 			</autopilot>
 		</systems>
 
@@ -302,6 +305,15 @@
 							</script>
 						</binding>
 					</item>
+					<item>
+						<label>Show IESI</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							canvas_iesi.showIESI();
+							</script>
+						</binding>
+					</item>
 				</menu>
 			</default>
 		</menubar>
@@ -337,6 +349,16 @@
 		<flight-recorder include="Systems/flight-recorder.xml"/>
 		
 		<gui n="0" include="Systems/it-gui.xml"/>
+		
+		<current-view>
+			<z-offset-dec-step type="double">0.0</z-offset-dec-step>
+			<z-offset-inc-step type="double">0.0</z-offset-inc-step>
+			<can-change-z-offset type="bool">false</can-change-z-offset>
+			
+			<z-offset-default type="float">100.0</z-offset-default>
+			<z-offset-min-m type="float">30.0</z-offset-min-m>
+			<z-offset-max-m type="float">300.0</z-offset-max-m>
+		</current-view>
 	</sim>
 
 	<consumables>
@@ -505,6 +527,7 @@
 			</engine>
 		</engines>
 		<flight>
+			<aileron-drives-tiller type="bool">0</aileron-drives-tiller>
 			<aileron-input>0</aileron-input>
 			<aileron-left>0.5</aileron-left>
 			<aileron-right>-0.5</aileron-right>
@@ -516,6 +539,7 @@
 			<flap-pos type="int">0</flap-pos>
 			<ground-spoilers-armed type="bool">0</ground-spoilers-armed>
 			<roll-fbw>0</roll-fbw>
+			<rudder-trim-fdm>0.0</rudder-trim-fdm>
 			<spoiler-l1>0.0</spoiler-l1>
 			<spoiler-l2>0.0</spoiler-l2>
 			<spoiler-l3>0.0</spoiler-l3>
@@ -536,7 +560,7 @@
 		</flight>
 		<gear>
 			<brake-parking type="bool">0</brake-parking>
-            <tiller-cmd-norm type="double">0</tiller-cmd-norm>
+			<tiller-cmd-norm type="double">0</tiller-cmd-norm>
 			<tiller-enabled type="bool">0</tiller-enabled>
 		</gear>
 		<lighting>
@@ -657,7 +681,7 @@
 	</gear>
 	
 	<systems>
-		<failures>
+		<failures n="0">
 			<aileron-left type="bool">0</aileron-left>
 			<aileron-right type="bool">0</aileron-right>
 			<elevator-left type="bool">0</elevator-left>
@@ -674,6 +698,10 @@
 			<spoiler-r4 type="bool">0</spoiler-r4>
 			<spoiler-r5 type="bool">0</spoiler-r5>
 		</failures>
+		<fctl n="0">
+			<fac1 type="bool">0</fac1>
+			<fac2 type="bool">0</fac2>
+		</fctl>
 		<fuel n="0">
 			<only-use-ctr-tank type="bool">0</only-use-ctr-tank>
 			<tank n="0">
@@ -900,7 +928,85 @@
 	</modes>
 
 	<input>
+		<mice n="0">
+			<mouse n="0">
+				<mode n="0">
+					<button n="3">
+						<binding n="0">
+							<script></script>
+						</binding>
+						<binding n="1">
+							<condition>
+								<and>
+									<property>/devices/status/mice/mouse[0]/button[2]</property>
+									<not><property>/sim/mouse/right-button-mode-cycle-enabled</property></not>
+								</and>
+							</condition>
+							<command>nasal</command>
+							<script>
+							if (getprop("/sim/current-view/can-change-z-offset")) {
+								var distance = getprop("/sim/current-view/z-offset-m");
+								var multiple = getprop("/sim/current-view/z-offset-inc-step");
+								var min_dist = getprop("/sim/current-view/z-offset-min-m");
+
+								distance = math.round(std.min(-min_dist, distance + multiple) / multiple) * multiple;
+								setprop("/sim/current-view/z-offset-m", distance);
+
+								gui.popupTip(sprintf("%d meters", abs(distance)));
+							} else {
+								view.decrease();
+							}
+							</script>
+						</binding>
+					</button>
+					<button n="4">
+						<binding n="0">
+							<script></script>
+						</binding>
+						<binding n="1">
+							<condition>
+								<and>
+									<property>/devices/status/mice/mouse[0]/button[2]</property>
+									<not><property>/sim/mouse/right-button-mode-cycle-enabled</property></not>
+								</and>
+							</condition>
+							<command>nasal</command>
+							<script>
+								if (getprop("/sim/current-view/can-change-z-offset")) {
+									var distance = getprop("/sim/current-view/z-offset-m");
+									var multiple = getprop("/sim/current-view/z-offset-dec-step");
+									var max_dist = getprop("/sim/current-view/z-offset-max-m");
+
+									distance = math.round(std.max(-max_dist, distance + multiple) / multiple) * multiple;
+									setprop("/sim/current-view/z-offset-m", distance);
+
+									gui.popupTip(sprintf("%d meters", abs(distance)));
+								} else {
+									view.increase();
+								}
+							</script>
+						</binding>
+					</button>
+				</mode>
+			</mouse>
+		</mice>
 		<keyboard>
+			<key n="24">
+				<name>Ctrl-X</name>
+				<desc>Reset zoom to default</desc>
+				<binding>
+					<command>nasal</command>
+					<script>
+						if (getprop("/sim/current-view/can-change-z-offset")) {
+							setprop("/sim/current-view/z-offset-m", getprop("/sim/current-view/z-offset-default") * -1);
+
+							gui.popupTip(sprintf("%d meters", getprop("/sim/current-view/z-offset-default")));
+						} else {
+							setprop("/sim/current-view/field-of-view", getprop("/sim/view/config/default-field-of-view-deg"));
+						}
+					</script>
+				</binding>
+			</key>
 			<key n="33">
 				<name>PAGE UP</name>
 				<desc>Throttle Increase</desc>
@@ -1114,6 +1220,50 @@
 					</script>
 				</binding>
 			</key>
+			<key n="88">
+				<name>X</name>
+				<desc>Increase field of view</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+				<command>nasal</command>
+				<script>
+					if (getprop("/sim/current-view/can-change-z-offset")) {
+						var distance = getprop("/sim/current-view/z-offset-m");
+						var multiple = getprop("/sim/current-view/z-offset-dec-step");
+						var max_dist = getprop("/sim/current-view/z-offset-max-m");
+
+						distance = math.round(std.max(-max_dist, distance + multiple) / multiple) * multiple;
+						setprop("/sim/current-view/z-offset-m", distance);
+
+						gui.popupTip(sprintf("%d meters", abs(distance)));
+					} else {
+						view.increase();
+					}
+				</script>
+				</binding>
+			</key>
+			<key n="120">
+				<name>x</name>
+				<desc>Decrease field of view</desc>
+				<repeatable type="bool">true</repeatable>
+				<binding>
+					<command>nasal</command>
+					<script>
+						if (getprop("/sim/current-view/can-change-z-offset")) {
+							var distance = getprop("/sim/current-view/z-offset-m");
+							var multiple = getprop("/sim/current-view/z-offset-inc-step");
+							var min_dist = getprop("/sim/current-view/z-offset-min-m");
+
+							distance = math.round(std.min(-min_dist, distance + multiple) / multiple) * multiple;
+							setprop("/sim/current-view/z-offset-m", distance);
+
+							gui.popupTip(sprintf("%d meters", abs(distance)));
+						} else {
+							view.decrease();
+						}
+					</script>
+				</binding>
+			</key>
 			<key n="127">
 				<name>DEL</name>
 				<desc>Simple Engage/Disengage reversers</desc>
@@ -1293,6 +1443,9 @@
 			<file>Aircraft/IDG-A32X/Models/Instruments/Upper-ECAM/Upper-ECAM.nas</file>
 			<file>Aircraft/IDG-A32X/Models/Instruments/Lower-ECAM/Lower-ECAM.nas</file>
 		</canvas_ecam>
+		<canvas_iesi>
+			<file>Aircraft/IDG-A32X/Models/Instruments/IESI/IESI.nas</file>
+		</canvas_iesi>
 		<icing>
 			<file>Aircraft/IDG-A32X/Nasal/icing.nas</file>
 		</icing>
