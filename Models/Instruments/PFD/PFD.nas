@@ -16,6 +16,7 @@ var ASI = 0;
 var ASItrgt = 0;
 var ASItrgtdiff = 0;
 var ASImax = 0;
+var ASItrend = 0;
 var altTens = 0;
 var state1 = getprop("/systems/thrust/state1");
 var state2 = getprop("/systems/thrust/state2");
@@ -38,7 +39,6 @@ var wow1 = getprop("/gear/gear[1]/wow");
 var wow2 = getprop("/gear/gear[2]/wow");
 var pitch = 0;
 var roll = 0;
-var spdTrend_c = 0;
 setprop("/instrumentation/pfd/vs-needle", 0);
 setprop("/instrumentation/pfd/vs-digit-trans", 0);
 setprop("/it-autoflight/input/spd-managed", 0);
@@ -56,10 +56,13 @@ setprop("/instrumentation/pfd/hdg-diff", 0);
 setprop("/instrumentation/pfd/heading-scale", 0);
 setprop("/instrumentation/pfd/track-deg", 0);
 setprop("/instrumentation/pfd/track-hdg-diff", 0);
+setprop("/instrumentation/pfd/speed-lookahead", 0);
 setprop("/instrumentation/du/du1-test", 0);
 setprop("/instrumentation/du/du1-test-time", 0);
+setprop("/instrumentation/du/du1-test-amount", 0);
 setprop("/instrumentation/du/du6-test", 0);
 setprop("/instrumentation/du/du6-test-time", 0);
+setprop("/instrumentation/du/du6-test-amount", 0);
 setprop("/it-autoflight/internal/vert-speed-fpm-pfd", 0);
 setprop("/position/gear-agl-ft", 0);
 setprop("/controls/flight/aileron-input-fast", 0);
@@ -84,25 +87,20 @@ var canvas_PFD_base = {
 		var svg_keys = me.getKeys();
 		foreach(var key; svg_keys) {
 			me[key] = canvas_group.getElementById(key);
-			var svg_keys = me.getKeys();
 
-			foreach (var key; svg_keys) {
-				me[key] = canvas_group.getElementById(key);
+			var clip_el = canvas_group.getElementById(key ~ "_clip");
+			if (clip_el != nil) {
+				clip_el.setVisible(0);
+				var tran_rect = clip_el.getTransformedBounds();
 
-				var clip_el = canvas_group.getElementById(key ~ "_clip");
-				if (clip_el != nil) {
-					clip_el.setVisible(0);
-					var tran_rect = clip_el.getTransformedBounds();
-
-					var clip_rect = sprintf("rect(%d,%d, %d,%d)", 
-					tran_rect[1], # 0 ys
-					tran_rect[2], # 1 xe
-					tran_rect[3], # 2 ye
-					tran_rect[0]); #3 xs
-					#   coordinates are top,right,bottom,left (ys, xe, ye, xs) ref: l621 of simgear/canvas/CanvasElement.cxx
-					me[key].set("clip", clip_rect);
-					me[key].set("clip-frame", canvas.Element.PARENT);
-				}
+				var clip_rect = sprintf("rect(%d,%d, %d,%d)", 
+				tran_rect[1], # 0 ys
+				tran_rect[2], # 1 xe
+				tran_rect[3], # 2 ye
+				tran_rect[0]); #3 xs
+				#   coordinates are top,right,bottom,left (ys, xe, ye, xs) ref: l621 of simgear/canvas/CanvasElement.cxx
+				me[key].set("clip", clip_rect);
+				me[key].set("clip-frame", canvas.Element.PARENT);
 			}
 		}
 		
@@ -124,20 +122,22 @@ var canvas_PFD_base = {
 	getKeys: func() {
 		return ["FMA_man","FMA_manmode","FMA_flxtemp","FMA_thrust","FMA_lvrclb","FMA_pitch","FMA_pitcharm","FMA_pitcharm2","FMA_roll","FMA_rollarm","FMA_combined","FMA_ctr_msg","FMA_catmode","FMA_cattype","FMA_nodh","FMA_dh","FMA_dhn","FMA_ap","FMA_fd",
 		"FMA_athr","FMA_man_box","FMA_flx_box","FMA_thrust_box","FMA_pitch_box","FMA_pitcharm_box","FMA_roll_box","FMA_rollarm_box","FMA_combined_box","FMA_catmode_box","FMA_cattype_box","FMA_cat_box","FMA_dh_box","FMA_ap_box","FMA_fd_box","FMA_athr_box",
-		"FMA_Middle1","FMA_Middle2","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_ten_sec","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP","ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center","AI_bank","AI_bank_lim",
-		"AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two","ALT_three","ALT_four",
-		"ALT_five","ALT_digits","ALT_tens","ALT_digit_UP","ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer","LOC_scale","GS_scale",
-		"GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer"];
+		"FMA_Middle1","FMA_Middle2","ASI_max","ASI_scale","ASI_target","ASI_mach","ASI_mach_decimal","ASI_trend_up","ASI_trend_down","ASI_digit_UP","ASI_digit_DN","ASI_decimal_UP","ASI_decimal_DN","ASI_index","ASI_error","ASI_group","ASI_frame","AI_center",
+		"AI_bank","AI_bank_lim","AI_slipskid","AI_horizon","AI_horizon_ground","AI_horizon_sky","AI_stick","AI_stick_pos","AI_heading","AI_agl_g","AI_agl","AI_error","AI_group","FD_roll","FD_pitch","ALT_scale","ALT_target","ALT_target_digit","ALT_one","ALT_two",
+		"ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_digit_UP","ALT_digit_DN","ALT_error","ALT_group","ALT_group2","ALT_frame","VS_pointer","VS_box","VS_digit","VS_error","VS_group","QNH","QNH_setting","QNH_std","QNH_box","LOC_pointer",
+		"LOC_scale","GS_scale","GS_pointer","CRS_pointer","HDG_target","HDG_scale","HDG_one","HDG_two","HDG_three","HDG_four","HDG_five","HDG_six","HDG_seven","HDG_digit_L","HDG_digit_R","HDG_error","HDG_group","HDG_frame","TRK_pointer"];
 	},
 	update: func() {
 		elapsedtime = getprop("/sim/time/elapsed-sec");
 		if (getprop("/systems/electrical/bus/ac-ess") >= 110) {
 			if (getprop("/systems/acconfig/autoconfig-running") != 1 and getprop("/instrumentation/du/du1-test") != 1) {
 				setprop("/instrumentation/du/du1-test", 1);
+				setprop("/instrumentation/du/du1-test-amount", math.round((rand() * 5 ) + 35, 0.1));
 				setprop("/instrumentation/du/du1-test-time", getprop("/sim/time/elapsed-sec"));
 			} else if (getprop("/systems/acconfig/autoconfig-running") == 1 and getprop("/instrumentation/du/du1-test") != 1) {
 				setprop("/instrumentation/du/du1-test", 1);
-				setprop("/instrumentation/du/du1-test-time", getprop("/sim/time/elapsed-sec") - 35);
+				setprop("/instrumentation/du/du1-test-amount", math.round((rand() * 5 ) + 35, 0.1));
+				setprop("/instrumentation/du/du1-test-time", getprop("/sim/time/elapsed-sec") - 30);
 			}
 		} else {
 			setprop("/instrumentation/du/du1-test", 0);
@@ -145,22 +145,26 @@ var canvas_PFD_base = {
 		if (getprop("/systems/electrical/bus/ac2") >= 110) {
 			if (getprop("/systems/acconfig/autoconfig-running") != 1 and getprop("/instrumentation/du/du6-test") != 1) {
 				setprop("/instrumentation/du/du6-test", 1);
+				setprop("/instrumentation/du/du6-test-amount", math.round((rand() * 5 ) + 35, 0.1));
 				setprop("/instrumentation/du/du6-test-time", getprop("/sim/time/elapsed-sec"));
 			} else if (getprop("/systems/acconfig/autoconfig-running") == 1 and getprop("/instrumentation/du/du6-test") != 1) {
 				setprop("/instrumentation/du/du6-test", 1);
-				setprop("/instrumentation/du/du6-test-time", getprop("/sim/time/elapsed-sec") - 35);
+				setprop("/instrumentation/du/du6-test-amount", math.round((rand() * 5 ) + 35, 0.1));
+				setprop("/instrumentation/du/du6-test-time", getprop("/sim/time/elapsed-sec") - 30);
 			}
 		} else {
 			setprop("/instrumentation/du/du6-test", 0);
 		}
 		
 		if (getprop("/systems/electrical/bus/ac-ess") >= 110 and getprop("/controls/lighting/DU/du1") > 0) {
-			if (getprop("/instrumentation/du/du1-test-time") + 39.5 >= elapsedtime and getprop("/modes/cpt-du-xfr") != 1) {
+			if (getprop("/instrumentation/du/du1-test-time") + getprop("/instrumentation/du/du1-test-amount") >= elapsedtime and getprop("/modes/cpt-du-xfr") != 1) {
 				PFD_1.page.hide();
 				PFD_1_test.page.show();
-			} else if (getprop("/instrumentation/du/du2-test-time") + 38.5 >= elapsedtime and getprop("/modes/cpt-du-xfr") == 1) {
+				PFD_1_test.update();
+			} else if (getprop("/instrumentation/du/du2-test-time") + getprop("/instrumentation/du/du2-test-amount") >= elapsedtime and getprop("/modes/cpt-du-xfr") == 1) {
 				PFD_1.page.hide();
 				PFD_1_test.page.show();
+				PFD_1_test.update();
 			} else {
 				PFD_1_test.page.hide();
 				PFD_1.page.show();
@@ -171,12 +175,14 @@ var canvas_PFD_base = {
 			PFD_1.page.hide();
 		}
 		if (getprop("/systems/electrical/bus/ac2") >= 110 and getprop("/controls/lighting/DU/du6") > 0) {
-			if (getprop("/instrumentation/du/du6-test-time") + 39.5 >= elapsedtime and getprop("/modes/fo-du-xfr") != 1) {
+			if (getprop("/instrumentation/du/du6-test-time") + getprop("/instrumentation/du/du6-test-amount") >= elapsedtime and getprop("/modes/fo-du-xfr") != 1) {
 				PFD_2.page.hide();
 				PFD_2_test.page.show();
-			} else if (getprop("/instrumentation/du/du5-test-time") + 38.5 >= elapsedtime and getprop("/modes/fo-du-xfr") == 1) {
+				PFD_2_test.update();
+			} else if (getprop("/instrumentation/du/du5-test-time") + getprop("/instrumentation/du/du5-test-amount") >= elapsedtime and getprop("/modes/fo-du-xfr") == 1) {
 				PFD_2.page.hide();
 				PFD_2_test.page.show();
+				PFD_2_test.update();
 			} else {
 				PFD_2_test.page.hide();
 				PFD_2.page.show();
@@ -564,7 +570,20 @@ var canvas_PFD_base = {
 			me["ASI_target"].hide();
 		}
 		
-		me["ASI_ten_sec"].hide();
+		ASItrend = getprop("/instrumentation/pfd/speed-lookahead") - ASI;
+		me["ASI_trend_up"].setTranslation(0, math.clamp(ASItrend, 0, 50) * -6.6);
+		me["ASI_trend_down"].setTranslation(0, math.clamp(ASItrend, -50, 0) * -6.6);
+		
+		if (ASItrend >= 2) {
+			me["ASI_trend_up"].show();
+			me["ASI_trend_down"].hide();
+		} else if (ASItrend <= -2) {
+			me["ASI_trend_down"].show();
+			me["ASI_trend_up"].hide();
+		} else {
+			me["ASI_trend_up"].hide();
+			me["ASI_trend_down"].hide();
+		}
 		
 		# Attitude Indicator
 		pitch = getprop("/orientation/pitch-deg") or 0;
@@ -981,6 +1000,11 @@ var canvas_PFD_1_test = {
 		};
 
 		canvas.parsesvg(canvas_group, file, {"font-mapper": font_mapper});
+		
+		var svg_keys = me.getKeys();
+		foreach(var key; svg_keys) {
+			me[key] = canvas_group.getElementById(key);
+		}
 
 		me.page = canvas_group;
 
@@ -992,6 +1016,21 @@ var canvas_PFD_1_test = {
 
 		return m;
 	},
+	getKeys: func() {
+		return ["Test_white","Test_text"];
+	},
+	update: func() {
+		if (getprop("/instrumentation/du/du1-test-time") + 1 >= elapsedtime and getprop("/modes/cpt-du-xfr") != 1) {
+			me["Test_white"].show();
+			me["Test_text"].hide();
+		} else if (getprop("/instrumentation/du/du2-test-time") + 1 >= elapsedtime and getprop("/modes/cpt-du-xfr") == 1) {
+			me["Test_white"].show();
+			me["Test_text"].hide();
+		} else {
+			me["Test_white"].hide();
+			me["Test_text"].show();
+		}
+	},
 };
 
 var canvas_PFD_2_test = {
@@ -1001,6 +1040,11 @@ var canvas_PFD_2_test = {
 		};
 
 		canvas.parsesvg(canvas_group, file, {"font-mapper": font_mapper});
+		
+		var svg_keys = me.getKeys();
+		foreach(var key; svg_keys) {
+			me[key] = canvas_group.getElementById(key);
+		}
 
 		me.page = canvas_group;
 
@@ -1011,6 +1055,21 @@ var canvas_PFD_2_test = {
 		m.init(canvas_group, file);
 
 		return m;
+	},
+	getKeys: func() {
+		return ["Test_white","Test_text"];
+	},
+	update: func() {
+		if (getprop("/instrumentation/du/du6-test-time") + 1 >= elapsedtime and getprop("/modes/fo-du-xfr") != 1) {
+			me["Test_white"].show();
+			me["Test_text"].hide();
+		} else if (getprop("/instrumentation/du/du5-test-time") + 1 >= elapsedtime and getprop("/modes/fo-du-xfr") == 1) {
+			me["Test_white"].show();
+			me["Test_text"].hide();
+		} else {
+			me["Test_white"].hide();
+			me["Test_text"].show();
+		}
 	},
 };
 
