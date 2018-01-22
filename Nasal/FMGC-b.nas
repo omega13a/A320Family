@@ -92,7 +92,7 @@ var APinit = func {
 	setprop("/it-autoflight/mode/vert", " ");
 	setprop("/it-autoflight/input/spd-kts", 100);
 	setprop("/it-autoflight/input/spd-mach", 0.50);
-	setprop("/it-autoflight/custom/show-hdg", 0);
+	setprop("/it-autoflight/custom/show-hdg", 1);
 	trkfpa_off();
 	ap_varioust.start();
 	thrustmode();
@@ -672,8 +672,8 @@ var fpa_calc = func {
 }
 
 setlistener("/it-autoflight/input/kts-mach", func {
-	var ias = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt");
-	var mach = getprop("/instrumentation/airspeed-indicator/indicated-mach");
+	var ias = getprop("/it-autoflight/input/spd-kts") or 0;
+	var mach = getprop("/it-autoflight/input/spd-mach") or 0;
 	if (getprop("/it-autoflight/input/kts-mach") == 0) {
 		if (ias >= 100 and ias <= 350) {
 			setprop("/it-autoflight/input/spd-kts", math.round(ias, 1));
