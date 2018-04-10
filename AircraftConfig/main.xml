@@ -75,6 +75,17 @@
 						</script>
 					</binding>
 				</button>
+				<button>
+					<halign>center</halign>
+					<legend>DU Framerate</legend>
+					<pref-width>140</pref-width>
+					<binding>
+						<command>nasal</command>
+						<script>
+						acconfig.du_framerate.open();
+						</script>
+					</binding>
+				</button>
 			</group>
 			
 			<group>
@@ -340,7 +351,7 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					acconfig.saveSettings();
+					acconfig.writeSettings();
 					</script>
 				</binding>
 				<live>true</live>
@@ -360,7 +371,7 @@
 				<binding>
 					<command>nasal</command>
 					<script>
-					acconfig.saveSettings();
+					acconfig.writeSettings();
 					</script>
 				</binding>
 				<live>true</live>
