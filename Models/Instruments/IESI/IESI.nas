@@ -11,8 +11,29 @@ var elapsedtime = 0;
 var ASI = 0;
 var alt = 0;
 var altTens = 0;
-var pitch = 0;
-var roll = 0;
+
+# props.nas nodes
+var iesi_init = props.globals.initNode("/instrumentation/iesi/iesi-init", 0, "BOOL");
+var iesi_time = props.globals.initNode("/instrumentation/iesi/iesi-init-time", 0.0, "DOUBLE");
+var iesi_rate = props.globals.getNode("/systems/acconfig/options/iesi-rate");
+var et = props.globals.getNode("/sim/time/elapsed-sec");
+var aconfig = props.globals.getNode("/systems/acconfig/autoconfig-running");
+
+var dcbat = props.globals.getNode("/systems/electrical/bus/dcbat");
+var dc1 = props.globals.getNode("/systems/electrical/bus/dc1");
+var dc2 = props.globals.getNode("/systems/electrical/bus/dc2");
+
+var airspeed = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-speed-kt");
+var mach = props.globals.getNode("/instrumentation/airspeed-indicator/indicated-mach");
+var pitch = props.globals.getNode("/orientation/pitch-deg");
+var roll =  props.globals.getNode("/orientation/roll-deg");
+var skid = props.globals.getNode("/instrumentation/slip-skid-ball/indicated-slip-skid");
+var altitude = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft");
+var altitude_ind = props.globals.getNode("/instrumentation/altimeter/indicated-altitude-ft-pfd");
+
+var altimeter_mode = props.globals.getNode("/modes/altimeter/std");
+var qnh_hpa = props.globals.getNode("/instrumentation/altimeter/setting-hpa");
+var qnh_inhg = props.globals.getNode("/instrumentation/altimeter/setting-inhg");
 
 var canvas_IESI_base = {
 	init: func(canvas_group, file) {
@@ -58,19 +79,24 @@ var canvas_IESI_base = {
 		return [];
 	},
 	update: func() {
-		if (getprop("/systems/electrical/bus/dcbat") >= 25 or getprop("/systems/electrical/bus/dc1") >= 25 or getprop("/systems/electrical/bus/dc2") >= 25) {
-			if (getprop("/systems/acconfig/autoconfig-running") != 1 and getprop("/instrumentation/iesi/iesi-init") != 1) {
-				setprop("/instrumentation/iesi/iesi-init", 1);
-				setprop("/instrumentation/iesi/iesi-init-time", getprop("/sim/time/elapsed-sec"));
-			} else if (getprop("/systems/acconfig/autoconfig-running") == 1 and getprop("/instrumentation/iesi/iesi-init") != 1) {
-				setprop("/instrumentation/iesi/iesi-init", 1);
-				setprop("/instrumentation/iesi/iesi-init-time", getprop("/sim/time/elapsed-sec") - 87);
+		if (dcbat.getValue() >= 25 or dc1.getValue() >= 25 or dc2.getValue() >= 25) {
+			IESI.page.show();
+			IESI.update();
+			
+			if (aconfig.getValue() != 1 and iesi_init.getValue() != 1) {
+				iesi_init.setBoolValue(1);
+				cur_time = et.getValue();
+				iesi_time.setValue(cur_time);
+			} else if (aconfig.getValue() == 1 and iesi_init.getValue() != 1) {
+				iesi_init.setBoolValue(1);
+				cur_time = et.getValue() - 87;
+				iesi_time.setValue(cur_time);
 			}
 		} else {
-			setprop("/instrumentation/iesi/iesi-init", 0);
+			iesi_init.setBoolValue(0);
 		}
 		
-		if (getprop("/systems/electrical/bus/dcbat") >= 25 or getprop("/systems/electrical/bus/dc1") >= 25 or getprop("/systems/electrical/bus/dc2") >= 25) {
+		if (dcbat.getValue() >= 25 or dc1.getValue() >= 25 or dc2.getValue() >= 25) {
 			IESI.page.show();
 			IESI.update();
 		} else {
@@ -90,8 +116,7 @@ var canvas_IESI = {
 		return ["IESI","IESI_Init","ASI_scale","ASI_mach","ASI_mach_decimal","AI_center","AI_horizon","AI_bank","AI_slipskid","ALT_scale","ALT_one","ALT_two","ALT_three","ALT_four","ALT_five","ALT_digits","ALT_tens","ALT_meters","QNH_setting","QNH_std"];
 	},
 	update: func() {
-		elapsedtime = getprop("/sim/time/elapsed-sec");
-		if (getprop("/instrumentation/iesi/iesi-init-time") + 90 >= elapsedtime) {
+		if (iesi_time.getValue() + 90 >= et.getValue()) {
 			me["IESI"].hide(); 
 			me["IESI_Init"].show();
 		} else {
@@ -101,16 +126,16 @@ var canvas_IESI = {
 		
 		# Airspeed
 		# Subtract 30, since the scale starts at 30, but don"t allow less than 0, or more than 420 situations
-		if (getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") <= 30) {
+		if (airspeed.getValue() <= 30) {
 			ASI = 0;
-		} else if (getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") >= 420) {
+		} else if (airspeed.getValue() >= 420) {
 			ASI = 390;
 		} else {
-			ASI = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt") - 30;
+			ASI = airspeed.getValue() - 30;
 		}
 		me["ASI_scale"].setTranslation(0, ASI * 8.295);
 		
-		if (getprop("/instrumentation/airspeed-indicator/indicated-mach") >= 0.5) {
+		if (mach.getValue() >= 0.5) {
 			me["ASI_mach_decimal"].show();
 			me["ASI_mach"].show();
 		} else {
@@ -118,26 +143,23 @@ var canvas_IESI = {
 			me["ASI_mach"].hide();
 		}
 		
-		if (getprop("/instrumentation/airspeed-indicator/indicated-mach") >= 0.999) {
+		if (mach.getValue() >= 0.999) {
 			me["ASI_mach"].setText("99");
 		} else {
-			me["ASI_mach"].setText(sprintf("%2.0f", getprop("/instrumentation/airspeed-indicator/indicated-mach") * 100));
+			me["ASI_mach"].setText(sprintf("%2.0f", mach.getValue() * 100));
 		}
 		
 		# Attitude
-		pitch = getprop("/orientation/pitch-deg") or 0;
-		roll =  getprop("/orientation/roll-deg") or 0;
 		
-		me.AI_horizon_trans.setTranslation(0, pitch * 16.74);
-		me.AI_horizon_rot.setRotation(-roll * D2R, me["AI_center"].getCenter());
+		me.AI_horizon_trans.setTranslation(0, pitch.getValue() * 16.74);
+		me.AI_horizon_rot.setRotation(-roll.getValue() * D2R, me["AI_center"].getCenter());
 		
-		me["AI_slipskid"].setTranslation(math.clamp(getprop("/instrumentation/slip-skid-ball/indicated-slip-skid"), -7, 7) * -15, 0);
-		me["AI_bank"].setRotation(-roll * D2R);
+		me["AI_slipskid"].setTranslation(math.clamp(skid.getValue(), -7, 7) * -15, 0);
+		me["AI_bank"].setRotation(-roll.getValue() * D2R);
 		
 		# Altitude
-		me.altitude = getprop("/instrumentation/altimeter/indicated-altitude-ft");
-		me.altOffset = me.altitude / 500 - int(me.altitude / 500);
-		me.middleAltText = roundaboutAlt(me.altitude / 100);
+		me.altOffset = altitude.getValue() / 500 - int(altitude.getValue() / 500);
+		me.middleAltText = roundaboutAlt(altitude.getValue() / 100);
 		me.middleAltOffset = nil;
 		if (me.altOffset > 0.5) {
 			me.middleAltOffset = -(me.altOffset - 1) * 258.5528;
@@ -152,17 +174,17 @@ var canvas_IESI = {
 		me["ALT_two"].setText(sprintf("%03d", abs(me.middleAltText-5)));
 		me["ALT_one"].setText(sprintf("%03d", abs(me.middleAltText-10)));
 		
-		me["ALT_digits"].setText(sprintf("%s", getprop("/instrumentation/altimeter/indicated-altitude-ft-pfd")));
-		me["ALT_meters"].setText(sprintf("%5.0f", getprop("/instrumentation/altimeter/indicated-altitude-ft") * 0.3048));
-		altTens = num(right(sprintf("%02d", getprop("/instrumentation/altimeter/indicated-altitude-ft")), 2));
+		me["ALT_digits"].setText(sprintf("%s", altitude_ind.getValue()));
+		me["ALT_meters"].setText(sprintf("%5.0f", altitude.getValue() * 0.3048));
+		altTens = num(right(sprintf("%02d", altitude_ind.getValue()), 2));
 		me["ALT_tens"].setTranslation(0, altTens * 3.16);
 		
 		# QNH
-		if (getprop("/modes/altimeter/std") == 1) {
+		if (altimeter_mode.getValue() == 1) {
 			me["QNH_setting"].hide();
 			me["QNH_std"].show();
 		} else {
-			me["QNH_setting"].setText(sprintf("%4.0f", getprop("/instrumentation/altimeter/setting-hpa")) ~ "/" ~ sprintf("%2.2f", getprop("/instrumentation/altimeter/setting-inhg")));
+			me["QNH_setting"].setText(sprintf("%4.0f", qnh_hpa.getValue()) ~ "/" ~ sprintf("%2.2f", qnh_inhg.getValue()));
 			me["QNH_setting"].show();
 			me["QNH_std"].hide();
 		}
@@ -182,16 +204,16 @@ setlistener("sim/signals/fdm-initialized", func {
 	IESI = canvas_IESI.new(group_IESI, "Aircraft/IDG-A32X/Models/Instruments/IESI/res/iesi.svg");
 	
 	IESI_update.start();
-	if (getprop("/systems/acconfig/options/iesi-rate") > 1) {
+	if (iesi_rate.getValue() > 1) {
 		rateApply();
 	}
 });
 
 var rateApply = func {
-	IESI_update.restart(0.07 * getprop("/systems/acconfig/options/iesi-rate"));
+	IESI_update.restart(0.05 * iesi_rate.getValue());
 }
 
-var IESI_update = maketimer(0.07, func {
+var IESI_update = maketimer(0.05, func {
 	canvas_IESI_base.update();
 });
 
