@@ -125,9 +125,10 @@
 			<c1>16.3</c1>
 		</lag_filter>
 		
-		<pure_gain name="hydraulics/spoiler-l1/final-deg">
+		<pure_gain name="hydraulics/spoiler-l1/final-gain">
 			<input>hydraulics/spoiler-l1/final-lag</input>
 			<gain>40.0</gain>
+			<output>hydraulics/spoiler-l1/final-deg</output>
 		</pure_gain>
 	
 	</channel>
@@ -227,9 +228,10 @@
 			<c1>16.3</c1>
 		</lag_filter>
 		
-		<pure_gain name="hydraulics/spoiler-l2/final-deg">
+		<pure_gain name="hydraulics/spoiler-l2/final-gain">
 			<input>hydraulics/spoiler-l2/final-lag</input>
 			<gain>40.0</gain>
+			<output>hydraulics/spoiler-l2/final-deg</output>
 		</pure_gain>
 	
 	</channel>
@@ -291,9 +293,10 @@
 			<c1>16.3</c1>
 		</lag_filter>
 		
-		<pure_gain name="hydraulics/spoiler-l3/final-deg">
+		<pure_gain name="hydraulics/spoiler-l3/final-gain">
 			<input>hydraulics/spoiler-l3/final-lag</input>
 			<gain>40.0</gain>
+			<output>hydraulics/spoiler-l3/final-deg</output>
 		</pure_gain>
 	
 	</channel>
@@ -355,9 +358,10 @@
 			<c1>16.3</c1>
 		</lag_filter>
 		
-		<pure_gain name="hydraulics/spoiler-l4/final-deg">
+		<pure_gain name="hydraulics/spoiler-l4/final-gain">
 			<input>hydraulics/spoiler-l4/final-lag</input>
 			<gain>40.0</gain>
+			<output>hydraulics/spoiler-l4/final-deg</output>
 		</pure_gain>
 	
 	</channel>
@@ -420,9 +424,10 @@
 			<c1>16.3</c1>
 		</lag_filter>
 		
-		<pure_gain name="hydraulics/spoiler-l5/final-deg">
+		<pure_gain name="hydraulics/spoiler-l5/final-gain">
 			<input>hydraulics/spoiler-l5/final-lag</input>
 			<gain>40.0</gain>
+			<output>hydraulics/spoiler-l5/final-deg</output>
 		</pure_gain>
 	
 	</channel>
@@ -452,9 +457,10 @@
 			<c1>16.3</c1>
 		</lag_filter>
 		
-		<pure_gain name="hydraulics/spoiler-r1/final-deg">
+		<pure_gain name="hydraulics/spoiler-r1/final-gain">
 			<input>hydraulics/spoiler-r1/final-lag</input>
 			<gain>40.0</gain>
+			<output>hydraulics/spoiler-r1/final-deg</output>
 		</pure_gain>
 	
 	</channel>
@@ -554,9 +560,10 @@
 			<c1>16.3</c1>
 		</lag_filter>
 		
-		<pure_gain name="hydraulics/spoiler-r2/final-deg">
+		<pure_gain name="hydraulics/spoiler-r2/final-gain">
 			<input>hydraulics/spoiler-r2/final-lag</input>
 			<gain>40.0</gain>
+			<output>hydraulics/spoiler-r2/final-deg</output>
 		</pure_gain>
 	
 	</channel>
@@ -618,9 +625,10 @@
 			<c1>16.3</c1>
 		</lag_filter>
 		
-		<pure_gain name="hydraulics/spoiler-r3/final-deg">
+		<pure_gain name="hydraulics/spoiler-r3/final-gain">
 			<input>hydraulics/spoiler-r3/final-lag</input>
 			<gain>40.0</gain>
+			<output>hydraulics/spoiler-r3/final-deg</output>
 		</pure_gain>
 	
 	</channel>
@@ -683,9 +691,10 @@
 			<c1>16.3</c1>
 		</lag_filter>
 		
-		<pure_gain name="hydraulics/spoiler-r4/final-deg">
+		<pure_gain name="hydraulics/spoiler-r4/final-gain">
 			<input>hydraulics/spoiler-r4/final-lag</input>
 			<gain>40.0</gain>
+			<output>hydraulics/spoiler-r4/final-deg</output>
 		</pure_gain>
 	
 	</channel>
@@ -748,9 +757,10 @@
 			<c1>16.3</c1>
 		</lag_filter>
 		
-		<pure_gain name="hydraulics/spoiler-r5/final-deg">
+		<pure_gain name="hydraulics/spoiler-r5/final-gain">
 			<input>hydraulics/spoiler-r5/final-lag</input>
 			<gain>40.0</gain>
+			<output>hydraulics/spoiler-r5/final-deg</output>
 		</pure_gain>
 	
 	</channel>
@@ -758,11 +768,11 @@
 	<channel name="Output">
 		
 		<summer name="fcs/spoiler-left-sum">
-			<input>hydraulics/spoiler-l1/final-deg</input>
-			<input>hydraulics/spoiler-l2/final-deg</input>
-			<input>hydraulics/spoiler-l3/final-deg</input>
-			<input>hydraulics/spoiler-l4/final-deg</input>
-			<input>hydraulics/spoiler-l5/final-deg</input>
+			<input>hydraulics/spoiler-l1/final-gain</input>
+			<input>hydraulics/spoiler-l2/final-gain</input>
+			<input>hydraulics/spoiler-l3/final-gain</input>
+			<input>hydraulics/spoiler-l4/final-gain</input>
+			<input>hydraulics/spoiler-l5/final-gain</input>
 		</summer>
 		
 		<fcs_function name="fcs/spoiler-left-deg">
@@ -775,11 +785,11 @@
 		</fcs_function>
 		
 		<summer name="fcs/spoiler-right-sum">
-			<input>hydraulics/spoiler-r1/final-deg</input>
-			<input>hydraulics/spoiler-r2/final-deg</input>
-			<input>hydraulics/spoiler-r3/final-deg</input>
-			<input>hydraulics/spoiler-r4/final-deg</input>
-			<input>hydraulics/spoiler-r5/final-deg</input>
+			<input>hydraulics/spoiler-r1/final-gain</input>
+			<input>hydraulics/spoiler-r2/final-gain</input>
+			<input>hydraulics/spoiler-r3/final-gain</input>
+			<input>hydraulics/spoiler-r4/final-gain</input>
+			<input>hydraulics/spoiler-r5/final-gain</input>
 		</summer>
 		
 		<fcs_function name="fcs/spoiler-right-deg">
