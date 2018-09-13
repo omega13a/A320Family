@@ -125,7 +125,7 @@ var HYD = {
 			setprop("/systems/hydraulic/ptu-active", 0);
 		}
 
-		if ((rat_man_sw == 1 or getprop("/controls/electrical/switches/emer-gen") == 1) and (gs > 100)) {
+		if ((rat_man_sw == 1 or getprop("/controls/electrical/switches/emer-gen") == 1) and gs > 100) {
 			setprop("/controls/hydraulic/rat", 1);
 			setprop("/controls/hydraulic/rat-deployed", 1);
 		} else if (gs < 100) {
@@ -134,7 +134,7 @@ var HYD = {
 		
 		ptu_active = getprop("/systems/hydraulic/ptu-active");
 		
-		if ((elec_pump_blue_sw and dc_ess >= 25 and !blue_pump_fail) and (stateL == 3 or stateR == 3 or getprop("/gear/gear[0]/wow") == 0) and !blue_leak) {
+		if (elec_pump_blue_sw and dc_ess >= 25 and !blue_pump_fail and (stateL == 3 or stateR == 3 or getprop("/gear/gear[0]/wow") == 0) and !blue_leak) {
 			if (blue_psi < 2900) {
 				setprop("/systems/hydraulic/blue-psi", blue_psi + 50);
 			} else {
@@ -154,13 +154,13 @@ var HYD = {
 			}
 		}
 		
-		if ((eng1_pump_sw and stateL == 3 and !green_pump_fail) and !green_leak) {
+		if (eng1_pump_sw and stateL == 3 and !green_pump_fail and !green_leak) {
 			if (green_psi < 2900) {
 				setprop("/systems/hydraulic/green-psi", green_psi + 50);
 			} else {
 				setprop("/systems/hydraulic/green-psi", 3000);
 			}
-		} else if ((ptu_active and stateL != 3 and !ptu_fail) and !green_leak) {
+		} else if (ptu_active and !ptu_fail and yellow_psi >= 1500 and !green_leak) {
 			if (green_psi < 2900) {
 				setprop("/systems/hydraulic/green-psi", green_psi + 50);
 			} else {
@@ -174,19 +174,19 @@ var HYD = {
 			}
 		}
 		
-		if ((eng2_pump_sw and stateR == 3 and !yellow_pump_eng_fail) and !yellow_leak) {
+		if (eng2_pump_sw and stateR == 3 and !yellow_pump_eng_fail and !yellow_leak) {
 			if (yellow_psi < 2900) {
 				setprop("/systems/hydraulic/yellow-psi", yellow_psi + 50);
 			} else {
 				setprop("/systems/hydraulic/yellow-psi", 3000);
 			}
-		} else if ((elec_pump_yellow_sw and dc_ess >= 25 and !yellow_pump_elec_fail) and !yellow_leak) {
+		} else if (elec_pump_yellow_sw and dc_ess >= 25 and !yellow_pump_elec_fail and !yellow_leak) {
 			if (yellow_psi < 2900) {
 				setprop("/systems/hydraulic/yellow-psi", yellow_psi + 50);
 			} else {
 				setprop("/systems/hydraulic/yellow-psi", 3000);
 			}
-		} else if ((ptu_active and stateR != 3 and !ptu_fail) and !yellow_leak) {
+		} else if (ptu_active and !ptu_fail and green_psi >= 1500 and !yellow_leak) {
 			if (yellow_psi < 2900) {
 				setprop("/systems/hydraulic/yellow-psi", yellow_psi + 50);
 			} else {
