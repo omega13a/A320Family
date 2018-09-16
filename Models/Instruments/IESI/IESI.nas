@@ -11,6 +11,8 @@ var elapsedtime = 0;
 var ASI = 0;
 var alt = 0;
 var altTens = 0;
+var airspeed_act = 0;
+var mach_act = 0;
 
 # props.nas nodes
 var iesi_init = props.globals.initNode("/instrumentation/iesi/iesi-init", 0, "BOOL");
@@ -126,16 +128,18 @@ var canvas_IESI = {
 		
 		# Airspeed
 		# Subtract 30, since the scale starts at 30, but don"t allow less than 0, or more than 420 situations
-		if (airspeed.getValue() <= 30) {
+		airspeed_act = airspeed.getValue();
+		mach_act = mach.getValue();
+		if (airspeed_act <= 30) {
 			ASI = 0;
-		} else if (airspeed.getValue() >= 420) {
+		} else if (airspeed_act >= 420) {
 			ASI = 390;
 		} else {
-			ASI = airspeed.getValue() - 30;
+			ASI = airspeed_act - 30;
 		}
 		me["ASI_scale"].setTranslation(0, ASI * 8.295);
 		
-		if (mach.getValue() >= 0.5) {
+		if (mach_act >= 0.5) {
 			me["ASI_mach_decimal"].show();
 			me["ASI_mach"].show();
 		} else {
@@ -143,14 +147,13 @@ var canvas_IESI = {
 			me["ASI_mach"].hide();
 		}
 		
-		if (mach.getValue() >= 0.999) {
+		if (mach_act >= 0.999) {
 			me["ASI_mach"].setText("99");
 		} else {
-			me["ASI_mach"].setText(sprintf("%2.0f", mach.getValue() * 100));
+			me["ASI_mach"].setText(sprintf("%2.0f", mach_act * 100));
 		}
 		
 		# Attitude
-		
 		me.AI_horizon_trans.setTranslation(0, pitch.getValue() * 16.74);
 		me.AI_horizon_rot.setRotation(-roll.getValue() * D2R, me["AI_center"].getCenter());
 		
@@ -158,8 +161,9 @@ var canvas_IESI = {
 		me["AI_bank"].setRotation(-roll.getValue() * D2R);
 		
 		# Altitude
-		me.altOffset = altitude.getValue() / 500 - int(altitude.getValue() / 500);
-		me.middleAltText = roundaboutAlt(altitude.getValue() / 100);
+		me.altitude = altitude.getValue();
+		me.altOffset = me.altitude / 500 - int(me.altitude / 500);
+		me.middleAltText = roundaboutAlt(me.altitude / 100);
 		me.middleAltOffset = nil;
 		if (me.altOffset > 0.5) {
 			me.middleAltOffset = -(me.altOffset - 1) * 258.5528;
@@ -175,8 +179,8 @@ var canvas_IESI = {
 		me["ALT_one"].setText(sprintf("%03d", abs(me.middleAltText-10)));
 		
 		me["ALT_digits"].setText(sprintf("%s", altitude_ind.getValue()));
-		me["ALT_meters"].setText(sprintf("%5.0f", altitude.getValue() * 0.3048));
-		altTens = num(right(sprintf("%02d", altitude_ind.getValue()), 2));
+		me["ALT_meters"].setText(sprintf("%5.0f", me.altitude * 0.3048));
+		altTens = num(right(sprintf("%02d", altitude.getValue()), 2));
 		me["ALT_tens"].setTranslation(0, altTens * 3.16);
 		
 		# QNH

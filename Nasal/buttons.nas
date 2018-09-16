@@ -55,19 +55,31 @@ var variousReset = func {
 	setprop("/controls/switches/seatbelt-sign", 1);
 }
 
-setlistener("/sim/signals/fdm-initialized", func {
-	var stateL = getprop("/engines/engine[0]/state");
-	var stateR = getprop("/engines/engine[1]/state");
-	var Lrain = getprop("/controls/switches/LrainRpt");
-	var Rrain = getprop("/controls/switches/RrainRpt");
-	var OnLt = getprop("/controls/switches/emerCallLtO");
-	var CallLt = getprop("/controls/switches/emerCallLtC");
-	var wow = getprop("/gear/gear[1]/wow");
-	rainTimer.start();
-});
+var BUTTONS = {
+	init: func() {
+		var stateL = getprop("/engines/engine[0]/state");
+		var stateR = getprop("/engines/engine[1]/state");
+		var Lrain = getprop("/controls/switches/LrainRpt");
+		var Rrain = getprop("/controls/switches/RrainRpt");
+		var OnLt = getprop("/controls/switches/emerCallLtO");
+		var CallLt = getprop("/controls/switches/emerCallLtC");
+		var EmerCall = getprop("/controls/switches/emerCall");
+		var wow = getprop("/gear/gear[1]/wow");
+		var wowr = getprop("/gear/gear[2]/wow");
+		var gndCtl = getprop("/systems/CVR/gndctl");
+		var acPwr = getprop("/systems/electrical/bus/ac-ess");
+	},
+	update: func() {
+		rainRepel();
+		CVR_master();
+		if (getprop("/controls/switches/emerCall")) {
+			EmerCallOnLight();
+			EmerCallLight();
+		}
+	},
+};
 
-# inhibit rain rpt when engines off and on ground
-var rainRepel = func {
+var rainRepel = func() {
 	Lrain = getprop("/controls/switches/LrainRpt");
 	Rrain = getprop("/controls/switches/RrainRpt");
 	wow = getprop("/gear/gear[1]/wow");
@@ -81,39 +93,53 @@ var rainRepel = func {
 	}
 }
 
-var EmerCall = func {
-	setprop("/controls/switches/emerCall", 1);
-	EmerCallTimer1.start();
-	EmerCallTimer2.start();
-	settimer(func() {
-		setprop("/controls/switches/emerCall", 0);
-		EmerCallTimer1.stop();
-		EmerCallTimer2.stop();
-	}, 10);
-}
-
-var EmerCallOnLight = func {
+var EmerCallOnLight = func() {
 	OnLt = getprop("/controls/switches/emerCallLtO");
-	if (OnLt) { 
+	EmerCall = getprop("/controls/switches/emerCall");
+	if ((OnLt and EmerCall) or !EmerCall) { 
 		setprop("/controls/switches/emerCallLtO", 0);
-	} else if (!OnLt) { 
+	} else if (!OnLt and EmerCall) { 
 		setprop("/controls/switches/emerCallLtO", 1);
 	}
 }
 
-var EmerCallLightCall = func {
+var EmerCallLight = func() {
 	CallLt = getprop("/controls/switches/emerCallLtC");
-	if (CallLt) { 
+	EmerCall = getprop("/controls/switches/emerCall");
+	if ((CallLt and EmerCall) or !EmerCall) { 
 		setprop("/controls/switches/emerCallLtC", 0);
-	} else if (!CallLt) { 
+	} else if (!CallLt and EmerCall) { 
 		setprop("/controls/switches/emerCallLtC", 1);
 	}
 }
 
-var CabinCall = func {
-	setprop("/controls/switches/emerCall", 0);
+var CVR_master = func() {
+	stateL = getprop("/engines/engine[0]/state");
+	stateR = getprop("/engines/engine[1]/state");
+	wow = getprop("/gear/gear[1]/wow");
+	wowr = getprop("/gear/gear[2]/wow");
+	gndCtl = getprop("/systems/CVR/gndctl");
+	acPwr = getprop("/systems/electrical/bus/ac-ess");
+	if (acPwr > 0 and wow and wowr and (gndCtl or (stateL == 3 or stateR == 3))) {
+		setprop("/controls/CVR/power", 1);
+	} else if (!wow and !wowr and acPwr > 0) {
+		setprop("/controls/CVR/power", 1);
+	} else {
+		setprop("/controls/CVR/power", 0);
+	}
+}
+
+var EmerCall = func {
+	setprop("/controls/switches/emerCall", 1);
 	settimer(func() {
 		setprop("/controls/switches/emerCall", 0);
+	}, 10);
+}
+
+var CabinCall = func {
+	setprop("/controls/switches/cabinCall", 0);
+	settimer(func() {
+		setprop("/controls/switches/cabinCall", 0);
 	}, 15);
 }
 		
@@ -131,22 +157,6 @@ var CVR_test = func {
 		settimer(func() {
 			setprop("controls/CVR/tone", 0);
 		}, 15);
-	}
-}
-
-var CVR_master = func {
-	var stateL = getprop("/engines/engine[0]/state");
-	var stateR = getprop("/engines/engine[1]/state");
-	var wowl = getprop("/gear/gear[1]/wow");
-	var wowr = getprop("/gear/gear[2]/wow");
-	var gndCtl = getprop("/systems/CVR/gndctl");
-	var acPwr = getprop("/systems/electrical/bus/ac-ess");
-	if (acPwr > 0 and wowl and wowr and (gndCtl or (stateL == 3 or stateR == 3))) {
-		setprop("/controls/CVR/power", 1);
-	} else if (!wowl and !wowr and acPwr > 0) {
-		setprop("/controls/CVR/power", 1);
-	} else {
-		setprop("/controls/CVR/power", 0);
 	}
 }
 
@@ -239,12 +249,3 @@ var decreaseManVS = func {
 		setprop("/systems/pressurization/outflowpos-man", manvs - 0.001);
 	}
 }
-
-var update_CVR = func {
-	CVR_master();
-}
-
-var CVR = maketimer(0.1, update_CVR);
-var EmerCallTimer1 = maketimer(0.5, EmerCallOnLight);
-var EmerCallTimer2 = maketimer(0.5, EmerCallLightCall);
-var rainTimer = maketimer(0.1, rainRepel);
