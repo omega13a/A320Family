@@ -215,9 +215,9 @@
 		<name>ND1</name>
 		<path>Aircraft/IDG-A32X/Models/Instruments/ND/ND_L.xml</path>
 		<offsets>
-			<x-m>-0.55475</x-m>
+			<x-m>-0.55415</x-m>
 			<y-m>-0.35198</y-m>
-			<z-m>0.22255</z-m>
+			<z-m>0.22256</z-m>
 			<pitch-deg>-16.534</pitch-deg>
 		</offsets>
 	</model>
@@ -238,9 +238,9 @@
 		<name>ND2</name>
 		<path>Aircraft/IDG-A32X/Models/Instruments/ND/ND_R.xml</path>
 		<offsets>
-			<x-m>-0.55475</x-m>
+			<x-m>-0.55415</x-m>
 			<y-m>0.35198</y-m>
-			<z-m>0.22255</z-m>
+			<z-m>0.22256</z-m>
 			<pitch-deg>-16.534</pitch-deg>
 		</offsets>
 	</model>
