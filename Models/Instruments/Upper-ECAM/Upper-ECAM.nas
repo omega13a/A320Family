@@ -54,6 +54,7 @@ var gear = props.globals.getNode("/gear/gear[1]/position-norm", 1);
 var smoke = props.globals.getNode("/controls/switches/no-smoking-sign", 1);
 var seatbelt = props.globals.getNode("/controls/switches/seatbelt-sign", 1);
 var flaps3_ovr = props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override", 1);
+var wow0 = props.globals.getNode("/gear/gear[0]/wow");
 var eng1_n1 = props.globals.getNode("/engines/engine[0]/n1-actual", 1);
 var eng2_n1 = props.globals.getNode("/engines/engine[1]/n1-actual", 1);
 var eng1_n2 = props.globals.getNode("/engines/engine[0]/n2-actual", 1);
@@ -119,14 +120,20 @@ var canvas_upperECAM_base = {
 		elapsedtime = et.getValue();
 		
 		if (acess.getValue() >= 110) {
-			if (acconfig.getValue() != 1 and du3_test.getValue() != 1) {
+			if (wow0.getValue() == 1) {
+				if (acconfig.getValue() != 1 and du3_test.getValue() != 1) {
+					du3_test.setValue(1);
+					du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+					du3_test_time.setValue(elapsedtime);
+				} else if (acconfig.getValue() == 1 and du3_test.getValue() != 1) {
+					du3_test.setValue(1);
+					du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+					du3_test_time.setValue(elapsedtime - 30);
+				}
+			} else {
 				du3_test.setValue(1);
-				du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-				du3_test_time.setValue(elapsedtime);
-			} else if (acconfig.getValue() == 1 and du3_test.getValue() != 1) {
-				du3_test.setValue(1);
-				du3_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-				du3_test_time.setValue(elapsedtime - 30);
+				du3_test_amount.setValue(0);
+				du3_test_time.setValue(-100);
 			}
 		} else {
 			du3_test.setValue(0);
@@ -161,6 +168,7 @@ var canvas_upperECAM_base = {
 		# Reversers
 		rev_1_cur = rev_1.getValue();
 		rev_2_cur = rev_2.getValue();
+		cur_eng_option = eng_option.getValue();
 		if (rev_1_cur >= 0.01 and eng1_n1mode.getValue() == 1 and cur_eng_option == "CFM") {
 			me["REV1"].show();
 			me["REV1-box"].show();

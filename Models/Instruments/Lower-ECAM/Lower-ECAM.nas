@@ -91,14 +91,20 @@ var canvas_lowerECAM_base = {
 	update: func() {
 		elapsedtime = getprop("/sim/time/elapsed-sec");
 		if (getprop("/systems/electrical/bus/ac2") >= 110) {
-			if (getprop("/systems/acconfig/autoconfig-running") != 1 and getprop("/instrumentation/du/du4-test") != 1) {
+			if (getprop("/gear/gear[0]/wow") == 1) {
+				if (getprop("/systems/acconfig/autoconfig-running") != 1 and getprop("/instrumentation/du/du4-test") != 1) {
+					setprop("/instrumentation/du/du4-test", 1);
+					setprop("/instrumentation/du/du4-test-amount", math.round((rand() * 5 ) + 35, 0.1));
+					setprop("/instrumentation/du/du4-test-time", getprop("/sim/time/elapsed-sec"));
+				} else if (getprop("/systems/acconfig/autoconfig-running") == 1 and getprop("/instrumentation/du/du4-test") != 1) {
+					setprop("/instrumentation/du/du4-test", 1);
+					setprop("/instrumentation/du/du4-test-amount", math.round((rand() * 5 ) + 35, 0.1));
+					setprop("/instrumentation/du/du4-test-time", getprop("/sim/time/elapsed-sec") - 30);
+				}
+			} else {
 				setprop("/instrumentation/du/du4-test", 1);
-				setprop("/instrumentation/du/du4-test-amount", math.round((rand() * 5 ) + 35, 0.1));
-				setprop("/instrumentation/du/du4-test-time", getprop("/sim/time/elapsed-sec"));
-			} else if (getprop("/systems/acconfig/autoconfig-running") == 1 and getprop("/instrumentation/du/du4-test") != 1) {
-				setprop("/instrumentation/du/du4-test", 1);
-				setprop("/instrumentation/du/du4-test-amount", math.round((rand() * 5 ) + 35, 0.1));
-				setprop("/instrumentation/du/du4-test-time", getprop("/sim/time/elapsed-sec") - 30);
+				setprop("/instrumentation/du/du4-test-amount", 0);
+				setprop("/instrumentation/du/du4-test-time", -100);
 			}
 		} else if (getprop("/systems/electrical/ac1-src") == "XX" or getprop("/systems/electrical/ac2-src") == "XX") {
 			setprop("/instrumentation/du/du4-test", 0);
@@ -1327,13 +1333,13 @@ var canvas_lowerECAM_elec = {
 		if (getprop("/systems/electrical/bus/ac1") >= 110) {
 			me["AC1-in"].show();
 		} else {
-			me["AC1-in"].hide()
+			me["AC1-in"].hide();
 		}
 
 		if (getprop("/systems/electrical/bus/ac2") >= 110) {
 			me["AC2-in"].show();
 		} else {
-			me["AC2-in"].hide()
+			me["AC2-in"].hide();
 		}
 
 		if (getprop("/systems/electrical/ac1-src") == "APU" or getprop("/systems/electrical/ac1-src") == "EXT" or getprop("/systems/electrical/ac1-src") == "XTIE" or getprop("/systems/electrical/ac2-src") == "XTIE") {
@@ -2331,18 +2337,18 @@ var canvas_lowerECAM_hyd = {
 
 		if (getprop("/systems/hydraulic/yellow-fire-valve") == 1) {
 			me["Fire-Valve-Yellow"].setColor(0.7333,0.3803,0);
-			me["Fire-Valve-Yellow"].setRotation(90 * D2R)
+			me["Fire-Valve-Yellow"].setRotation(90 * D2R);
 		} else {
 			me["Fire-Valve-Yellow"].setColor(0.0509,0.7529,0.2941);
-			me["Fire-Valve-Yellow"].setRotation(0)
+			me["Fire-Valve-Yellow"].setRotation(0);
 		}
 		
 		if (getprop("/systems/hydraulic/green-fire-valve") == 1) {
 			me["Fire-Valve-Green"].setColor(0.7333,0.3803,0);
-			me["Fire-Valve-Green"].setRotation(90 * D2R)
+			me["Fire-Valve-Green"].setRotation(90 * D2R);
 		} else {
 			me["Fire-Valve-Green"].setColor(0.0509,0.7529,0.2941);
-			me["Fire-Valve-Green"].setRotation(0)
+			me["Fire-Valve-Green"].setRotation(0);
 		}
 		
 		me.updateBottomStatus();

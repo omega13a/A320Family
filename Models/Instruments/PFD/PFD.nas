@@ -38,8 +38,9 @@ var roll_mode_box = props.globals.getNode("/modes/pfd/fma/roll-mode-box", 1);
 var roll_mode_armed_box = props.globals.getNode("/modes/pfd/fma/roll-mode-armed-box", 1);
 var thr1 = props.globals.getNode("/controls/engines/engine[0]/throttle-pos", 1);
 var thr2 = props.globals.getNode("/controls/engines/engine[1]/throttle-pos", 1);
-var wow1 = props.globals.getNode("/gear/gear[1]/wow", 1);
-var wow2 = props.globals.getNode("/gear/gear[2]/wow", 1);
+var wow0 = props.globals.getNode("/gear/gear[0]/wow");
+var wow1 = props.globals.getNode("/gear/gear[1]/wow");
+var wow2 = props.globals.getNode("/gear/gear[2]/wow");
 var pitch = props.globals.getNode("/orientation/pitch-deg", 1);
 var roll = props.globals.getNode("/orientation/roll-deg", 1);
 var elapsedtime = props.globals.getNode("/sim/time/elapsed-sec", 1);
@@ -203,28 +204,40 @@ var canvas_PFD_base = {
 	update: func() {
 		elapsedtime_act = elapsedtime.getValue();
 		if (acess.getValue() >= 110) {
-			if (acconfig.getValue() != 1 and du1_test.getValue() != 1) {
+			if (wow0.getValue() == 1) {
+				if (acconfig.getValue() != 1 and du1_test.getValue() != 1) {
+					du1_test.setValue(1);
+					du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+					du1_test_time.setValue(elapsedtime_act);
+				} else if (acconfig.getValue() == 1 and du1_test.getValue() != 1) {
+					du1_test.setValue(1);
+					du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+					du1_test_time.setValue(elapsedtime_act - 30);
+				}
+			} else {
 				du1_test.setValue(1);
-				du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-				du1_test_time.setValue(elapsedtime_act);
-			} else if (acconfig.getValue() == 1 and du1_test.getValue() != 1) {
-				du1_test.setValue(1);
-				du1_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-				du1_test_time.setValue(elapsedtime_act - 30);
+				du1_test_amount.setValue(0);
+				du1_test_time.setValue(-100);
 			}
 		} else {
 			du1_test.setValue(0);
 		}
 		
 		if (ac2.getValue() >= 110) {
-			if (acconfig.getValue() != 1 and du6_test.getValue() != 1) {
+			if (wow0.getValue() == 1) {
+				if (acconfig.getValue() != 1 and du6_test.getValue() != 1) {
+					du6_test.setValue(1);
+					du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+					du6_test_time.setValue(elapsedtime_act);
+				} else if (acconfig.getValue() == 1 and du6_test.getValue() != 1) {
+					du6_test.setValue(1);
+					du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
+					du6_test_time.setValue(elapsedtime_act - 30);
+				}
+			} else {
 				du6_test.setValue(1);
-				du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-				du6_test_time.setValue(elapsedtime_act);
-			} else if (acconfig.getValue() == 1 and du6_test.getValue() != 1) {
-				du6_test.setValue(1);
-				du6_test_amount.setValue(math.round((rand() * 5 ) + 35, 0.1));
-				du6_test_time.setValue(elapsedtime_act - 30);
+				du6_test_amount.setValue(0);
+				du6_test_time.setValue(-100);
 			}
 		} else {
 			du6_test.setValue(0);

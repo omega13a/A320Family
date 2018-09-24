@@ -146,20 +146,71 @@
 	<model>
 		<path>Aircraft/IDG-A32X/Models/Instruments/MCDU/MCDU1.xml</path>
 		<offsets>
-			<x-m>-0.35794</x-m>
-			<y-m>-0.18632</y-m>
-			<z-m>-0.06521</z-m>
-			<pitch-deg>10</pitch-deg>
+			<x-m>0.022</x-m>
+			<y-m>0.0</y-m>
+			<z-m>-0.00515</z-m>
+			<pitch-deg>9.4</pitch-deg>
 		</offsets>
 	</model>
-	
+
 	<model>
 		<path>Aircraft/IDG-A32X/Models/Instruments/MCDU/MCDU2.xml</path>
 		<offsets>
-			<x-m>-0.35794</x-m>
-			<y-m>0.18632</y-m>
-			<z-m>-0.06521</z-m>
-			<pitch-deg>10</pitch-deg>
+			<x-m>0.022</x-m>
+			<y-m>0.3651</y-m>
+			<z-m>-0.00515</z-m>
+			<pitch-deg>9.4</pitch-deg>
+		</offsets>
+	</model>
+
+	<!-- Radio -->
+	<model>
+		<path>Aircraft/IDG-A32X/Models/Instruments/Radio/Radio1.xml</path>
+		<offsets>
+			<x-m>0.022</x-m>
+			<y-m>0.0</y-m>
+			<z-m>-0.00515</z-m>
+			<pitch-deg>9.4</pitch-deg>
+		</offsets>
+	</model>
+	<model>
+		<path>Aircraft/IDG-A32X/Models/Instruments/Radio/Radio2.xml</path>
+		<offsets>
+			<x-m>0.022</x-m>
+			<y-m>0.3651</y-m>
+			<z-m>-0.00515</z-m>
+			<pitch-deg>9.4</pitch-deg>
+		</offsets>
+	</model>
+
+	<!-- Audio -->
+	<model>
+		<path>Aircraft/IDG-A32X/Models/Instruments/Audio/Audio1.xml</path>
+		<offsets>
+			<x-m>0.022</x-m>
+			<y-m>0.0</y-m>
+			<z-m>-0.00515</z-m>
+			<pitch-deg>9.4</pitch-deg>
+		</offsets>
+	</model>
+	<model>
+		<path>Aircraft/IDG-A32X/Models/Instruments/Audio/Audio2.xml</path>
+		<offsets>
+			<x-m>0.022</x-m>
+			<y-m>0.3651</y-m>
+			<z-m>-0.00515</z-m>
+			<pitch-deg>9.4</pitch-deg>
+		</offsets>
+	</model>
+
+	<!-- Upper Pedestal Panels -->
+	<model>
+		<path>Aircraft/IDG-A32X/Models/Instruments/Pedestal_up/Pedestal_up.xml</path>
+		<offsets>
+			<x-m>0.022</x-m>
+			<y-m>0.0</y-m>
+			<z-m>-0.00515</z-m>
+			<pitch-deg>9.4</pitch-deg>
 		</offsets>
 	</model>
 
@@ -174,7 +225,7 @@
 			<pitch-deg>-16.534</pitch-deg>
 		</offsets>
 	</model>
-	
+
 	<animation>
 		<type>translate</type>
 		<object-name>PFD1</object-name>
@@ -302,6 +353,21 @@
 		<object-name>arpt_led</object-name>
 		<object-name>arpt_led.001</object-name>
 		<object-name>a-thr_led</object-name>
+		<object-name>audio_att_led</object-name>
+		<object-name>audio_att_sgn</object-name>
+		<object-name>audio_call_hf2_led</object-name>
+		<object-name>audio_call_hf1_led</object-name>
+		<object-name>audio_call_vhf1_led</object-name>
+		<object-name>audio_call_vhf2_led</object-name>
+		<object-name>audio_call_vhf3_led</object-name>
+		<object-name>audio_hf1_led</object-name>
+		<object-name>audio_hf2_led</object-name>
+		<object-name>audio_mech_led</object-name>
+		<object-name>audio_mech_sgn</object-name>
+		<object-name>audio_voice_led</object-name>
+		<object-name>audio_vhf1_led</object-name>
+		<object-name>audio_vhf2_led</object-name>
+		<object-name>audio_vhf3_led</object-name>
 		<object-name>autoland_light_on</object-name>
 		<object-name>cstr_led</object-name>
 		<object-name>cstr_led.001</object-name>
@@ -347,6 +413,19 @@
 		<object-name>qnh-inhg</object-name>
 		<object-name>qnh-std</object-name>
 		<object-name>qnh-test</object-name>
+		<object-name>radio_adf_led</object-name>
+		<object-name>radio_am_led</object-name>
+		<object-name>radio_bfo_led</object-name>
+		<object-name>radio_hf1_led</object-name>
+		<object-name>radio_hf2_led</object-name>
+		<object-name>radio_ls_led</object-name>
+		<object-name>radio_nav_led</object-name>
+		<object-name>radio_opt_led</object-name>
+		<object-name>radio_sel_led</object-name>
+		<object-name>radio_vhf1_led</object-name>
+		<object-name>radio_vhf2_led</object-name>
+		<object-name>radio_vhf3_led</object-name>
+		<object-name>radio_vor_led</object-name>
 		<object-name>rgear_down</object-name>
 		<object-name>rgear_unlk</object-name>
 		<object-name>rudder-trim</object-name>
@@ -372,6 +451,21 @@
 	<animation>
 		<type>select</type>
 		<object-name>alt-text-test</object-name>
+		<object-name>audio_att_led</object-name>
+		<object-name>audio_att_sgn</object-name>
+		<object-name>audio_call_hf2_led</object-name>
+		<object-name>audio_call_hf1_led</object-name>
+		<object-name>audio_call_vhf1_led</object-name>
+		<object-name>audio_call_vhf2_led</object-name>
+		<object-name>audio_call_vhf3_led</object-name>
+		<object-name>audio_hf1_led</object-name>
+		<object-name>audio_hf2_led</object-name>
+		<object-name>audio_mech_led</object-name>
+		<object-name>audio_mech_sgn</object-name>
+		<object-name>audio_voice_led</object-name>
+		<object-name>audio_vhf1_led</object-name>
+		<object-name>audio_vhf2_led</object-name>
+		<object-name>audio_vhf3_led</object-name>
 		<object-name>autoland_light_on</object-name>
 		<object-name>ecam_apu_led</object-name>
 		<object-name>ecam_bleed_led</object-name>
@@ -394,6 +488,19 @@
 		<object-name>master_caution_on</object-name>
 		<object-name>master_warning_on</object-name>
 		<object-name>qnh-test</object-name>
+		<object-name>radio_adf_led</object-name>
+		<object-name>radio_am_led</object-name>
+		<object-name>radio_bfo_led</object-name>
+		<object-name>radio_hf1_led</object-name>
+		<object-name>radio_hf2_led</object-name>
+		<object-name>radio_ls_led</object-name>
+		<object-name>radio_nav_led</object-name>
+		<object-name>radio_opt_led</object-name>
+		<object-name>radio_sel_led</object-name>
+		<object-name>radio_vhf1_led</object-name>
+		<object-name>radio_vhf2_led</object-name>
+		<object-name>radio_vhf3_led</object-name>
+		<object-name>radio_vor_led</object-name>
 		<object-name>rudder-trim-test</object-name>
 		<object-name>spd-text-test</object-name>
 		<object-name>terr_on_nd_on</object-name>
@@ -1377,6 +1484,7 @@
 	<animation>
 		<type>pick</type>
 		<object-name>eng_mode</object-name>
+		<object-name>eng_mode.mark</object-name>
 		<action>
 			<button>0</button>
 			<button>3</button>
@@ -1406,11 +1514,12 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>eng_mode</object-name>
+		<object-name>eng_mode.mark</object-name>
 		<property>controls/engines/engine-start-switch</property>
 		<interpolation>
-			<entry><ind>0</ind><dep>-53</dep></entry>
+			<entry><ind>0</ind><dep> 53</dep></entry>
 			<entry><ind>1</ind><dep>  0</dep></entry>
-			<entry><ind>2</ind><dep> 53</dep></entry>
+			<entry><ind>2</ind><dep>-53</dep></entry>
 		</interpolation>
 		<axis>
 			<object-name>eng_mode.axis</object-name>
@@ -4653,7 +4762,7 @@
 	</animation>
 
 	<animation>
-		<name>Main Panel lighting</name>
+		<name>Main Panel and Pedestal lighting</name>
 		<type>material</type>
 		<object-name>main_panel_label</object-name>
 		<object-name>terr_on_nd_label</object-name>
@@ -4663,23 +4772,51 @@
 		<object-name>brightness_panel_left_glare</object-name>
 		<object-name>brightness_panel_right_glare</object-name>
 		<object-name>ped_labels_1</object-name>
-		<object-name>PedLoLabels</object-name>
-		<object-name>111VU_112VU_label</object-name>
+		<object-name>pedestal_low_glare</object-name>
+		<object-name>mcdu_glare</object-name>
+		<object-name>radio_glare</object-name>
+		<object-name>audio_glare</object-name>
+		<object-name>audio_vhf1_glare</object-name>
+		<object-name>audio_vhf2_glare</object-name>
+		<object-name>audio_vhf3_glare</object-name>
+		<object-name>audio_hf1_glare</object-name>
+		<object-name>audio_hf2_glare</object-name>
+		<object-name>audio_int_glare</object-name>
+		<object-name>audio_cab_glare</object-name>
+		<object-name>audio_pa_rot_glare</object-name>
+		<object-name>audio_vor1_glare</object-name>
+		<object-name>audio_vor2_glare</object-name>
+		<object-name>audio_mkr_glare</object-name>
+		<object-name>audio_ils_glare</object-name>
+		<object-name>audio_mls_glare</object-name>
+		<object-name>audio_adf1_glare</object-name>
+		<object-name>audio_adf2_glare</object-name>
+		<object-name>audio_int_rad.mark</object-name>
+		<object-name>vu111_glare</object-name>
+		<object-name>vu112_glare</object-name>
+		<object-name>radar_glare</object-name>
+		<object-name>radar_mode.mark</object-name>
+		<object-name>atc_glare</object-name>
+		<object-name>atc_thrt.mark</object-name>
+		<object-name>atc_sys.mark</object-name>
+		<object-name>atc_abv.mark</object-name>
+		<object-name>engine_glare</object-name>
+		<object-name>eng_mode.mark</object-name>
 		<object-name>flaps_scale</object-name>
 		<object-name>gear_lever_label</object-name>
 		<object-name>flood_lt_main.mark</object-name>
 		<object-name>flood_lt_ped.mark</object-name>
 		<object-name>integ_lt.mark</object-name>
-		<object-name>eng_mode.mark</object-name>
 		<object-name>RudderTrim.mark</object-name>
 		<object-name>CockpitDoorSwitch.mark</object-name>
-		<object-name>ecam_att_hdg_sw.mark</object-name>
-		<object-name>ecam_air_data_sw.mark</object-name>
 		<object-name>ecam_brt_upper.mark</object-name>
 		<object-name>ecam_brt_lower.mark</object-name>
-		<object-name>ecam_eis_dmc_sw.mark</object-name>
-		<object-name>ecam_glare</object-name>
-		<object-name>ecam_nd_xfr_sw.mark</object-name>
+		<object-name>ecam_att_hdg.mark</object-name>
+		<object-name>ecam_air_data.mark</object-name>
+		<object-name>ecam_eis_dmc.mark</object-name>
+		<object-name>ecam_nd_xfr.mark</object-name>
+		<object-name>ecam_glare_up</object-name>
+		<object-name>ecam_glare_down</object-name>
 		<object-name>pfd_brt_cpt.mark</object-name>
 		<object-name>speaker_volume_cpt.mark</object-name>
 		<object-name>light_console_cpt_sw.mark</object-name>
