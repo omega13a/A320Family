@@ -307,6 +307,9 @@ var beforestart_b = func {
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/lighting/beacon", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
+	setprop("/controls/radio/rmp[0]/on", 1);
+	setprop("/controls/radio/rmp[1]/on", 1);
+	setprop("/controls/radio/rmp[2]/on", 1);
 	setprop("/controls/gear/brake-left", 0);
 	setprop("/controls/gear/brake-right", 0);
 	setprop("/systems/acconfig/autoconfig-running", 0);
@@ -381,6 +384,9 @@ var taxi_b = func {
 	setprop("/controls/adirs/mcducbtn", 1);
 	setprop("/controls/lighting/beacon", 1);
 	setprop("/controls/lighting/nav-lights-switch", 1);
+	setprop("/controls/radio/rmp[0]/on", 1);
+	setprop("/controls/radio/rmp[1]/on", 1);
+	setprop("/controls/radio/rmp[2]/on", 1);
 	settimer(taxi_c, 2);
 }
 var taxi_c = func {
