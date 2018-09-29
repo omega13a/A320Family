@@ -17,10 +17,19 @@ var apu_egt_min = 352;
 var apu_egt_max = 704;
 setprop("/systems/apu/rpm", 0);
 setprop("/systems/apu/egt", 42);
+setprop("/systems/apu/bleed-used", 0);
+setprop("/systems/apu/bleed-counting", 0);
+setprop("/systems/apu/bleed-time", 0);
+
+var eng_common_init = func {
+	setprop("/systems/apu/bleed-used", 0);
+}
 
 # Start APU
 setlistener("/controls/APU/start", func {
-	if ((getprop("/controls/APU/master") == 1) and (getprop("/controls/APU/start") == 1)) {
+	if (getprop("/controls/APU/master") == 1 and getprop("/controls/APU/start") == 1) {
+		apuBleedChk.stop();
+		setprop("/systems/apu/bleed-counting", 0);
 		if (getprop("/systems/acconfig/autoconfig-running") == 0) {
 			interpolate("/systems/apu/rpm", apu_max, spinup_time);
 			apu_egt_check.start();
@@ -56,13 +65,37 @@ setlistener("/controls/APU/master", func {
 		apu_egt_check.stop();
 		apu_egt2_check.stop();
 		apu_stop();
+	} else if (getprop("/controls/APU/master") == 1) {
+		apuBleedChk.stop();
+		setprop("/systems/apu/bleed-counting", 0);
 	}
 });
 
 var apu_stop = func {
-	interpolate("/systems/apu/rpm", 0, 30);
-	interpolate("/systems/apu/egt", 42, 40);
+	if (getprop("/systems/apu/bleed-used") == 1 and getprop("/systems/apu/bleed-counting") != 1) {
+		setprop("/systems/apu/bleed-counting", 1);
+		setprop("/systems/apu/bleed-time", getprop("/sim/time/elapsed-sec"));
+	}
+	if (getprop("/systems/apu/bleed-used") == 1 and getprop("/systems/apu/bleed-counting") == 1) {
+		apuBleedChk.start();
+	} else {
+		apuBleedChk.stop();
+		interpolate("/systems/apu/rpm", 0, 30);
+		interpolate("/systems/apu/egt", 42, 40);
+		setprop("/systems/apu/bleed-counting", 0);
+	}
 }
+
+var apuBleedChk = maketimer(0.1, func {
+	if (getprop("/systems/apu/bleed-used") == 1 and getprop("/systems/apu/bleed-counting") == 1) {
+		if (getprop("/systems/apu/bleed-time") + 60 <= getprop("/sim/time/elapsed-sec")) {
+			apuBleedChk.stop();
+			interpolate("/systems/apu/rpm", 0, 30);
+			interpolate("/systems/apu/egt", 42, 40);
+			setprop("/systems/apu/bleed-counting", 0);
+		}
+	}
+});
 
 # Various Other Stuff
 var doIdleThrust = func {

@@ -3312,7 +3312,88 @@
 			</or>
 		</condition>
 	</animation>
-
+	
+	<animation>
+		<name>ELEC RAT MAN pick</name>
+		<type>pick</type>
+		<object-name>EmerElecManOnBtn</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<condition>
+					<and>
+						<equals>
+							<property>controls/OH/protectors/elecratman</property>
+							<value>1</value>
+						</equals>
+						<or>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dcbat</property>
+								<value>25</value>
+							</greater-than-equals>
+							<greater-than-equals>
+								<property>systems/electrical/bus/dc-ess</property>
+								<value>25</value>
+							</greater-than-equals>
+						</or>
+					</and>
+				</condition>
+				<command>property-toggle</command>
+				<property>controls/electrical/switches/rat-man</property>
+			</binding>
+			<binding>
+				<condition>
+					<equals>
+						<property>controls/OH/protectors/elecratman</property>
+						<value>1</value>
+					</equals>
+				</condition>
+				<command>nasal</command>
+				<script>setprop("/sim/sounde/oh-btn", 1);</script>
+			</binding>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>pick</type>
+		<object-name>EmerManOnGuard</object-name>
+		<action>
+			<button>1</button>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/OH/protectors/elecratman</property>
+				<value>1</value>
+			</binding>
+			<mod-up>
+				<binding>
+					<command>property-assign</command>
+					<property>controls/OH/protectors/elecratman</property>
+					<value>0</value>
+				</binding>
+				<binding>
+					<command>nasal</command>
+					<script>setprop("/sim/sounde/oh-cover", 1);</script>
+				</binding>
+			</mod-up>
+		</action>
+	</animation>
+	
+	<animation>
+		<type>rotate</type>
+		<object-name>EmerManOnGuard</object-name>
+		<property>controls/OH/protectors/elecratman</property>
+		<factor>-145</factor>
+		<axis>
+			<x1-m>-0.00273</x1-m>
+			<y1-m>-0.20848</y1-m>
+			<z1-m>-0.02796</z1-m>
+			<x2-m>-0.00420</x2-m>
+			<y2-m>-0.19657</y2-m>
+			<z2-m>-0.02796</z2-m>
+		</axis>
+	</animation>
+	
 	<!-- Pneumatic -->
 	<animation>
 		<name>AC pack flow pick</name>

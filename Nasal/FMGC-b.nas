@@ -110,7 +110,7 @@ setlistener("/it-autoflight/input/ap1", func {
 		fmabox();
 		updateTimers();
 	} else if (apmas == 1 and ac_ess >= 110 and law == 0) {
-		if ((getprop("/gear/gear[1]/wow") == 0) and (getprop("/gear/gear[2]/wow") == 0)) {
+		if (getprop("/gear/gear[1]/wow") == 0 and getprop("/gear/gear[2]/wow") == 0 and getprop("/position/gear-agl-ft") >= 100) {
 			if (getprop("/it-autoflight/output/lat") == 9) {
 				setprop("/it-autoflight/input/lat", 3);
 			}
@@ -146,7 +146,7 @@ setlistener("/it-autoflight/input/ap2", func {
 		fmabox();
 		updateTimers();
 	} else if (apmas == 1 and ac_ess >= 110 and law == 0) {
-		if ((getprop("/gear/gear[1]/wow") == 0) and (getprop("/gear/gear[2]/wow") == 0)) {
+		if (getprop("/gear/gear[1]/wow") == 0 and getprop("/gear/gear[2]/wow") == 0 and getprop("/position/gear-agl-ft") >= 100) {
 			if (getprop("/it-autoflight/output/lat") == 9) {
 				setprop("/it-autoflight/input/lat", 3);
 			}

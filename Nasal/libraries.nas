@@ -16,9 +16,6 @@ setprop("/controls/lighting/ndl-norm", 1);
 setprop("/controls/lighting/ndr-norm", 1);
 setprop("/controls/lighting/upper-norm", 1);
 
-# Surprise
-setprop("/controls/tray/surprise", 1);
-
 # Lights
 setprop("/sim/model/lights/nose-lights", 0);
 setprop("/sim/model/lights/turnoffsw", 0);
@@ -180,6 +177,7 @@ var systemsInit = func {
 	systems.eng_init();
 	systems.fire_init();
 	systems.autobrake_init();
+	fadec.FADEC.init();
   	fmgc.APinit();			
 	fmgc.FMGCinit();
 	mcdu1.MCDU_init();
@@ -208,7 +206,7 @@ var systemsLoop = maketimer(0.1, func {
 	systems.ADIRS.loop();
 	libraries.ECAM.loop();
 	libraries.BUTTONS.update();
-	fadec.fadecLoop();
+	fadec.FADEC.loop();
 	
 	if ((getprop("/controls/pneumatic/switches/groundair") or getprop("/controls/switches/cart")) and ((getprop("/velocities/groundspeed-kt") > 2) or getprop("/controls/gear/brake-parking") == 0)) {
 		setprop("/controls/switches/cart", 0);

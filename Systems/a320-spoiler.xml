@@ -666,7 +666,6 @@
 			<default value="0"/>
 			<test logic="AND" value="hydraulics/spoiler-r4/extended">
 				/systems/hydraulic/yellow-psi ge 1500
-				spoilers/main-gear-and eq 0
 				/systems/failures/spoiler-r4 eq 0
 				spoilers/main-cmd gt 0
 			</test>

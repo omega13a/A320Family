@@ -643,7 +643,7 @@ var canvas_MCDU_base = {
 			if (getprop("/FMGC/internal/adf1freq-set") == 1) {
 				me["Simple_L5"].setFont(default); 
 				me["Simple_L5"].setFontSize(normal); 
-				me["Simple_L5"].setText(sprintf("%3.0f", adf1));
+				me["Simple_L5"].setText(sprintf("%s", adf1));
 			} else {
 				me["Simple_L5"].setFont(symbol); 
 				me["Simple_L5"].setFontSize(small); 
@@ -663,7 +663,7 @@ var canvas_MCDU_base = {
 			if (getprop("/FMGC/internal/adf2freq-set") == 1) {
 				me["Simple_R5"].setFont(default); 
 				me["Simple_R5"].setFontSize(normal); 
-				me["Simple_R5"].setText(sprintf("%3.0f", adf2));
+				me["Simple_R5"].setText(sprintf("%s", adf2));
 			} else {
 				me["Simple_R5"].setFont(symbol); 
 				me["Simple_R5"].setFontSize(small); 

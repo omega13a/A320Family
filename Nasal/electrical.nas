@@ -34,6 +34,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 	var ac_ess_feed_sw = getprop("/controls/electrical/switches/ac-ess-feed");
 	var battery1_sw = getprop("/controls/electrical/switches/battery1");
 	var battery2_sw = getprop("/controls/electrical/switches/battery2");
+	var manrat = getprop("/controls/electrical/switches/rat-man");
 	var battery1_volts = getprop("/systems/electrical/battery1-volts");
 	var battery2_volts = getprop("/systems/electrical/battery2-volts");
 	var battery1_amps = getprop("/systems/electrical/battery1-amps");
@@ -62,8 +63,7 @@ setlistener("/sim/signals/fdm-initialized", func {
 	var galley_shed = getprop("/systems/electrical/extra/galleyshed");
 	var emergen = getprop("/controls/electrical/switches/emer-gen");
 	var ias = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt");
-	var rat = getprop("/controls/hydraulic/rat");
-	var manrat = getprop("/controls/hydraulic/rat-man");
+	var rat = getprop("/controls/electrical/rat");
 	var ac_ess_fail = getprop("/systems/failures/elec-ac-ess");
 	var batt1_fail = getprop("/systems/failures/elec-batt1");
 	var batt2_fail = getprop("/systems/failures/elec-batt2");
@@ -158,6 +158,7 @@ var ELEC = {
 		setprop("/controls/electrical/switches/ac-ess-feed", 0);
 		setprop("/controls/electrical/switches/battery1", 0);
 		setprop("/controls/electrical/switches/battery2", 0);
+		setprop("/controls/electrical/switches/rat-man", 0);
 		setprop("/systems/electrical/battery1-volts", 26.5);
 		setprop("/systems/electrical/battery2-volts", 26.5);
 		setprop("/systems/electrical/battery1-amps", 0);
@@ -206,6 +207,7 @@ var ELEC = {
 		setprop("/systems/electrical/idg2-fault", 0);
 		setprop("/controls/electrical/xtie/xtieL", 0);
 		setprop("/controls/electrical/xtie/xtieR", 0);
+		setprop("/controls/electrical/rat", 0);
 		setprop("/systems/electrical/battery-available", 0);
 		setprop("/systems/electrical/dc2-available", 0);
 		# Below are standard FG Electrical stuff to keep things working when the plane is powered
@@ -280,6 +282,7 @@ var ELEC = {
 		ac_ess_feed_sw = getprop("/controls/electrical/switches/ac-ess-feed");
 		battery1_sw = getprop("/controls/electrical/switches/battery1");
 		battery2_sw = getprop("/controls/electrical/switches/battery2");
+		manrat = getprop("/controls/electrical/switches/rat-man");
 		battery1_volts = getprop("/systems/electrical/battery1-volts");
 		battery2_volts = getprop("/systems/electrical/battery2-volts");
 		battery1_percent = getprop("/systems/electrical/battery1-percent");
@@ -302,8 +305,7 @@ var ELEC = {
 		galley_shed = getprop("/systems/electrical/extra/galleyshed");
 		emergen = getprop("/controls/electrical/switches/emer-gen");
 		ias = getprop("/instrumentation/airspeed-indicator/indicated-speed-kt");
-		rat = getprop("/controls/hydraulic/rat");
-		manrat = getprop("/controls/hydraulic/rat-man");
+		rat = getprop("/controls/electrical/rat");
 		ac_ess_fail = getprop("/systems/failures/elec-ac-ess");
 		batt1_fail = getprop("/systems/failures/elec-batt1");
 		batt2_fail = getprop("/systems/failures/elec-batt2");
@@ -594,13 +596,17 @@ var ELEC = {
 			setprop("/systems/electrical/extra/galleyshed", 0);
 		}
 		
-		if (((ac1 == 0 and ac2 == 0 and ias >= 100) or manrat) and replay == 0) {
+		if (ac1 < 110 and ac2 < 110 and ias >= 100 and replay == 0) {
 			setprop("/controls/hydraulic/rat-deployed", 1);
-			setprop("/controls/hydraulic/rat", 1);
+			setprop("/controls/electrical/rat", 1);
+			setprop("/controls/electrical/switches/emer-gen", 1);
+		} else if (manrat) {
+			setprop("/controls/hydraulic/rat-deployed", 1);
+			setprop("/controls/electrical/rat", 1);
 			setprop("/controls/electrical/switches/emer-gen", 1);
 		}
 		
-		if (ias < 100 or (ac1 == 1) or (ac2 == 1)) {
+		if (ias < 100 or ac1 >= 110 or ac2 >= 110) {
 			setprop("/controls/electrical/switches/emer-gen", 0);
 		}
 		

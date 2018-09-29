@@ -25,6 +25,8 @@ setprop("/FMGC/internal/ils1-mcdu", "XXX/999.99");
 setprop("/FMGC/internal/ils2-mcdu", "XXX/999.99");
 setprop("/FMGC/internal/vor1-mcdu", "XXX/999.99");
 setprop("/FMGC/internal/vor2-mcdu", "999.99/XXX");
+setprop("/FMGC/internal/adf1-mcdu", "XXX/999.99");
+setprop("/FMGC/internal/adf2-mcdu", "999.99/XXX");
 setprop("/gear/gear[0]/wow-fmgc", 1);
 
 setlistener("/sim/signals/fdm-initialized", func {

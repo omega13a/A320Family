@@ -200,6 +200,7 @@ var PNEU = {
 		# Air Sources/PSI
 		if (rpmapu >= 94.9 and bleedapu_sw and !bleedapu_fail) {
 			setprop("/systems/pneumatic/bleedapu", 34);
+			setprop("/systems/apu/bleed-used", 1);
 		} else {
 			setprop("/systems/pneumatic/bleedapu", 0);
 		}
@@ -372,10 +373,10 @@ var PNEU = {
 		acess = getprop("/systems/electrical/bus/ac-ess");
 		fanon = getprop("/systems/ventilation/avionics/fan");
 		
-		if ((dcess > 25) or (acess > 110)) {
+		if (dcess > 25 or acess > 110) {
 			setprop("/systems/ventilation/avionics/fan", 1);
 			setprop("/systems/ventilation/lavatory/extractfan", 1);
-		} else if ((dcess == 0) and (acess == 0)) {
+		} else if (dcess == 0 and acess == 0) {
 			setprop("/systems/ventilation/avionics/fan", 0);
 			setprop("/systems/ventilation/lavatory/extractfan", 0);
 		}

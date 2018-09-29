@@ -229,9 +229,6 @@ var colddark_b = func {
 	# Continues the Cold and Dark script, after engines fully shutdown.
 	setprop("/controls/APU/master", 0);
 	setprop("/controls/APU/start", 0);
-	setprop("/controls/bleed/OHP/bleedapu", 0);
-	setprop("/controls/electrical/switches/battery1", 0);
-	setprop("/controls/electrical/switches/battery2", 0);
 	setprop("/controls/gear/brake-left", 0);
 	setprop("/controls/gear/brake-right", 0);
 	setprop("/systems/acconfig/autoconfig-running", 0);
@@ -265,9 +262,6 @@ var beforestart = func {
 	failReset();
 	setprop("/controls/APU/master", 0);
 	setprop("/controls/APU/start", 0);
-	setprop("/controls/bleed/OHP/bleedapu", 0);
-	setprop("/controls/electrical/switches/battery1", 0);
-	setprop("/controls/electrical/switches/battery2", 0);
 	
 	# Now the Startup!
 	setprop("/controls/electrical/switches/battery1", 1);
@@ -343,8 +337,6 @@ var taxi = func {
 	failReset();
 	setprop("/controls/APU/master", 0);
 	setprop("/controls/APU/start", 0);
-	setprop("/controls/electrical/switches/battery1", 0);
-	setprop("/controls/electrical/switches/battery2", 0);
 	
 	# Now the Startup!
 	setprop("/controls/electrical/switches/battery1", 1);
