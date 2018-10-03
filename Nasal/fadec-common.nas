@@ -11,6 +11,25 @@ if (getprop("/options/eng") == "IAE") {
 	io.include("fadec-cfm.nas");
 }
 
+var thr1 = 0;
+var thr2 = 0;
+var state1 = 0;
+var state2 = 0;
+var engstate1 = 0;
+var engstate2 = 0;
+var eprtoga = 0;
+var eprmct = 0;
+var eprflx = 0;
+var eprclb = 0;
+var n1toga = 0;
+var n1mct = 0;
+var n1flx = 0;
+var n1clb = 0;
+var alpha = 0;
+var flaps = 0;
+var alphaProt = 0;
+var togaLock = 0;
+var gs = 0;
 setprop("/systems/thrust/alpha-floor", 0);
 setprop("/systems/thrust/toga-lk", 0);
 setprop("/systems/thrust/epr/toga-lim", 0.0);
@@ -37,25 +56,6 @@ setprop("/engines/flex-derate", 0);
 setprop("/systems/thrust/eng-out", 0);
 
 setlistener("/sim/signals/fdm-initialized", func {
-	var thr1 = getprop("/controls/engines/engine[0]/throttle-pos");
-	var thr2 = getprop("/controls/engines/engine[1]/throttle-pos");
-	var state1 = getprop("/systems/thrust/state1");
-	var state2 = getprop("/systems/thrust/state2");
-	var engstate1 = getprop("/engines/engine[0]/state");
-	var engstate2 = getprop("/engines/engine[1]/state");
-	var eprtoga = getprop("/systems/thrust/epr/toga-lim");
-	var eprmct = getprop("/systems/thrust/epr/mct-lim");
-	var eprflx = getprop("/systems/thrust/epr/flx-lim");
-	var eprclb = getprop("/systems/thrust/epr/clb-lim");
-	var n1toga = getprop("/systems/thrust/n1/toga-lim");
-	var n1mct = getprop("/systems/thrust/n1/mct-lim");
-	var n1flx = getprop("/systems/thrust/n1/flx-lim");
-	var n1clb = getprop("/systems/thrust/n1/clb-lim");
-	var alpha = getprop("/fdm/jsbsim/aero/alpha-deg");
-	var flaps = getprop("/controls/flight/flap-pos");
-	var alphaProt = 0;
-	var togaLock = 0;
-	var gs = getprop("/velocities/groundspeed-kt");
 	thrust_loop.start();
 	thrust_flash.start();
 });

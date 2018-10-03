@@ -8,6 +8,14 @@
 
 <!-- Sven Seipp, Oct 2017 -->
 
+<!--
+TODO: add conditions for not yet implemented stuff:
+* TCAS
+* RADAR
+* Predictive windshear system
+* DH/MDA
+-->
+
 <PropertyList>
 	<checklist>
 		<title>BEFORE START</title>
@@ -280,17 +288,6 @@
 			<item>
 				<name>PARKING BRAKE</name>
 				<value>AS RQRD</value>
-				<condition>
-					<equals>
-						<property>controls/gear/brake-parking</property>
-						<value>1</value>
-					</equals>
-				</condition>
-				<binding>
-					<command>property-assign</command>
-					<property>controls/gear/brake-parking</property>
-					<value>1</value> 
-				</binding>
                                 <marker>
                                         <x-m>5.0500</x-m>
                                         <y-m>-0.0325</y-m>
@@ -325,17 +322,6 @@
 		<item>
 			<name>PITCH TRIM</name>
 			<value>____SET</value>
-			<condition>
-				<less-than>
-					<property>controls/flight/elevator-trim</property>
-					<value>-0.005</value>
-				</less-than>
-			</condition>
-			<binding>
-				<command>property-assign</command>
-				<property>controls/flight/elevator-trim</property>
-					<value>-0.03</value> 
-			</binding>
                         <marker>
                                 <x-m>4.6850</x-m>
                                 <y-m>-0.1075</y-m>
@@ -491,6 +477,10 @@
 							<property>controls/flight/flap-lever</property>
 							<value>3</value>
 						</less-than>
+						<equals>
+							<property>ECAM/to-config</property>
+							<value>1</value>
+						</equals>
 					</and>
 				</condition>
                                 <marker>
@@ -503,32 +493,10 @@
 		<item>
 			<name>CABIN CREW</name>
 			<value>ADVISED</value>
-			<condition>
-				<equals>
-					<property>/sim/sounde/prepareto</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<binding>
-				<command>property-assign</command>
-				<property>/sim/sounde/prepareto</property>
-				<value>1</value>
-			</binding>
 		</item>
 		<item>
 			<name>ENG MODE SEL</name>
 			<value>AS RQRD</value>
-			<condition>
-				<equals>
-					<property>controls/engines/engine-start-switch</property>
-					<value>1</value>
-				</equals>
-			</condition>
-			<binding>
-				<command>property-assign</command>
-				<property>controls/engines/engine-start-switch</property>
-				<value>1</value>
-			</binding>
                         <marker>
                                 <x-m>4.8617</x-m>
                                 <y-m>-0.0333</y-m>
@@ -539,28 +507,6 @@
 		<item>
 			<name>PACKS</name>
 			<value>AS RQRD</value>
-			<condition>
-				<and>
-					<equals>
-						<property>controls/pneumatic/switches/pack1</property>
-						<value>0</value>
-					</equals>
-					<equals>
-						<property>controls/pneumatic/switches/pack2</property>
-						<value>0</value>
-					</equals>
-				</and>
-			</condition>
-			<binding>
-				<command>property-assign</command>
-				<property>controls/pneumatic/switches/pack1</property>
-				<value>0</value> 
-			</binding>
-			<binding>
-				<command>property-assign</command>
-				<property>controls/pneumatic/switches/pack2</property>
-				<value>0</value> 
-			</binding>
                         <marker>
                                 <x-m>4.8175</x-m>
                                 <y-m>-0.1317</y-m>
@@ -753,17 +699,6 @@
 		<item>
 			<name>MDA/DH</name>
 			<value>____SET(BOTH)</value>
-			<condition>
-				<equals>
-					<property>modes/altimeter/std</property>
-					<value>0</value>
-				</equals>
-			</condition>
-			<binding>
-				<command>property-assign</command>
-				<property>modes/altimeter/std</property>
-				<value>0</value> 
-			</binding>
                         <marker>
                                 <x-m>4.5000</x-m>
                                 <y-m>-0.2592</y-m>
@@ -850,10 +785,28 @@
 						<property>controls/flight/speedbrake-arm</property>
 						<value>1</value>
 					</equals>
-					<equals>
-						<property>controls/flight/flap-lever</property>
-						<value>4</value>
-					</equals>
+					<or>
+						<and>
+							<equals>
+								<property>controls/flight/flap-lever</property>
+								<value>4</value>
+							</equals>
+							<equals>
+								<property>instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override</property>
+								<value>0</value>
+							</equals>
+						</and>
+						<and>
+							<equals>
+								<property>controls/flight/flap-lever</property>
+								<value>3</value>
+							</equals>
+							<equals>
+								<property>instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override</property>
+								<value>1</value>
+							</equals>
+						</and>
+					</or>
 				</and>
 			</condition>
                         <marker>
@@ -908,7 +861,7 @@
 			<condition>
 				<and>
 					<equals>
-						<property>controls/flight/speedbrake-lever</property>
+						<property>controls/flight/speedbrake</property>
 						<value>0</value>
 					</equals>
 					<equals>
@@ -919,7 +872,7 @@
 			</condition>
 			<binding>
 				<command>property-assign</command>
-				<property>controls/flight/speedbrake-lever</property>
+				<property>controls/flight/speedbrake</property>
 				<value>0</value>
 			</binding>
 			<binding>
@@ -937,22 +890,6 @@
 		<item>
 			<name>APU</name>
 			<value>AS RQRD</value>
-			<condition>
-				<equals>
-					<property>controls/APU/start</property>
-					<value>true</value>
-				</equals>
-			</condition>
-			<binding>
-				<command>property-assign</command>
-				<property>controls/APU/master</property>
-				<value>true</value>
-			</binding>
-			<binding>
-				<command>property-assign</command>
-				<property>controls/APU/start</property>
-				<value>true</value>
-			</binding>
                         <marker>
                                 <x-m>4.6817</x-m>
                                 <y-m>0.0000</y-m>
@@ -978,17 +915,6 @@
 		<item>
 			<name>APU BLEED</name>
 			<value>ON</value>
-			<condition>
-				<equals>
-					<property>systems/pneumatic/bleedapu</property>
-					<value>34</value>
-				</equals>
-			</condition>
-			<binding>
-				<command>property-assign</command>
-				<property>controls/pneumatic/switches/bleedapu</property>
-				<value>1</value>
-			</binding>
                         <marker>
                                 <x-m>4.7958</x-m>
                                 <y-m>-0.0091</y-m>
@@ -1258,6 +1184,17 @@
 		<item>
 			<name>EMER EXIT LT</name>
 			<value>OFF</value>
+			<condition>
+				<equals>
+					<property>controls/switches/emer-lights</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>property-assign</command>
+				<property>controls/switches/emer-lights</property>
+				<value>0</value>
+			</binding>
 		</item>
 		<item>
 			<name>SIGNS</name>

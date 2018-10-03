@@ -1741,13 +1741,13 @@ var MCDU_update_fast = maketimer(0.125, func {
 });
 
 var showMCDU1 = func {
-	var dlg = canvas.Window.new([512, 432], "dialog").set("resize", 1);
-	dlg.setCanvas(MCDU1_display);
+	var mcdu1_dlg = gui.Dialog.new("sim/gui/dialogs/mcdu1/dialog", "Aircraft/IDG-A32X/Systems/mcdu1-dlg.xml");
+	mcdu1_dlg.open();
 }
 
 var showMCDU2 = func {
-	var dlg = canvas.Window.new([512, 432], "dialog").set("resize", 1);
-	dlg.setCanvas(MCDU2_display);
+	var mcdu2_dlg = gui.Dialog.new("sim/gui/dialogs/mcdu2/dialog", "Aircraft/IDG-A32X/Systems/mcdu2-dlg.xml");
+	mcdu2_dlg.open();
 }
 
 setlistener("/MCDU[0]/page", func {

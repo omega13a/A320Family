@@ -5,35 +5,33 @@
 # Copyright (c) Joshua Davidson (it0uchpods) #
 ##############################################
 
-setlistener("/sim/signals/fdm-initialized", func {
-	var xfeed_sw = getprop("/controls/fuel/x-feed");
-	var tank0pump1_sw = getprop("/controls/fuel/tank0pump1");
-	var tank0pump2_sw = getprop("/controls/fuel/tank0pump2");
-	var tank1pump1_sw = getprop("/controls/fuel/tank1pump1");
-	var tank1pump2_sw = getprop("/controls/fuel/tank1pump2");
-	var tank2pump1_sw = getprop("/controls/fuel/tank2pump1");
-	var tank2pump2_sw = getprop("/controls/fuel/tank2pump2");
-	var mode_sw = getprop("/controls/fuel/mode");
-	var xfeed = getprop("/systems/fuel/x-feed");
-	var ac1 = getprop("/systems/electrical/bus/ac1");
-	var ac2 = getprop("/systems/electrical/bus/ac2");
-	var gravityfeedL = getprop("/systems/fuel/gravityfeedL");
-	var gravityfeedR = getprop("/systems/fuel/gravityfeedR");
-	var gload = getprop("/accelerations/pilot-gdamped");
-	var gravityfeedL_output = getprop("/systems/fuel/gravityfeedL-output");
-	var gravityfeedR_output = getprop("/systems/fuel/gravityfeedR-output");
-	var tank0 = getprop("/systems/fuel/tank[0]/feed");
-	var tank1 = getprop("/systems/fuel/tank[1]/feed");
-	var tank2 = getprop("/systems/fuel/tank[2]/feed");
-	var gravityfeedL = getprop("/systems/fuel/gravityfeedL");
-	var gravityfeedR = getprop("/systems/fuel/gravityfeedR");
-	var tank0pump1_fail = getprop("/systems/failures/tank0pump1");
-	var tank0pump2_fail = getprop("/systems/failures/tank0pump2");
-	var tank1pump1_fail = getprop("/systems/failures/tank1pump1");
-	var tank1pump2_fail = getprop("/systems/failures/tank1pump2");
-	var tank2pump1_fail = getprop("/systems/failures/tank2pump1");
-	var tank2pump2_fail = getprop("/systems/failures/tank2pump2");
-});
+var xfeed_sw = getprop("/controls/fuel/x-feed");
+var tank0pump1_sw = 0;
+var tank0pump2_sw = 0;
+var tank1pump1_sw = 0;
+var tank1pump2_sw = 0;
+var tank2pump1_sw = 0;
+var tank2pump2_sw = 0;
+var mode_sw = 0;
+var xfeed = 0;
+var ac1 = 0;
+var ac2 = 0;
+var gravityfeedL = 0;
+var gravityfeedR = 0;
+var gload = 0;
+var gravityfeedL_output = 0;
+var gravityfeedR_output = 0;
+var tank0 = 0;
+var tank1 = 0;
+var tank2 = 0;
+var gravityfeedL = 0;
+var gravityfeedR = 0;
+var tank0pump1_fail = 0;
+var tank0pump2_fail = 0;
+var tank1pump1_fail = 0;
+var tank1pump2_fail = 0;
+var tank2pump1_fail = 0;
+var tank2pump2_fail = 0;
 
 var FUEL = {
 	init: func() {

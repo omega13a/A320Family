@@ -9,28 +9,26 @@
 # Init Vars #
 #############
 
-setlistener("/sim/signals/fdm-initialized", func {
-	var level = getprop("/systems/fire/cargo/bottlelevel");
-	var fwdsquib = getprop("/systems/fire/cargo/fwdsquib");
-	var aftsquib = getprop("/systems/fire/cargo/aftsquib");
-	var fwddet = getprop("/systems/failures/cargo-fwd-fire");
-	var aftdet = getprop("/systems/failures/cargo-aft-fire");
-	var test = getprop("/controls/fire/cargo/test");
-	var guard1 = getprop("/controls/fire/cargo/fwdguard");
-	var guard2 = getprop("/controls/fire/cargo/aftguard");
-	var dischpb1 = getprop("/controls/fire/cargo/fwddisch"); 
-	var dischpb2 = getprop("/controls/fire/cargo/aftdisch");
-	var smokedet1 = getprop("/controls/fire/cargo/fwdsmokeLight");
-	var smokedet2 = getprop("/controls/fire/cargo/aftsmokeLight");
-	var bottleIsEmpty = getprop("/controls/fire/cargo/bottleempty");
-	var WeCanExt = getprop("/controls/fire/cargo/status");
-	var test2 = getprop("/systems/fire/cargo/test");
-	var state = getprop("/controls/fire/cargo/test/state");
-	var dc1 = getprop("/systems/electrical/bus/dc1");
-	var dc2 = getprop("/systems/electrical/bus/dc2");
-	var dcbat = getprop("/systems/electrical/bus/dcbat");
-	var pause = getprop("/sim/freeze/master");
-});
+var level = 0;
+var fwdsquib = 0;
+var aftsquib = 0;
+var fwddet = 0;
+var aftdet = 0;
+var test = 0;
+var guard1 = 0;
+var guard2 = 0;
+var dischpb1 = 0;
+var dischpb2 = 0;
+var smokedet1 = 0;
+var smokedet2 = 0;
+var bottleIsEmpty = 0;
+var WeCanExt = 0;
+var test2 = 0;
+var state = 0;
+var dc1 = 0;
+var dc2 = 0;
+var dcbat = 0;
+var pause = 0;
 
 var fire_init = func {
 	setprop("/controls/OH/protectors/fwddisch", 0);

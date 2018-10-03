@@ -500,7 +500,7 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/bw-ft</property>
-				<property>fcs/rudder-pos-rad</property>
+				<toradians><property>hydraulics/rudder/final-deg</property></toradians>
 				<value>0.01</value>
 			</product>
 		</function>

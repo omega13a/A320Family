@@ -5,47 +5,45 @@
 # Copyright (c) Joshua Davidson (it0uchpods) #
 ##############################################
 
-setlistener("/sim/signals/fdm-initialized", func {
-	var eng1_pump_sw = getprop("/controls/hydraulic/eng1-pump");
-	var eng2_pump_sw = getprop("/controls/hydraulic/eng2-pump");
-	var elec_pump_blue_sw = getprop("/controls/hydraulic/elec-pump-blue");
-	var elec_pump_yellow_sw = getprop("/controls/hydraulic/elec-pump-yellow");
-	var yellow_hand_pump = getprop("/controls/hydraulic/hand-pump-yellow");
-	var ptu_sw = getprop("/controls/hydraulic/ptu");
-	var rat_man_sw = getprop("/controls/hydraulic/rat-man");
-	var blue_psi = getprop("/systems/hydraulic/blue-psi");
-	var green_psi = getprop("/systems/hydraulic/green-psi");
-	var yellow_psi = getprop("/systems/hydraulic/yellow-psi");
-	var rpmapu = getprop("/systems/apu/rpm");
-	var stateL = getprop("/engines/engine[0]/state");
-	var stateR = getprop("/engines/engine[1]/state");
-	var dc_ess = getprop("/systems/electrical/bus/dc-ess");
-	var psi_diff = green_psi - yellow_psi;
-	var rat = getprop("/controls/hydraulic/rat");
-	var ratout = getprop("/controls/hydraulic/rat-deployed");
-	var gs = getprop("/velocities/groundspeed-kt");
-	var blue_leak = getprop("/systems/failures/hyd-blue");
-	var green_leak = getprop("/systems/failures/hyd-green");
-	var yellow_leak = getprop("/systems/failures/hyd-yellow");
-	var blue_pump_fail = getprop("/systems/failures/pump-blue");
-	var green_pump_fail = getprop("/systems/failures/pump-green");
-	var yellow_pump_eng_fail = getprop("/systems/failures/pump-yellow-eng");
-	var yellow_pump_elec_fail = getprop("/systems/failures/pump-yellow-elec");
-	var ptu_fail = getprop("/systems/failures/ptu");
-	var dc2 = getprop("/systems/electrical/bus/dc2");
-	var ptu_active = getprop("/systems/hydraulic/ptu-active");
-	var accum = getprop("/systems/hydraulic/brakes/accumulator-pressure-psi");
-	var lpsi = getprop("/systems/hydraulic/brakes/pressure-left-psi");
-	var rpsi = getprop("/systems/hydraulic/brakes/pressure-right-psi");
-	var parking = getprop("/controls/gear/brake-parking");
-	var askidnws_sw = getprop("/systems/hydraulic/brakes/askidnwssw");
-	var brake_mode = getprop("/systems/hydraulic/brakes/mode");
-	var brake_l = getprop("/systems/hydraulic/brakes/lbrake");
-	var brake_r = getprop("/systems/hydraulic/brakes/rbrake");
-	var brake_nose = getprop("/systems/hydraulic/brakes/nose-rubber");
-	var counter = getprop("/systems/hydraulic/brakes/counter");
-	var down = getprop("/controls/gear/gear-down");
-});
+var eng1_pump_sw = 0;
+var eng2_pump_sw = 0;
+var elec_pump_blue_sw = 0;
+var elec_pump_yellow_sw = 0;
+var yellow_hand_pump = 0;
+var ptu_sw = 0;
+var rat_man_sw = 0;
+var blue_psi = 0;
+var green_psi = 0;
+var yellow_psi = 0;
+var rpmapu = 0;
+var stateL = 0;
+var stateR = 0;
+var dc_ess = 0;
+var psi_diff = 0;
+var rat = 0;
+var ratout = 0;
+var gs = 0;
+var blue_leak = 0;
+var green_leak = 0;
+var yellow_leak = 0;
+var blue_pump_fail = 0;
+var green_pump_fail = 0;
+var yellow_pump_eng_fail = 0;
+var yellow_pump_elec_fail = 0;
+var ptu_fail = 0;
+var dc2 = 0;
+var ptu_active = 0;
+var accum = 0;
+var lpsi = 0;
+var rpsi = 0;
+var parking = 0;
+var askidnws_sw = 0;
+var brake_mode = 0;
+var brake_l = 0;
+var brake_r = 0;
+var brake_nose = 0;
+var counter = 0;
+var down = 0;
 
 var HYD = {
 	init: func() {

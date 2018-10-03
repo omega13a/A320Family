@@ -404,7 +404,7 @@ var canvas_upperECAM_base = {
 			}
 			
 			flaps3 = flaps3_ovr.getValue();
-			flaps_position = flaps_pos.getValue();
+			flaps_position = flap_pos.getValue();
 			if (flaps3 != 1 and flaps_position == 5) {
 				me["LDG_Flaps"].setText("FLAPS FULL");
 				me["LDG_Flaps_B"].hide();

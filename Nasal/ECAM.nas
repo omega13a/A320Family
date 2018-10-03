@@ -5,6 +5,14 @@
 # Copyright (c) Joshua Davidson (it0uchpods) #
 ##############################################
 
+var stateL = 0;
+var stateR = 0;
+var thrustL = 0;
+var thrustR = 0;
+var elec = 0;
+var speed = 0;
+var wow = 0;
+var altitude = 0;
 setprop("/ECAM/left-msg", "NONE");
 setprop("/position/gear-agl-ft", 0);
 setprop("/ECAM/Lower/page", "fctl");
@@ -17,14 +25,6 @@ var ECAM = {
 		setprop("/ECAM/to-memo-enable", 1);
 		setprop("/ECAM/to-config", 0);
 		setprop("/ECAM/ldg-memo-enable", 0);
-		var stateL = getprop("/engines/engine[0]/state");
-		var stateR = getprop("/engines/engine[1]/state");
-		var thrustL = getprop("/systems/thrust/state1");
-		var thrustR = getprop("/systems/thrust/state2");
-		var elec = getprop("/systems/electrical/on");
-		var speed = getprop("/velocities/airspeed-kt");
-		var wow = getprop("/gear/gear[0]/wow");
-		var altitude = getprop("/position/gear-agl-ft");
 	},
 	MSGclr: func() {
 		setprop("/ECAM/ecam-checklist-active", 0);

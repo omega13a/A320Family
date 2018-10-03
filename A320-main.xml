@@ -328,6 +328,24 @@
 							</script>
 						</binding>
 					</item>
+					<item>
+						<label>Show Left MCDU</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							canvas_mcdu.showMCDU1();
+							</script>
+						</binding>
+					</item>
+					<item>
+						<label>Show Right MCDU</label>
+						<binding>
+							<command>nasal</command>
+							<script>
+							canvas_mcdu.showMCDU2();
+							</script>
+						</binding>
+					</item>
 				</menu>
 			</default>
 		</menubar>

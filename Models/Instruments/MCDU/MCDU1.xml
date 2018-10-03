@@ -9,7 +9,20 @@
 <PropertyList>
 
 	<path>res/MCDU1.ac</path>
-
+	
+	<animation>
+		<type>pick</type>
+		<object-name>mcdu1.screen</object-name>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>canvas_mcdu.showMCDU1();</script>
+			</binding>
+		</action>
+	</animation>
+	
 	<animation>
 		<type>pick</type>
 		<object-name>radnav</object-name>
