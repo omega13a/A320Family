@@ -1686,14 +1686,12 @@
 		<lag_filter name="fcs/throttle1">
 			<input>/controls/engines/engine[0]/throttle-output</input>
 			<c1>0.95</c1>
-			<output>fcs/throttle-cmd-norm</output>
-			<output>fcs/throttle-pos-norm</output>
+			<output>fcs/throttle-pos-norm[0]</output>
 		</lag_filter>
 		
 		<lag_filter name="fcs/throttle2">
 			<input>/controls/engines/engine[1]/throttle-output</input>
 			<c1>0.95</c1>
-			<output>fcs/throttle-cmd-norm[1]</output>
 			<output>fcs/throttle-pos-norm[1]</output>
 		</lag_filter>
 		

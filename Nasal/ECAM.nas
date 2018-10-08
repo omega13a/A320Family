@@ -25,6 +25,7 @@ var ECAM = {
 		setprop("/ECAM/to-memo-enable", 1);
 		setprop("/ECAM/to-config", 0);
 		setprop("/ECAM/ldg-memo-enable", 0);
+		setprop("/systems/gear/landing-gear-warning-light", 0);
 	},
 	MSGclr: func() {
 		setprop("/ECAM/ecam-checklist-active", 0);
