@@ -353,7 +353,7 @@
 		<!-- Engines -->
 		<object-name>NacellePW1100G</object-name>
 		<object-name>ReverserPW1100G</object-name>
-		<!-- Fuselage -->
+		<!-- Engines -->
 		<property-base>sim/model/eng</property-base>
 		<texture-prop>texture</texture-prop>
 		<texture>PW_PurePower_1100G.png</texture>
@@ -362,10 +362,10 @@
 	<!-- Nasal code -->
 	<nasal>
 		<load>
-		 var livery_update = aircraft.livery_update.new("Aircraft/IDG-A32X/Models/Liveries/A320/PW-NEO");
+			var livery_update = aircraft.livery_update.new("Aircraft/IDG-A32X/Models/Liveries/A320/PW-NEO");
 		</load>
 		<unload>
-		 livery_update.stop();
+			livery_update.stop();
 		</unload>
 	</nasal>
 	

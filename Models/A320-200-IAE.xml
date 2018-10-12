@@ -375,10 +375,10 @@
 	<!-- Nasal code -->
 	<nasal>
 		<load>
-		 var livery_update = aircraft.livery_update.new("Aircraft/IDG-A32X/Models/Liveries/A320/IAE");
+			var livery_update = aircraft.livery_update.new("Aircraft/IDG-A32X/Models/Liveries/A320/IAE");
 		</load>
 		<unload>
-		 livery_update.stop();
+			livery_update.stop();
 		</unload>
 	</nasal>
 	
