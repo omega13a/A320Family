@@ -17,13 +17,14 @@
 		<description>Airbus A320-251N (LEAP-1A26)</description>
 		<flight-model>jsb</flight-model>
 		<aero>A320neo-CFM</aero>
+		<variant-of>A320neo-PW</variant-of>
 		<model>
 			<path>Aircraft/IDG-A32X/Models/A320neo-CFM.xml</path>
 			<livery>
 				<file>Airbus</file>
 			</livery>
 		</model>
-
+		
 		<previews>
 			<preview>
 				<type>exterior</type>

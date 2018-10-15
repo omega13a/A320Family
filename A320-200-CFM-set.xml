@@ -17,6 +17,7 @@
 		<description>Airbus A320-214 (CFM56-5B4)</description>
 		<flight-model>jsb</flight-model>
 		<aero>A320-200-CFM</aero>
+		<variant-of>A320-200-IAE</variant-of>
 		<model>
 			<path>Aircraft/IDG-A32X/Models/A320-200-CFM.xml</path>
 			<livery>

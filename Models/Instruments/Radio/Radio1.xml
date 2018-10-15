@@ -1409,7 +1409,7 @@
 	<text>
 		<name>rmp-active</name>
 		<offsets>
-			<x-m>-0.22205</x-m>
+			<x-m>-0.23205</x-m>
 			<y-m>-0.21625</y-m>
 			<z-m>-0.12582</z-m>
 			<heading-deg>90</heading-deg>
@@ -1464,7 +1464,7 @@
 	<text>
 		<name>rmp-active-vhf3-data</name>
 		<offsets>
-			<x-m>-0.22205</x-m>
+			<x-m>-0.23205</x-m>
 			<y-m>-0.21625</y-m>
 			<z-m>-0.12582</z-m>
 			<heading-deg>90</heading-deg>
@@ -1501,7 +1501,7 @@
 	<text>
 		<name>rmp-active-test</name>
 		<offsets>
-			<x-m>-0.22205</x-m>
+			<x-m>-0.23205</x-m>
 			<y-m>-0.21625</y-m>
 			<z-m>-0.12582</z-m>
 			<heading-deg>90</heading-deg>
@@ -1560,7 +1560,7 @@
 	<text>
 		<name>rmp-standby</name>
 		<offsets>
-			<x-m>-0.22205</x-m>
+			<x-m>-0.23205</x-m>
 			<y-m>-0.14896</y-m>
 			<z-m>-0.12582</z-m>
 			<heading-deg>90</heading-deg>
@@ -1615,7 +1615,7 @@
 	<text>
 		<name>rmp-standby-vhf3-data</name>
 		<offsets>
-			<x-m>-0.22205</x-m>
+			<x-m>-0.23205</x-m>
 			<y-m>-0.14896</y-m>
 			<z-m>-0.12582</z-m>
 			<heading-deg>90</heading-deg>
@@ -1652,7 +1652,7 @@
 	<text>
 		<name>rmp-standby-test</name>
 		<offsets>
-			<x-m>-0.22205</x-m>
+			<x-m>-0.23205</x-m>
 			<y-m>-0.14896</y-m>
 			<z-m>-0.12582</z-m>
 			<heading-deg>90</heading-deg>

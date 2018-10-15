@@ -121,7 +121,7 @@
 	</model>
 
 	<!-- VOR Instrument -->
-	<model>
+	<!--model>
 		<path>Aircraft/IDG-A32X/Models/Instruments/VOR/VOR.xml</path>
 		<offsets>
 			<x-m>-0.51846</x-m>
@@ -129,16 +129,16 @@
 			<z-m>0.10572</z-m>
 			<pitch-deg>-16.534</pitch-deg>
 		</offsets>
-	</model>
+	</model-->
 
 	<!-- Brakes Pressure Indicator -->
 	<model>
 		<path>Aircraft/IDG-A32X/Models/Instruments/Brakes/Brakes.xml</path>
 		<offsets>
-			<x-m>-0.51327</x-m>
-			<y-m>0.21515</y-m>
-			<z-m>0.08365</z-m>
-			<pitch-deg>-16.534</pitch-deg>
+			<x-m>-0.5131</x-m>
+			<y-m>0.21535</y-m>
+			<z-m>0.083</z-m>
+			<pitch-deg>73.466</pitch-deg>
 		</offsets>
 	</model>
 
@@ -4512,10 +4512,10 @@
 			</binding>
 		</action>
 	</animation>
-	
+
 	<animation>
 		<type>select</type>
-		<object-name>gear_lever_label-lit</object-name>
+		<object-name>gear_lever_down_arrow</object-name>
 		<condition>
 			<or>
 				<equals>
@@ -4527,36 +4527,6 @@
 					<value>1</value>
 				</equals>
 			</or>
-		</condition>
-	</animation>
-	
-	<animation>
-		<type>material</type>
-		<object-name>gear_lever_label-lit</object-name>
-		<emission>
-			<red>1</red>
-			<green>0.725</green>
-			<blue>0.259</blue>
-			<factor-prop>systems/gear/landing-gear-warning-light</factor-prop>
-		</emission>
-	</animation>
-	
-	<animation>
-		<type>select</type>
-		<object-name>gear_lever_label</object-name>
-		<condition>
-			<not>
-				<or>
-					<equals>
-						<property>controls/switches/annun-test</property>
-						<value>1</value>
-					</equals>
-					<equals>
-						<property>systems/gear/landing-gear-warning-light</property>
-						<value>1</value>
-					</equals>
-				</or>
-			</not>
 		</condition>
 	</animation>
 	
@@ -4838,7 +4808,12 @@
 		<object-name>engine_glare</object-name>
 		<object-name>eng_mode.mark</object-name>
 		<object-name>flaps_scale</object-name>
-		<object-name>gear_lever_label</object-name>
+		<object-name>gear_lever_glare</object-name>
+		<object-name>brakes_glare</object-name>
+		<object-name>brakes_accum_psi.mark</object-name>
+		<object-name>brakes_lb_psi.mark</object-name>
+		<object-name>brakes_rb_psi.mark</object-name>
+		<object-name>clock_glare</object-name>
 		<object-name>flood_lt_main.mark</object-name>
 		<object-name>flood_lt_ped.mark</object-name>
 		<object-name>integ_lt.mark</object-name>
@@ -4923,7 +4898,7 @@
 				<command>nasal</command>
 				<script>
 					var trim = getprop("/controls/flight/elevator-trim");
-					setprop("/controls/flight/elevator-trim", trim + 0.01);
+					setprop("/controls/flight/elevator-trim", trim - 0.01);
 				</script>
 			</binding>
 		</action>
@@ -4935,7 +4910,7 @@
 				<command>nasal</command>
 				<script>
 					var trim = getprop("/controls/flight/elevator-trim");
-					setprop("/controls/flight/elevator-trim", trim - 0.01);
+					setprop("/controls/flight/elevator-trim", trim + 0.01);
 				</script>
 			</binding>
 		</action>
@@ -4947,15 +4922,8 @@
 		<property>fdm/jsbsim/hydraulics/elevator-trim/cmd-deg</property>
 		<factor>-15.55</factor>
 		<offset-deg>-0.9</offset-deg>
-		<center>
-			<x-m>-0.1507</x-m>
-			<y-m>0</y-m>
-			<z-m>-0.12886</z-m>
-		</center>
 		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
+			<object-name>trim.axis</object-name>
 		</axis>
 	</animation>
 	
@@ -4964,15 +4932,8 @@
 		<object-name>trim_1</object-name>
 		<property>controls/flight/elevator-trim</property>
 		<factor>-1000</factor>
-		<center>
-			<x-m>-0.1507</x-m>
-			<y-m>0</y-m>
-			<z-m>-0.12886</z-m>
-		</center>
 		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
+			<object-name>trim.axis</object-name>
 		</axis>
 	</animation>
 	
@@ -5436,15 +5397,8 @@
 			<entry><ind>1.00000</ind><dep>45</dep></entry>
 		</interpolation> 
 		<axis>
-			<x>0</x>
-			<y>-1</y>
-			<z>0</z>
+			<object-name>trim.axis</object-name>
 		</axis>
-		<center>
-			<x-m>-0.1507</x-m>
-			<y-m>0</y-m>
-			<z-m>-0.12886</z-m>
-		</center>
 	</animation>
 	<animation>
 		<name>Engine 1 throttle lever rev</name>
@@ -5453,15 +5407,8 @@
 		<property>controls/engines/engine[0]/reverser</property>
 		<factor>-3.5</factor> 
 		<axis>
-			<x>0</x>
-			<y>-1</y>
-			<z>0</z>
+			<object-name>trim.axis</object-name>
 		</axis>
-		<center>
-			<x-m>-0.1507</x-m>
-			<y-m>0</y-m>
-			<z-m>-0.12886</z-m>
-		</center>
 	</animation>
 	<animation>
 		<name>Engine 1 throttle lever rev 2</name>
@@ -5473,15 +5420,8 @@
 			<entry><ind>0.50</ind><dep>-20</dep></entry>
 		</interpolation> 
 		<axis>
-			<x>0</x>
-			<y>-1</y>
-			<z>0</z>
+			<object-name>trim.axis</object-name>
 		</axis>
-		<center>
-			<x-m>-0.1507</x-m>
-			<y-m>0</y-m>
-			<z-m>-0.12886</z-m>
-		</center>
 	</animation>
 	<animation>
 		<name>Engine 2 throttle lever pick</name>
@@ -5532,15 +5472,8 @@
 			<entry><ind>1.00000</ind><dep>45</dep></entry>
 		</interpolation> 
 		<axis>
-			<x>0</x>
-			<y>-1</y>
-			<z>0</z>
+			<object-name>trim.axis</object-name>
 		</axis>
-		<center>
-			<x-m>-0.1507</x-m>
-			<y-m>0</y-m>
-			<z-m>-0.12886</z-m>
-		</center>
 	</animation>
 	<animation>
 		<name>Engine 2 throttle lever rev</name>
@@ -5549,15 +5482,8 @@
 		<property>controls/engines/engine[1]/reverser</property>
 		<factor>-3.5</factor> 
 		<axis>
-			<x>0</x>
-			<y>-1</y>
-			<z>0</z>
+			<object-name>trim.axis</object-name>
 		</axis>
-		<center>
-			<x-m>-0.1507</x-m>
-			<y-m>0</y-m>
-			<z-m>-0.12886</z-m>
-		</center>
 	</animation>
 	<animation>
 		<name>Engine 2 throttle lever rev 2</name>
@@ -5569,15 +5495,8 @@
 			<entry><ind>0.50</ind><dep>-20</dep></entry>
 		</interpolation> 
 		<axis>
-			<x>0</x>
-			<y>-1</y>
-			<z>0</z>
+			<object-name>trim.axis</object-name>
 		</axis>
-		<center>
-			<x-m>-0.1507</x-m>
-			<y-m>0</y-m>
-			<z-m>-0.12886</z-m>
-		</center>
 	</animation>
 	
 	<animation>
@@ -5587,15 +5506,8 @@
 		<property>controls/engines/engine[0]/reverser</property>
 		<factor>60</factor>
 		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
+			<object-name>rev_l.axis</object-name>
 		</axis>
-		<center>
-			<x-m>-0.10437</x-m>
-			<y-m>0</y-m>
-			<z-m>0.02132</z-m>
-		</center>
 	</animation>
 
 	<animation>
@@ -5605,15 +5517,8 @@
 		<property>controls/engines/engine[1]/reverser</property>
 		<factor>60</factor>
 		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
+			<object-name>rev_r.axis</object-name>
 		</axis>
-		<center>
-			<x-m>-0.10437</x-m>
-			<y-m>0</y-m>
-			<z-m>0.02132</z-m>
-		</center>
 	</animation>
 	
 	<!-- Tray Tables -->

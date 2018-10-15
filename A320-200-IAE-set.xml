@@ -17,6 +17,7 @@
 		<description>Airbus A320-232 (IAE V2527-A5)</description>
 		<flight-model>jsb</flight-model>
 		<aero>A320-200-IAE</aero>
+		<primary-set>true</primary-set>
 		<model>
 			<path>Aircraft/IDG-A32X/Models/A320-200-IAE.xml</path>
 			<livery>

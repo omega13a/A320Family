@@ -10,13 +10,13 @@
 
 <PropertyList>
 
-	<path>res/brakes-ind.ac</path>
+	<path>res/Brakes.ac</path>
     
     <!-- Left Brake Pressure Indicator -->
     
     <animation>
     	<type>rotate</type>
-    	<object-name>lb_psi</object-name>
+    	<object-name>brakes_lb_psi</object-name>
     	<property>systems/hydraulic/brakes/pressure-left-psi</property>
     	<factor>0.03</factor>
 		<condition>
@@ -25,21 +25,14 @@
 				<value>2</value>
 			</equals>
 		</condition>
-    	<center>
-    		<x-m>0</x-m>
-    		<y-m>-0.0141</y-m>
-    		<z-m>-0.0106</z-m>
-    	</center>
     	<axis>
-    		<x>1</x>
-    		<y>0</y>
-    		<z>0</z>
+			<object-name>brakes_lb_psi.axis</object-name>
     	</axis>
     </animation>
     
     <animation>
     	<type>rotate</type>
-    	<object-name>rb_psi</object-name>
+    	<object-name>brakes_rb_psi</object-name>
     	<property>systems/hydraulic/brakes/pressure-right-psi</property>
     	<factor>-0.03</factor>
 		<condition>
@@ -48,21 +41,14 @@
 				<value>2</value>
 			</equals>
 		</condition>
-    	<center>
-    		<x-m>0</x-m>
-    		<y-m>0.0136</y-m>
-    		<z-m>-0.0107</z-m>
-    	</center>
     	<axis>
-    		<x>1</x>
-    		<y>0</y>
-    		<z>0</z>
+			<object-name>brakes_rb_psi.axis</object-name>
     	</axis>
     </animation>
     
     <animation>
     	<type>rotate</type>
-    	<object-name>accum_psi</object-name>
+    	<object-name>brakes_accum_psi</object-name>
     	<property>systems/hydraulic/brakes/accumulator-pressure-psi</property>
     	<interpolation>
 			<entry><ind>0</ind><dep>0</dep></entry>
@@ -70,15 +56,8 @@
 			<entry><ind>2000</ind><dep>78</dep></entry>
 			<entry><ind>3000</ind><dep>90</dep></entry>
 		</interpolation>
-    	<center>
-    		<x-m>0</x-m>
-    		<y-m>0.0012</y-m>
-    		<z-m>0.0134</z-m>
-    	</center>
     	<axis>
-    		<x>1</x>
-    		<y>0</y>
-    		<z>0</z>
+			<object-name>brakes_accum_psi.axis</object-name>
     	</axis>
     </animation>
 
