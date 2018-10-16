@@ -681,48 +681,6 @@
 		<output>/controls/flight/auto-coordination</output>
 	</filter>
 	
-	<filter>
-		<debug>false</debug>
-		<type>noise-spike</type>
-		<enable>
-			<condition>
-				<greater-than-equals>
-					<property>/systems/hydraulic/green-psi</property>
-					<value>1500</value>
-				</greater-than-equals>
-			</condition>
-		</enable>
-		<input>/controls/flight/elevator-trim</input>
-		<output>/controls/flight/elevator-trim-fdm</output>
-		<max-rate-of-change>0.1</max-rate-of-change>
-	</filter>
-	
-	<filter>
-		<debug>false</debug>
-		<type>noise-spike</type>
-		<enable>
-			<condition>
-				<or>
-					<greater-than-equals>
-						<property>/systems/hydraulic/green-psi</property>
-						<value>1500</value>
-					</greater-than-equals>
-					<greater-than-equals>
-						<property>/systems/hydraulic/blue-psi</property>
-						<value>1500</value>
-					</greater-than-equals>
-					<greater-than-equals>
-						<property>/systems/hydraulic/yellow-psi</property>
-						<value>1500</value>
-					</greater-than-equals>
-				</or>
-			</condition>
-		</enable>
-		<input>/controls/flight/rudder-trim</input>
-		<output>/controls/flight/rudder-trim-fdm</output>
-		<max-rate-of-change>0.5</max-rate-of-change>
-	</filter>
-	
 	<!-- Braking -->
 	
 	<filter>

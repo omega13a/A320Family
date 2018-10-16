@@ -582,9 +582,7 @@
 			<aileron-drives-tiller type="bool">0</aileron-drives-tiller>
 			<aileron-input>0</aileron-input>
 			<elevator-input>0</elevator-input>
-			<elevator-trim-fdm>0.0</elevator-trim-fdm>
 			<flap-pos type="int">0</flap-pos>
-			<rudder-trim-fdm>0.0</rudder-trim-fdm>
 			<speedbrake-arm>0</speedbrake-arm>
 			<slats>0</slats>
 		</flight>
