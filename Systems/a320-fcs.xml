@@ -1737,6 +1737,24 @@
 	
 	</channel>
 	
+	<channel name="SFCC">
+		
+		<switch name="fcs/sfcc/unit1-avail">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/dc-ess ge 25
+			</test>
+		</switch>
+		
+		<switch name="fcs/sfcc/unit2-avail">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/electrical/bus/dc2 ge 25
+			</test>
+		</switch>
+	
+	</channel>
+	
 	<channel name="Flaps">
 		
 		<pure_gain name="fcs/flap-pos-gain">
@@ -1746,8 +1764,28 @@
 		
 		<switch name="fcs/flap-pos-rate">
 			<default value="0.0"/>
-			<test logic="OR" value="1.16666666">
+			<test logic="AND" value="1.16666666">
 				/systems/hydraulic/green-psi ge 1500
+				/systems/hydraulic/yellow-psi ge 1500
+				fcs/sfcc/unit1-avail eq 1
+				fcs/sfcc/unit2-avail eq 1
+			</test>
+			<test logic="AND" value="0.58333333">
+				/systems/hydraulic/green-psi ge 1500
+				fcs/sfcc/unit1-avail eq 1
+				fcs/sfcc/unit2-avail eq 0
+			</test>
+			<test logic="AND" value="0.58333333">
+				/systems/hydraulic/yellow-psi ge 1500
+				fcs/sfcc/unit1-avail eq 0
+				fcs/sfcc/unit2-avail eq 1
+			</test>
+			<test logic="AND" value="0.58333333">
+				/systems/hydraulic/green-psi ge 1500
+				/systems/hydraulic/yellow-psi lt 1500
+			</test>
+			<test logic="AND" value="0.58333333">
+				/systems/hydraulic/green-psi lt 1500
 				/systems/hydraulic/yellow-psi ge 1500
 			</test>
 		</switch>
@@ -1782,10 +1820,29 @@
 		
 		<switch name="fcs/slat-pos-rate">
 			<default value="0.0"/>
-			<test logic="OR" value="1.35">
+			<test logic="AND" value="1.35">
 				/systems/hydraulic/blue-psi ge 1500
 				/systems/hydraulic/green-psi ge 1500
-				/systems/hydraulic/yellow-psi ge 1500
+				fcs/sfcc/unit1-avail eq 1
+				fcs/sfcc/unit2-avail eq 1
+			</test>
+			<test logic="AND" value="0.675">
+				/systems/hydraulic/blue-psi ge 1500
+				fcs/sfcc/unit1-avail eq 1
+				fcs/sfcc/unit2-avail eq 0
+			</test>
+			<test logic="AND" value="0.675">
+				/systems/hydraulic/green-psi ge 1500
+				fcs/sfcc/unit1-avail eq 0
+				fcs/sfcc/unit2-avail eq 1
+			</test>
+			<test logic="AND" value="0.675">
+				/systems/hydraulic/blue-psi ge 1500
+				/systems/hydraulic/green-psi lt 1500
+			</test>
+			<test logic="AND" value="0.675">
+				/systems/hydraulic/blue-psi lt 1500
+				/systems/hydraulic/green-psi ge 1500
 			</test>
 		</switch>
 		

@@ -9,10 +9,8 @@
 <!-- IT-AUTOFLIGHT -->
 
 <PropertyList>
-
- <!-- =============================================================== -->
- <!-- Vertical Modes                                                  -->
- <!-- =============================================================== -->
+	
+	<!-- Pitch Axis -->
 	
 	<filter>
 		<name>ALTITUDE CAPTURE/HOLD</name>
@@ -29,33 +27,19 @@
 		</input>
 		<reference>
 			<condition>
-				<not-equals>
+				<equals>
 					<property>/it-autoflight/output/vert</property>
 					<value>8</value>
-				</not-equals>
+				</equals>
 			</condition>
-			<property>/it-autoflight/internal/alt</property>
-		</reference>
-		<reference>
-			<condition>
-					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>8</value>
-					</equals>
-				</condition>
 			<property>/it-autoflight/internal/mng-alt</property>
 		</reference>
-		<output>
-			<property>/it-autoflight/internal/target-fpm</property>
-		</output>
-		<min>
-			<property>/it-autoflight/internal/min-vs</property>
-		</min>
-		<max>
-			<property>/it-autoflight/internal/max-vs</property>
-		</max>
+		<reference>/it-autoflight/internal/alt</reference>
+		<output>/it-autoflight/internal/target-fpm</output>
+		<min>/it-autoflight/internal/min-vs</min>
+		<max>/it-autoflight/internal/max-vs</max>
 	</filter>
-
+	
 	<pid-controller>
 		<name>FPA HOLD</name>
 		<debug>false</debug>
@@ -87,15 +71,9 @@
 				</and>
 			</condition>
 		</enable>
-		<input>
-			<property>/it-autoflight/internal/fpa</property>
-		</input>
-		<reference>
-			<property>/it-autoflight/input/fpa</property>
-		</reference>
-		<output>
-			<property>/it-autoflight/internal/target-fpm-d</property>
-		</output>
+		<input>/it-autoflight/internal/fpa</input>
+		<reference>/it-autoflight/input/fpa</reference>
+		<output>/it-autoflight/internal/target-fpm-d</output>
 		<config>
 			<Kp>
 				<expression>
@@ -106,9 +84,6 @@
 					</table>
 				</expression>
 			</Kp>
-			<beta>1.0</beta>
-			<alpha>0.1</alpha>
-			<gamma>0.0</gamma>
 			<Ti>2.0</Ti>
 			<Td>0.002</Td>
 			<u_min>
@@ -215,9 +190,7 @@
 			<property>/it-autoflight/internal/flch-mach</property>
 			<scale>1000.0</scale>
 		</reference>
-		<output>
-			<property>/it-autoflight/internal/target-fpm-b</property>
-		</output>
+		<output>/it-autoflight/internal/target-fpm-b</output>
 		<config>
 			<Kp>
 				<condition>
@@ -237,9 +210,6 @@
 				</condition>
 				<value>-60</value>
 			</Kp>
-			<beta>1.0</beta>    
-			<alpha>0.1</alpha>  
-			<gamma>0.0</gamma>  
 			<Ti>2.5</Ti>        
 			<Td>0.001</Td>
 			<u_min>
@@ -505,9 +475,7 @@
 				</and>
 			</condition>
 		</enable>
-		<input>
-			<property>/it-autoflight/internal/vert-speed-fpm</property>
-		</input>
+		<input>/it-autoflight/internal/vert-speed-fpm</input>
 		<reference>
 			<condition>
 				<or>
@@ -590,9 +558,7 @@
 			</condition>
 			<property>/it-autoflight/internal/nav1-rate-of-climb-fpm</property>
 		</reference>
-		<output>
-			<property>/it-autoflight/internal/target-pitch-deg</property>
-		</output>
+		<output>/it-autoflight/internal/target-pitch-deg</output>
 		<config>
 			<Kp>
 				<condition>
@@ -711,21 +677,15 @@
 		<min>-15</min>
 		<max>30</max>
 	</filter>
-
+	
 	<filter>
 		<name>System Command: Pitch Rate</name>
 		<debug>false</debug>
 		<type>gain</type>
 		<gain>0.15</gain>
-		<input>
-			<property>/orientation/pitch-deg</property>
-		</input>
-		<reference>
-			<property>/it-autoflight/internal/target-pitch-deg</property>
-		</reference>
-		<output>
-			<property>/fdm/jsbsim/fbw/fmgc/pitch-cmd</property> <!-- Inputs to the FBW Pitch Rate -->
-		</output>
+		<input>/orientation/pitch-deg</input>
+		<reference>/it-autoflight/internal/target-pitch-deg</reference>
+		<output>/fdm/jsbsim/fbw/fmgc/pitch-cmd</output> <!-- Inputs to the FBW Pitch -->
 		<min>-0.3</min>
 		<max>0.3</max>
 	</filter>

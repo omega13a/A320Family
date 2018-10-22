@@ -717,6 +717,13 @@
 	</services>
 	
 	<systems>
+		<electrical n="0">
+			<bus n="0">
+				<dc-ess>0</dc-ess>
+				<dc1>0</dc1>
+				<dc2>0</dc2>
+			</bus>
+		</electrical>
 		<failures n="0">
 			<aileron-left type="bool">0</aileron-left>
 			<aileron-right type="bool">0</aileron-right>
