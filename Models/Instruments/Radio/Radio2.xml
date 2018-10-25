@@ -222,7 +222,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>rmp.transfer(1);</script>
+				<script>rmp.transfer(2);</script>
 				<condition>
 					<and>
 						<greater-than-equals>
