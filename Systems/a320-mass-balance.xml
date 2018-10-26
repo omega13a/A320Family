@@ -23,6 +23,7 @@
 		<z> 0.19249 </z>
 	</location>
 	
+	<!-- average human weight 145 lbs, max 44000 lb -->
 	<pointmass name="Crew">
 		<weight unit="LBS">380</weight>
 		<location name="POINTMASS" unit="M">

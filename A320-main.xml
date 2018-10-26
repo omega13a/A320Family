@@ -422,28 +422,28 @@
 	
 	<payload>
 		<weight n="0">
-			<name>Cockpit Crew</name>
+			<name>Crew</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[0]"/>
-			<min-lb type="double">200</min-lb>
-			<max-lb type="double">440</max-lb>
+			<min-lb type="double">280</min-lb>
+			<max-lb type="double">840</max-lb>
 		</weight>
 		<weight n="1">
 			<name>Passengers</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[1]"/>
-			<min-lb type="double">1500</min-lb>
-			<max-lb type="double">27000</max-lb>
+			<min-lb type="double">0</min-lb>
+			<max-lb type="double">24360</max-lb>
 		</weight>
 		<weight n="2">
 			<name>Forward Cargo</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[2]"/>
-			<min-lb type="double">300</min-lb>
-			<max-lb type="double">8765</max-lb>
+			<min-lb type="double">0</min-lb>
+			<max-lb type="double">9400</max-lb>
 		</weight>
 		<weight n="3">
 			<name>Aft Cargo</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[3]"/>
-			<min-lb type="double">300</min-lb>
-			<max-lb type="double">8765</max-lb>
+			<min-lb type="double">0</min-lb>
+			<max-lb type="double">9400</max-lb>
 		</weight>
 	</payload>
 	
