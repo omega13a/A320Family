@@ -422,10 +422,10 @@
 	
 	<payload>
 		<weight n="0">
-			<name>Crew</name>
+			<name>Cockpit Crew</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[0]"/>
-			<min-lb type="double">280</min-lb>
-			<max-lb type="double">840</max-lb>
+			<min-lb type="double">200</min-lb>
+			<max-lb type="double">440</max-lb>
 		</weight>
 		<weight n="1">
 			<name>Passengers</name>

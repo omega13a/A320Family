@@ -161,21 +161,29 @@ var update_stby_vhf = func(rmp_no, vhf) {
 			var stby = sprintf("%3.3f", stby_rmp1_vhf1.getValue());
 		} else if (vhf == 2) {
 			var stby = sprintf("%3.3f", stby_rmp1_vhf2.getValue());
-		} else {
+		} else if (vhf == 3) {
 			var stby = sprintf("%3.3f", stby_rmp1_vhf3.getValue());
 		}
 
-		stby_display_rmp1.setValue(stby);
+		if (stby == 0) {
+			stby_display_rmp1.setValue("data");
+		} else {
+			stby_display_rmp1.setValue(stby);
+		}
 	} else {
 		if (vhf == 1) {
 			var stby = sprintf("%3.3f", stby_rmp2_vhf1.getValue());
 		} else if (vhf == 2) {
 			var stby = sprintf("%3.3f", stby_rmp2_vhf2.getValue());
-		} else {
+		} else if (vhf == 3) {
 			var stby = sprintf("%3.3f", stby_rmp2_vhf3.getValue());
 		}
 
-		stby_display_rmp2.setValue(stby);
+		if (stby == 0) {
+			stby_display_rmp2.setValue("data");
+		} else {
+			stby_display_rmp2.setValue(stby);
+		}
 	}
 }
 
@@ -228,7 +236,6 @@ var transfer = func(rmp_no) {
 		setprop("/systems/radio/rmp[" ~ rmp_no ~ "]/vhf" ~ mod1 ~ "-standby", mem);
 	}
 }
-
 
 setlistener("/systems/radio/rmp[0]/vhf1-standby", func {
 	update_stby_vhf(0, 1);
