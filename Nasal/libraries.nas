@@ -33,11 +33,11 @@ setprop("/engines/engine[1]/oil-qt-actual", qty2);
 # Lights #
 ##########
 
-var beacon_switch = props.globals.getNode("/controls/switches/beacon", 2);
+var beacon_switch = props.globals.getNode("/controls/switches/beacon", 1);
 var beacon = aircraft.light.new("/sim/model/lights/beacon", [0.1, 1], "/controls/lighting/beacon");
-var strobe_switch = props.globals.getNode("/controls/switches/strobe", 2);
+var strobe_switch = props.globals.getNode("/controls/switches/strobe", 1);
+var strobe_light = props.globals.getNode("/controls/lighting/strobe", 1);
 var strobe = aircraft.light.new("/sim/model/lights/strobe", [0.05, 0.06, 0.05, 1], "/controls/lighting/strobe");
-var tail_strobe_switch = props.globals.getNode("/controls/switches/tailstrobe", 2);
 var tail_strobe = aircraft.light.new("/sim/model/lights/tailstrobe", [0.1, 1], "/controls/lighting/strobe");
 var logo_lights = getprop("/sim/model/lights/logo-lights");
 var nav_lights = props.globals.getNode("/sim/model/lights/nav-lights");
@@ -109,19 +109,19 @@ setlistener("/sim/sounde/switch1", func {
 	}, 0.05);
 });
 
-setlistener("/controls/switches/seatbelt-sign", func {
+setlistener("/controls/lighting/seatbelt-sign", func {
 	props.globals.getNode("/sim/sounde/seatbelt-sign").setBoolValue(1);
 	settimer(func {
 		props.globals.getNode("/sim/sounde/seatbelt-sign").setBoolValue(0);
 	}, 2);
-});
+}, 0, 0);
 
-setlistener("/controls/switches/no-smoking-sign", func {
+setlistener("/controls/lighting/no-smoking-sign", func {
 	props.globals.getNode("/sim/sounde/no-smoking-sign").setBoolValue(1);
 	settimer(func {
 		props.globals.getNode("/sim/sounde/no-smoking-sign").setBoolValue(0);
 	}, 1);
-});
+}, 0, 0);
 
 #########
 # Doors #
@@ -181,8 +181,8 @@ var systemsInit = func {
 	fadec.FADEC.init();
   	fmgc.APinit();			
 	fmgc.FMGCinit();
-	mcdu1.MCDU_init();
-	mcdu2.MCDU_init();
+	mcdu.MCDU_init(0);
+	mcdu.MCDU_init(1);
 	systemsLoop.start();
 	icing.icingInit();
 	lightsLoop.start();
@@ -193,6 +193,7 @@ var systemsInit = func {
 	libraries.BUTTONS.init();
 	libraries.variousReset();
 	rmp.init();
+	acp.init();
 }
 
 setlistener("/sim/signals/fdm-initialized", func {
@@ -208,6 +209,7 @@ var systemsLoop = maketimer(0.1, func {
 	libraries.ECAM.loop();
 	libraries.BUTTONS.update();
 	fadec.FADEC.loop();
+#	ecam.ECAM_controller.loop();
 	rmp.rmpUpdate();
 	
 	if ((getprop("/controls/pneumatic/switches/groundair") or getprop("/controls/switches/cart")) and ((getprop("/velocities/groundspeed-kt") > 2) or getprop("/controls/gear/brake-parking") == 0)) {
@@ -517,6 +519,47 @@ var lightsLoop = maketimer(0.2, func {
 		nav_lights.setBoolValue(1);
 	} else {
 		nav_lights.setBoolValue(0);
+	}
+	
+	# strobe
+	strobe_sw = strobe_switch.getValue();
+	
+	if (strobe_sw == 1) {
+		strobe_light.setValue(1);
+	} elsif (strobe_sw == 0.5 and getprop("/gear/gear[1]/wow") == 0 and getprop("/gear/gear[2]/wow") == 0) {
+		# todo: use lgciu output 5
+		strobe_light.setValue(1);
+	} else {
+		strobe_light.setValue(0);
+	}
+	
+	# signs
+	
+	if (getprop("/systems/pressurization/cabinalt-norm") > 11300) {
+		setprop("/controls/lighting/seatbelt-sign", 1);
+		setprop("/controls/lighting/no-smoking-sign", 1);
+	} else {
+		if (getprop("controls/switches/seatbelt-sign") == 1) {
+			 if (getprop("/controls/lighting/seatbelt-sign") == 0) {
+				setprop("/controls/lighting/seatbelt-sign", 1);
+			}
+		} elsif (getprop("controls/switches/seatbelt-sign") == 0) {
+			 if (getprop("/controls/lighting/seatbelt-sign") == 1) {
+				setprop("/controls/lighting/seatbelt-sign", 0);
+			}
+		}
+		
+		if (getprop("controls/switches/no-smoking-sign") == 1) {
+			if (getprop("/controls/lighting/no-smoking-sign") == 0) {
+				setprop("/controls/lighting/no-smoking-sign", 1);
+			}
+		} elsif (getprop("controls/switches/no-smoking-sign") == 0.5 and getprop("gear/gear[0]/position-norm") != 0) {
+			if (getprop("/controls/lighting/no-smoking-sign") == 0) {
+				setprop("/controls/lighting/no-smoking-sign", 1);
+			}
+		} else {
+			setprop("/controls/lighting/no-smoking-sign", 0); # sign stays on in cabin but sound still occurs
+		}
 	}
 });
 

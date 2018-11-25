@@ -198,7 +198,9 @@ var PNEU = {
 		# Air Sources/PSI
 		if (rpmapu >= 94.9 and bleedapu_sw and !bleedapu_fail) {
 			setprop("/systems/pneumatic/bleedapu", 34);
-			setprop("/systems/apu/bleed-used", 1);
+			if (getprop("/controls/APU/master") == 1) {
+				setprop("/systems/apu/bleed-used", 1);
+			}
 		} else {
 			setprop("/systems/pneumatic/bleedapu", 0);
 		}

@@ -246,7 +246,7 @@ var canvas_PFD_base = {
 		if (acconfig_mismatch.getValue() == "0x000") {
 			PFD_1_mismatch.page.hide();
 			PFD_2_mismatch.page.hide();
-			if (acess.getValue() >= 110 and du1_lgt.getValue() > 0) {
+			if (acess.getValue() >= 110 and du1_lgt.getValue() > 0.01) {
 				if (du1_test_time.getValue() + du1_test_amount.getValue() >= elapsedtime_act and cpt_du_xfr.getValue() != 1) {
 					PFD_1_test.update();
 					updateL = 0;
@@ -269,7 +269,7 @@ var canvas_PFD_base = {
 				PFD_1_test.page.hide();
 				PFD_1.page.hide();
 			}
-			if (ac2.getValue() >= 110 and du6_lgt.getValue() > 0) {
+			if (ac2.getValue() >= 110 and du6_lgt.getValue() > 0.01) {
 				if (du6_test_time.getValue() + du6_test_amount.getValue() >= elapsedtime_act and fo_du_xfr.getValue() != 1) {
 					PFD_2_test.update();
 					updateR = 0;

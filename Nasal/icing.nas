@@ -234,6 +234,15 @@ var icingModel = func {
 			setprop("/systems/pitot/failed", 0);
 		}
 	}
+	
+	if ((getprop("/systems/electrical/bus/dc1") == 0 or getprop("/systems/electrical/bus/dc2") == 0) and getprop("/fdm/jsbsim/position/wow") == 0) {
+		setprop("/controls/switches/leng", 1);
+		setprop("/controls/switches/reng", 1);
+	}
+	
+	if (getprop("/systems/electrical/bus/dc-ess-shed") == 0) {
+		setprop("/controls/switches/wing", 0);
+	}
 }
 
 #################

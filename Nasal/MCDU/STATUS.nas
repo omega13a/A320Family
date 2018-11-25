@@ -4,8 +4,8 @@
 # Copyright (c) Joshua Davidson (it0uchpods) #
 ##############################################
 
-var perfDESInput = func(key) {
-	if (key == "L6") {
-		setprop("/MCDU[0]/page", "CRZ");
+var statusInput = func(key, i) {
+	if (key == "L3") {
+		fmgc.switchDatabase();
 	}
 }

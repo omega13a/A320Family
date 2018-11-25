@@ -53,7 +53,15 @@
 		<reference>0</reference>
 		<output>/it-autoflight/internal/target-roll-deg</output>
 		<config>
-			<Kp>-1.8</Kp>
+			<Kp>
+				<expression>
+					<table>
+						<property>/fdm/jsbsim/velocities/vc-kts</property>
+						<entry><ind>140</ind><dep>-1.8</dep></entry>
+						<entry><ind>360</ind><dep>-2.8</dep></entry>
+					</table>
+				</expression>
+			</Kp>
 			<Ki>-0.000001</Ki>
 			<min>
 				<property>/it-autoflight/internal/bank-limit</property>

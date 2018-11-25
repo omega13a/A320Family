@@ -10,6 +10,8 @@ var upperECAM_iae_eis2 = nil;
 var upperECAM_test = nil;
 var upperECAM_display = nil;
 var elapsedtime = 0;
+var leftmsg = "XX";
+var rightmsg = "XX";
 
 # Create Nodes:
 var fuel_1 = props.globals.initNode("/engines/engine[0]/fuel-flow_actual", 0);
@@ -51,8 +53,8 @@ var modeautobrake = props.globals.getNode("/controls/autobrake/mode", 1);
 var speedbrakearm = props.globals.getNode("/controls/flight/speedbrake-arm", 1);
 var ECAMtoconfig = props.globals.getNode("/ECAM/to-config", 1);
 var gear = props.globals.getNode("/gear/gear[1]/position-norm", 1);
-var smoke = props.globals.getNode("/controls/switches/no-smoking-sign", 1);
-var seatbelt = props.globals.getNode("/controls/switches/seatbelt-sign", 1);
+var smoke = props.globals.getNode("/controls/lighting/no-smoking-sign", 1);
+var seatbelt = props.globals.getNode("/controls/lighting/seatbelt-sign", 1);
 var flaps3_ovr = props.globals.getNode("/instrumentation/mk-viii/inputs/discretes/momentary-flap-3-override", 1);
 var wow0 = props.globals.getNode("/gear/gear[0]/wow");
 var eng1_n1 = props.globals.getNode("/engines/engine[0]/n1-actual", 1);
@@ -83,15 +85,16 @@ var ECAM_line5 = props.globals.getNode("/ECAM/msg/line5", 1);
 var ECAM_line6 = props.globals.getNode("/ECAM/msg/line6", 1);
 var ECAM_line7 = props.globals.getNode("/ECAM/msg/line7", 1);
 var ECAM_line8 = props.globals.getNode("/ECAM/msg/line8", 1);
-var ECAM_line1c = props.globals.getNode("/ECAM/msg/line1c", 1);
-var ECAM_line2c = props.globals.getNode("/ECAM/msg/line2c", 1);
-var ECAM_line3c = props.globals.getNode("/ECAM/msg/line3c", 1);
-var ECAM_line4c = props.globals.getNode("/ECAM/msg/line4c", 1);
-var ECAM_line5c = props.globals.getNode("/ECAM/msg/line5c", 1);
-var ECAM_line6c = props.globals.getNode("/ECAM/msg/line6c", 1);
-var ECAM_line7c = props.globals.getNode("/ECAM/msg/line7c", 1);
-var ECAM_line8c = props.globals.getNode("/ECAM/msg/line8c", 1);
+var ECAM_line1c = props.globals.getNode("/ECAM/msg/linec1", 1);
+var ECAM_line2c = props.globals.getNode("/ECAM/msg/linec2", 1);
+var ECAM_line3c = props.globals.getNode("/ECAM/msg/linec3", 1);
+var ECAM_line4c = props.globals.getNode("/ECAM/msg/linec4", 1);
+var ECAM_line5c = props.globals.getNode("/ECAM/msg/linec5", 1);
+var ECAM_line6c = props.globals.getNode("/ECAM/msg/linec6", 1);
+var ECAM_line7c = props.globals.getNode("/ECAM/msg/linec7", 1);
+var ECAM_line8c = props.globals.getNode("/ECAM/msg/linec8", 1);
 var ECAMleft = props.globals.getNode("/ECAM/left-msg", 1);
+var ECAMright = props.globals.getNode("/ECAM/right-msg", 1);
 var rate = props.globals.getNode("/systems/acconfig/options/uecam-rate", 1);
 
 var canvas_upperECAM_base = {
@@ -138,7 +141,7 @@ var canvas_upperECAM_base = {
 		}
 		
 		cur_eng_option = eng_option.getValue();
-		if (acess.getValue() >= 110 and du3_lgt.getValue() > 0) {
+		if (acess.getValue() >= 110 and du3_lgt.getValue() > 0.01) {
 			if (du3_test_time.getValue() + du3_test_amount.getValue() >= elapsedtime) {
 				upperECAM_cfm_eis2.page.hide();
 				upperECAM_iae_eis2.page.hide();
@@ -223,6 +226,7 @@ var canvas_upperECAM_base = {
 		line7c = ECAM_line7c.getValue();
 		line8c = ECAM_line8c.getValue();
 		leftmsg = ECAMleft.getValue();
+		rightmsg = ECAMright.getValue();
 		
 		if (leftmsg == "MSG") {
 			me["ECAML1"].setText(sprintf("%s", ECAM_line1.getValue()));
@@ -432,6 +436,134 @@ var canvas_upperECAM_base = {
 			me["TO_Memo"].hide();
 			me["LDG_Memo"].hide();
 		}
+		
+		# Right ECAM Messages
+		if (rightmsg == "MSG") {
+			me["ECAMR1"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line1")));
+			me["ECAMR2"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line2")));
+			me["ECAMR3"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line3")));
+			me["ECAMR4"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line4")));
+			me["ECAMR5"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line5")));
+			me["ECAMR6"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line6")));
+			me["ECAMR7"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line7")));
+			me["ECAMR8"].setText(sprintf("%s", getprop("/ECAM/rightmsg/line8")));
+			
+			if (getprop("/ECAM/rightmsg/linec1") == "w") {
+				me["ECAMR1"].setColor(0.8078,0.8039,0.8078);
+			} else if (getprop("/ECAM/rightmsg/linec1") == "b") {
+				me["ECAMR1"].setColor(0.0901,0.6039,0.7176);
+			} else if (getprop("/ECAM/rightmsg/linec1") == "g") {
+				me["ECAMR1"].setColor(0.0509,0.7529,0.2941);
+			} else if (getprop("/ECAM/rightmsg/linec1") == "a") {
+				me["ECAMR1"].setColor(0.7333,0.3803,0);
+			} else if (getprop("/ECAM/rightmsg/linec1") == "r") {
+				me["ECAMR1"].setColor(1,0,0);
+			} else if (getprop("/ECAM/rightmsg/linec1") == "m") {
+				me["ECAMR1"].setColor(0.6901,0.3333,0.7450);
+			}
+			
+			if (getprop("/ECAM/rightmsg/linec2") == "w") {
+				me["ECAMR2"].setColor(0.8078,0.8039,0.8078);
+			} else if (getprop("/ECAM/rightmsg/linec2") == "b") {
+				me["ECAMR2"].setColor(0.0901,0.6039,0.7176);
+			} else if (getprop("/ECAM/rightmsg/linec2") == "g") {
+				me["ECAMR2"].setColor(0.0509,0.7529,0.2941);
+			} else if (getprop("/ECAM/rightmsg/linec2") == "a") {
+				me["ECAMR2"].setColor(0.7333,0.3803,0);
+			} else if (getprop("/ECAM/rightmsg/linec2") == "r") {
+				me["ECAMR2"].setColor(1,0,0);
+			} else if (getprop("/ECAM/rightmsg/linec2") == "m") {
+				me["ECAMR2"].setColor(0.6901,0.3333,0.7450);
+			}
+			
+			if (getprop("/ECAM/rightmsg/linec3") == "w") {
+				me["ECAMR3"].setColor(0.8078,0.8039,0.8078);
+			} else if (getprop("/ECAM/rightmsg/linec3") == "b") {
+				me["ECAMR3"].setColor(0.0901,0.6039,0.7176);
+			} else if (getprop("/ECAM/rightmsg/linec3") == "g") {
+				me["ECAMR3"].setColor(0.0509,0.7529,0.2941);
+			} else if (getprop("/ECAM/rightmsg/linec3") == "a") {
+				me["ECAMR3"].setColor(0.7333,0.3803,0);
+			} else if (getprop("/ECAM/rightmsg/linec3") == "r") {
+				me["ECAMR3"].setColor(1,0,0);
+			} else if (getprop("/ECAM/rightmsg/linec3") == "m") {
+				me["ECAMR3"].setColor(0.6901,0.3333,0.7450);
+			}
+			
+			if (getprop("/ECAM/rightmsg/linec4") == "w") {
+				me["ECAMR4"].setColor(0.8078,0.8039,0.8078);
+			} else if (getprop("/ECAM/rightmsg/linec4") == "b") {
+				me["ECAMR4"].setColor(0.0901,0.6039,0.7176);
+			} else if (getprop("/ECAM/rightmsg/linec4") == "g") {
+				me["ECAMR4"].setColor(0.0509,0.7529,0.2941);
+			} else if (getprop("/ECAM/rightmsg/linec4") == "a") {
+				me["ECAMR4"].setColor(0.7333,0.3803,0);
+			} else if (getprop("/ECAM/rightmsg/linec4") == "r") {
+				me["ECAMR4"].setColor(1,0,0);
+			} else if (getprop("/ECAM/rightmsg/linec4") == "m") {
+				me["ECAMR4"].setColor(0.6901,0.3333,0.7450);
+			}
+			
+			if (getprop("/ECAM/rightmsg/linec5") == "w") {
+				me["ECAMR5"].setColor(0.8078,0.8039,0.8078);
+			} else if (getprop("/ECAM/rightmsg/linec5") == "b") {
+				me["ECAMR5"].setColor(0.0901,0.6039,0.7176);
+			} else if (getprop("/ECAM/rightmsg/linec5") == "g") {
+				me["ECAMR5"].setColor(0.0509,0.7529,0.2941);
+			} else if (getprop("/ECAM/rightmsg/linec5") == "a") {
+				me["ECAMR5"].setColor(0.7333,0.3803,0);
+			} else if (getprop("/ECAM/rightmsg/linec5") == "r") {
+				me["ECAMR5"].setColor(1,0,0);
+			} else if (getprop("/ECAM/rightmsg/linec5") == "m") {
+				me["ECAMR5"].setColor(0.6901,0.3333,0.7450);
+			}
+			
+			if (getprop("/ECAM/rightmsg/linec6") == "w") {
+				me["ECAMR6"].setColor(0.8078,0.8039,0.8078);
+			} else if (getprop("/ECAM/rightmsg/linec6") == "b") {
+				me["ECAMR6"].setColor(0.0901,0.6039,0.7176);
+			} else if (getprop("/ECAM/rightmsg/linec6") == "g") {
+				me["ECAMR6"].setColor(0.0509,0.7529,0.2941);
+			} else if (getprop("/ECAM/rightmsg/linec6") == "a") {
+				me["ECAMR6"].setColor(0.7333,0.3803,0);
+			} else if (getprop("/ECAM/rightmsg/linec6") == "r") {
+				me["ECAMR6"].setColor(1,0,0);
+			} else if (getprop("/ECAM/rightmsg/linec6") == "m") {
+				me["ECAMR6"].setColor(0.6901,0.3333,0.7450);
+			}
+			
+			if (getprop("/ECAM/rightmsg/linec7") == "w") {
+				me["ECAMR7"].setColor(0.8078,0.8039,0.8078);
+			} else if (getprop("/ECAM/rightmsg/linec7") == "b") {
+				me["ECAMR7"].setColor(0.0901,0.6039,0.7176);
+			} else if (getprop("/ECAM/rightmsg/linec7") == "g") {
+				me["ECAMR7"].setColor(0.0509,0.7529,0.2941);
+			} else if (getprop("/ECAM/rightmsg/linec7") == "a") {
+				me["ECAMR7"].setColor(0.7333,0.3803,0);
+			} else if (getprop("/ECAM/rightmsg/linec7") == "r") {
+				me["ECAMR7"].setColor(1,0,0);
+			} else if (getprop("/ECAM/rightmsg/linec7") == "m") {
+				me["ECAMR7"].setColor(0.6901,0.3333,0.7450);
+			}
+			
+			if (getprop("/ECAM/rightmsg/linec8") == "w") {
+				me["ECAMR8"].setColor(0.8078,0.8039,0.8078);
+			} else if (getprop("/ECAM/rightmsg/linec8") == "b") {
+				me["ECAMR8"].setColor(0.0901,0.6039,0.7176);
+			} else if (getprop("/ECAM/rightmsg/linec8") == "g") {
+				me["ECAMR8"].setColor(0.0509,0.7529,0.2941);
+			} else if (getprop("/ECAM/rightmsg/linec8") == "a") {
+				me["ECAMR8"].setColor(0.7333,0.3803,0);
+			} else if (getprop("/ECAM/rightmsg/linec8") == "r") {
+				me["ECAMR8"].setColor(1,0,0);
+			} else if (getprop("/ECAM/rightmsg/linec8") == "m") {
+				me["ECAMR8"].setColor(0.6901,0.3333,0.7450);
+			}
+			
+			me["ECAM_Right"].show();
+		} else {
+			me["ECAM_Right"].hide();
+		}
 	},
 };
 
@@ -446,7 +578,7 @@ var canvas_upperECAM_cfm_eis2 = {
 		return ["N11-needle","N11-thr","N11-ylim","N11","N11-decpnt","N11-decimal","N11-box","N11-scale","N11-scale2","N11-scaletick","N11-scalenum","N11-XX","N11-XX2","N11-XX-box","EGT1-needle","EGT1","EGT1-scale","EGT1-box","EGT1-scale2","EGT1-scaletick",
 		"EGT1-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal","N12-box","N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N12-XX2","N12-XX-box","EGT2-needle","EGT2",
 		"EGT2-scale","EGT2-box","EGT2-scale2","EGT2-scaletick","EGT2-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","N1Lim-mode","N1Lim","N1Lim-decpnt","N1Lim-decimal","N1Lim-percent","N1Lim-XX","N1Lim-XX2","REV1",
-		"REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","TO_Memo","TO_Autobrake","TO_Signs","TO_Spoilers","TO_Flaps","TO_Config","TO_Autobrake_B","TO_Signs_B","TO_Spoilers_B","TO_Flaps_B",
+		"REV1-box","REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right", "TO_Memo","TO_Autobrake","TO_Signs","TO_Spoilers","TO_Flaps","TO_Config","TO_Autobrake_B","TO_Signs_B","TO_Spoilers_B","TO_Flaps_B",
 		"TO_Config_B","LDG_Memo","LDG_Gear","LDG_Signs","LDG_Spoilers","LDG_Flaps","LDG_Gear_B","LDG_Signs_B","LDG_Spoilers_B","LDG_Flaps_B","LDG_Flaps_B3"];
 	},
 	update: func() {
@@ -692,7 +824,7 @@ var canvas_upperECAM_iae_eis2 = {
 		"N11-needle","N11-thr","N11-ylim","N11","N11-decpnt","N11-decimal","N11-scale","N11-scale2","N11-scaletick","N11-scalenum","N11-XX","N21","N21-decpnt","N21-decimal","N21-XX","FF1","FF1-XX","EPR2-needle","EPR2-thr","EPR2-ylim","EPR2","EPR2-decpnt",
 		"EPR2-decimal","EPR2-box","EPR2-scale","EPR2-scaletick","EPR2-scalenum","EPR2-XX","EPR2-XX2","EGT2-needle","EGT2","EGT2-scale","EGT2-scale2","EGT2-box","EGT2-scaletick","EGT2-XX","N12-needle","N12-thr","N12-ylim","N12","N12-decpnt","N12-decimal",
 		"N12-scale","N12-scale2","N12-scaletick","N12-scalenum","N12-XX","N22","N22-decpnt","N22-decimal","N22-XX","FF2","FF2-XX","FOB-LBS","FlapTxt","FlapDots","EPRLim-mode","EPRLim","EPRLim-decpnt","EPRLim-decimal","EPRLim-XX","EPRLim-XX2","REV1","REV1-box",
-		"REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8","TO_Memo","TO_Autobrake","TO_Signs","TO_Spoilers","TO_Flaps","TO_Config","TO_Autobrake_B","TO_Signs_B","TO_Spoilers_B","TO_Flaps_B","TO_Config_B",
+		"REV2","REV2-box","ECAM_Left","ECAML1","ECAML2","ECAML3","ECAML4","ECAML5","ECAML6","ECAML7","ECAML8", "ECAMR1", "ECAMR2", "ECAMR3", "ECAMR4", "ECAMR5", "ECAMR6", "ECAMR7", "ECAMR8", "ECAM_Right", "TO_Memo","TO_Autobrake","TO_Signs","TO_Spoilers","TO_Flaps","TO_Config","TO_Autobrake_B","TO_Signs_B","TO_Spoilers_B","TO_Flaps_B","TO_Config_B",
 		"LDG_Memo","LDG_Gear","LDG_Signs","LDG_Spoilers","LDG_Flaps","LDG_Gear_B","LDG_Signs_B","LDG_Spoilers_B","LDG_Flaps_B","LDG_Flaps_B3"];
 	},
 	update: func() {

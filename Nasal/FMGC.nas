@@ -304,8 +304,8 @@ var reset_FMGC = func {
 	alt = getprop("/it-autoflight/input/alt");
 	APinit();
 	FMGCinit();
-	mcdu1.MCDU_reset();
-	mcdu2.MCDU_reset();
+	mcdu.MCDU_reset(0);
+	mcdu.MCDU_reset(1);
 	setprop("/it-autoflight/input/fd1", fd1);
 	setprop("/it-autoflight/input/fd2", fd2);
 	setprop("/it-autoflight/input/spd-kts", spd);

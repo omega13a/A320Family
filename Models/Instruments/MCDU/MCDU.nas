@@ -94,7 +94,7 @@ var canvas_MCDU_base = {
 		"PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE"];
 	},
 	update: func() {
-		if (getprop("/systems/electrical/bus/ac1") >= 110) {
+		if (getprop("/systems/electrical/bus/ac1") >= 110 and getprop("/controls/lighting/DU/mcdu1") > 0.01) {
 			MCDU_1.update();
 			MCDU_1.updateFast();
 			updateL = 1;
@@ -103,7 +103,7 @@ var canvas_MCDU_base = {
 			updateL = 0;
 			MCDU_1.page.hide();
 		}
-		if (getprop("/systems/electrical/bus/ac2") >= 110) {
+		if (getprop("/systems/electrical/bus/ac2") >= 110 and getprop("/controls/lighting/DU/mcdu2") > 0.01) {
 			MCDU_2.update();
 			MCDU_2.updateFast();
 			updateR = 1;

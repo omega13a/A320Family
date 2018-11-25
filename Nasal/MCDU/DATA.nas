@@ -4,19 +4,19 @@
 # Copyright (c) Joshua Davidson (it0uchpods) #
 ##############################################
 
-var dataInput = func(key) {
+var dataInput = func(key, i) {
 	if (key == "L1") {
-		setprop("/MCDU[1]/page", "POSMON");
+		setprop("/MCDU[" ~ i ~ "]/page", "POSMON");
 	}
 	if (key == "L2") {
-		setprop("/MCDU[1]/page", "IRSMON");
+		setprop("/MCDU[" ~ i ~ "]/page", "IRSMON");
 	}
 	if (key == "R5") {
-		setprop("/MCDU[1]/page", "PRINTFUNC");
+		setprop("/MCDU[" ~ i ~ "]/page", "PRINTFUNC");
 	}
 }
 
-var printInput = func(key) {
+var printInput = func(key, i) {
 	if (key == "L1") { 
 		setprop("/FMGC/print/mcdu/page1/L1auto", 1);
 	}
@@ -27,7 +27,7 @@ var printInput = func(key) {
 		setprop("/FMGC/print/mcdu/page1/L3auto", 1);
 	}
 	if (key == "L5") { 
-		setprop("/MCDU[1]/page", "DATA");
+		setprop("/MCDU[" ~ i ~ "]/page", "DATA");
 	}
 	if (key == "R1") { 
 		setprop("/FMGC/print/mcdu/page1/R1req", 1);
@@ -40,7 +40,7 @@ var printInput = func(key) {
 	}
 }
 
-var printInput2 = func(key) {
+var printInput2 = func(key, i) {
 	if (key == "L1") { 
 		setprop("/FMGC/print/mcdu/page2/L1auto", 1);
 	}
@@ -54,7 +54,7 @@ var printInput2 = func(key) {
 		setprop("/FMGC/print/mcdu/page2/L4auto", 1);
 	}
 	if (key == "L6") { 
-		setprop("/MCDU[1]/page", "DATA");
+		setprop("/MCDU[" ~ i ~ "]/page", "DATA");
 	}
 	if (key == "R1") { 
 		setprop("/FMGC/print/mcdu/page2/R1req", 1);
