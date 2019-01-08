@@ -1,9 +1,7 @@
 # A3XX FMGC/Autoflight
 # Joshua Davidson (it0uchpods) and Jonathan Redpath (legoboyvdlp)
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 ##################
 # Init Functions #

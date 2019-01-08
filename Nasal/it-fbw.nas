@@ -1,9 +1,7 @@
 # Airbus A3XX FBW/Flight Control Computer System
 # Joshua Davidson (it0uchpods)
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 # If All ELACs Fail, Alternate Law
 

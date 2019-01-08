@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 
-<!--
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
--->
+<!-- Copyright (c) 2019 Joshua Davidson (it0uchpods) -->
 
 <PropertyList>
 	<api-key type="string"></api-key>

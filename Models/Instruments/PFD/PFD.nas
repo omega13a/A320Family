@@ -1,9 +1,6 @@
 # A3XX PFD
-# Joshua Davidson (it0uchpods)
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 var PFD_1 = nil;
 var PFD_2 = nil;
@@ -22,6 +19,7 @@ var ASItrgtdiff = 0;
 var ASImax = 0;
 var ASItrend = 0;
 var altTens = 0;
+var altPolarity = "";
 
 # Fetch nodes:
 var state1 = props.globals.getNode("/systems/thrust/state1", 1);
@@ -810,7 +808,12 @@ var canvas_PFD_base = {
 		me["ALT_two"].setText(sprintf("%03d", abs(me.middleAltText-5)));
 		me["ALT_one"].setText(sprintf("%03d", abs(me.middleAltText-10)));
 		
-		me["ALT_digits"].setText(sprintf("%s", altitude_pfd.getValue()));
+		if (altitude.getValue() < 0) {
+			altPolarity = "-";
+		} else {
+			altPolarity = "";
+		}
+		me["ALT_digits"].setText(sprintf("%s%d", altPolarity, altitude_pfd.getValue()));
 		altTens = num(right(sprintf("%02d", altitude.getValue()), 2));
 		me["ALT_tens"].setTranslation(0, altTens * 1.392);
 		

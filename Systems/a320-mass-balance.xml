@@ -1,11 +1,7 @@
 <!-- Airbus A320 JSBsim -->
 <!-- Joshua Davidson (it0uchpods) -->
 
-<!--
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
--->
+<!-- Copyright (c) 2019 Joshua Davidson (it0uchpods) -->
 
 <mass_balance>
 	<ixx unit="SLUG*FT2">  611903 </ixx>

@@ -1,8 +1,6 @@
 # A3XX mCDU by Joshua Davidson (it0uchpods) and Jonathan Redpath
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 var MCDU_init = func(i) {
 	MCDU_reset(i); # Reset MCDU, clears data

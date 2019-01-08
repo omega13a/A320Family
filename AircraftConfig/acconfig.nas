@@ -1,9 +1,7 @@
 # Aircraft Config Center
 # Joshua Davidson (it0uchpods)
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 var spinning = maketimer(0.05, func {
 	var spinning = getprop("/systems/acconfig/spinning");
@@ -90,6 +88,7 @@ setprop("/systems/acconfig/options/keyboard-mode", 0);
 setprop("/systems/acconfig/options/laptop-mode", 0);
 setprop("/systems/acconfig/options/adirs-skip", 0);
 setprop("/systems/acconfig/options/welcome-skip", 0);
+setprop("/systems/acconfig/options/no-rendering-warn", 0);
 setprop("/systems/acconfig/options/pfd-rate", 1);
 setprop("/systems/acconfig/options/nd-rate", 1);
 setprop("/systems/acconfig/options/uecam-rate", 1);
@@ -109,7 +108,7 @@ var updated_dlg = gui.Dialog.new("sim/gui/dialogs/acconfig/updated/dialog", "Air
 var error_mismatch = gui.Dialog.new("sim/gui/dialogs/acconfig/error/mismatch/dialog", "Aircraft/IDG-A32X/AircraftConfig/error-mismatch.xml");
 var groundservices_dlg = gui.Dialog.new("sim/gui/dialogs/acconfig/groundsrvc/dialog", "Aircraft/IDG-A32X/AircraftConfig/groundservices.xml");
 var du_quality = gui.Dialog.new("sim/gui/dialogs/acconfig/du-quality/dialog", "Aircraft/IDG-A32X/AircraftConfig/du-quality.xml");
-var autopush_dlg = gui.Dialog.new("sim/gui/dialogs/autopush/dialog", "Aircraft/IDG-A32X/AircraftConfig/autopush.xml");
+var rendering_dlg = gui.Dialog.new("sim/gui/dialogs/rendering/dialog", "Aircraft/IDG-A32X/AircraftConfig/rendering.xml");
 spinning.start();
 init_dlg.open();
 
@@ -134,6 +133,7 @@ var mismatch_chk = func {
 		if (getprop("/systems/acconfig/out-of-date") != 1) {
 			error_mismatch.open();
 		}
+		libraries.systemsLoop.stop();
 		print("Mismatch: 0x121");
 		welcome_dlg.close();
 	} else if (getprop("/gear/gear[0]/wow") == 0 or getprop("/position/altitude-ft") >= 15000) {
@@ -142,6 +142,7 @@ var mismatch_chk = func {
 		if (getprop("/systems/acconfig/out-of-date") != 1) {
 			error_mismatch.open();
 		}
+		libraries.systemsLoop.stop();
 		print("Mismatch: 0x223");
 		welcome_dlg.close();
 	} else if (getprop("/systems/acconfig/libraries-loaded") != 1) {
@@ -150,6 +151,7 @@ var mismatch_chk = func {
 		if (getprop("/systems/acconfig/out-of-date") != 1) {
 			error_mismatch.open();
 		}
+		libraries.systemsLoop.stop();
 		print("Mismatch: 0x247");
 		welcome_dlg.close();
 	}
@@ -165,13 +167,48 @@ setlistener("/sim/signals/fdm-initialized", func {
 	readSettings();
 	if (getprop("/systems/acconfig/out-of-date") != 1 and getprop("/systems/acconfig/options/revision") < current_revision and getprop("/systems/acconfig/mismatch-code") == "0x000") {
 		updated_dlg.open();
+		if (getprop("/systems/acconfig/options/no-rendering-warn") != 1) {
+			renderingSettings.check();
+		}
 	} else if (getprop("/systems/acconfig/out-of-date") != 1 and getprop("/systems/acconfig/mismatch-code") == "0x000" and getprop("/systems/acconfig/options/welcome-skip") != 1) {
 		welcome_dlg.open();
+		if (getprop("/systems/acconfig/options/no-rendering-warn") != 1) {
+			renderingSettings.check();
+		}
 	}
 	setprop("/systems/acconfig/options/revision", current_revision);
 	writeSettings();
 	spinning.stop();
 });
+
+var renderingSettings = {
+	check: func() {
+		var rembrandt = getprop("/sim/rendering/rembrandt/enabled");
+		var ALS = getprop("/sim/rendering/shaders/skydome");
+		var customSettings = getprop("/sim/rendering/shaders/custom-settings") == 1;
+		var landmass = getprop("/sim/rendering/shaders/landmass") >= 4;
+		var model = getprop("/sim/rendering/shaders/model") >= 1;
+		if (!rembrandt and (!ALS or !customSettings or !landmass or !model)) {
+			rendering_dlg.open();
+		}
+	},
+	fixAll: func() {
+		me.fixCore();
+		var landmass = getprop("/sim/rendering/shaders/landmass") >= 4;
+		var model = getprop("/sim/rendering/shaders/model") >= 1;
+		if (!landmass) {
+			setprop("/sim/rendering/shaders/landmass", 4);
+		}
+		if (!model) {
+			setprop("/sim/rendering/shaders/model", 1);
+		}
+	},
+	fixCore: func() {
+		setprop("/sim/rendering/shaders/skydome", 1); # ALS on
+		setprop("/sim/rendering/shaders/custom-settings", 1);
+		gui.popupTip("Rendering Settings updated!");
+	},
+};
 
 var readSettings = func {
 	io.read_properties(getprop("/sim/fg-home") ~ "/Export/IDG-A32X-config.xml", "/systems/acconfig/options");
@@ -193,36 +230,39 @@ var writeSettings = func {
 
 # Cold and Dark
 var colddark = func {
-	spinning.start();
-	ps_load_dlg.open();
-	setprop("/systems/acconfig/autoconfig-running", 1);
-	setprop("/controls/gear/brake-left", 1);
-	setprop("/controls/gear/brake-right", 1);
-	# Initial shutdown, and reinitialization.
-	setprop("/controls/engines/engine-start-switch", 1);
-	setprop("/controls/engines/engine[0]/cutoff-switch", 1);
-	setprop("/controls/engines/engine[1]/cutoff-switch", 1);
-	setprop("/controls/flight/slats", 0.000);
-	setprop("/controls/flight/flaps", 0.000);
-	setprop("/controls/flight/flap-lever", 0);
-	setprop("/controls/flight/flap-pos", 0);
-	setprop("/controls/flight/flap-txt", " ");
-	libraries.flaptimer.stop();
-	setprop("/controls/flight/speedbrake-arm", 0);
-	setprop("/controls/flight/speedbrake", 0);
-	setprop("/controls/gear/gear-down", 1);
-	setprop("/controls/flight/elevator-trim", 0);
-	libraries.systemsInit();
-	failReset();
-	if (getprop("/engines/engine[1]/n2-actual") < 2) {
-		colddark_b();
-	} else {
-		var colddark_eng_off = setlistener("/engines/engine[1]/n2-actual", func {
-			if (getprop("/engines/engine[1]/n2-actual") < 2) {
-				removelistener(colddark_eng_off);
-				colddark_b();
-			}
-		});
+	if (getprop("/systems/acconfig/mismatch-code") == "0x000") {
+		spinning.start();
+		ps_loaded_dlg.close();
+		ps_load_dlg.open();
+		setprop("/systems/acconfig/autoconfig-running", 1);
+		setprop("/controls/gear/brake-left", 1);
+		setprop("/controls/gear/brake-right", 1);
+		# Initial shutdown, and reinitialization.
+		setprop("/controls/engines/engine-start-switch", 1);
+		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
+		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
+		setprop("/controls/flight/slats", 0.000);
+		setprop("/controls/flight/flaps", 0.000);
+		setprop("/controls/flight/flap-lever", 0);
+		setprop("/controls/flight/flap-pos", 0);
+		setprop("/controls/flight/flap-txt", " ");
+		libraries.flaptimer.stop();
+		setprop("/controls/flight/speedbrake-arm", 0);
+		setprop("/controls/flight/speedbrake", 0);
+		setprop("/controls/gear/gear-down", 1);
+		setprop("/controls/flight/elevator-trim", 0);
+		libraries.systemsInit();
+		failReset();
+		if (getprop("/engines/engine[1]/n2-actual") < 2) {
+			colddark_b();
+		} else {
+			var colddark_eng_off = setlistener("/engines/engine[1]/n2-actual", func {
+				if (getprop("/engines/engine[1]/n2-actual") < 2) {
+					removelistener(colddark_eng_off);
+					colddark_b();
+				}
+			});
+		}
 	}
 }
 var colddark_b = func {
@@ -239,41 +279,44 @@ var colddark_b = func {
 
 # Ready to Start Eng
 var beforestart = func {
-	spinning.start();
-	ps_load_dlg.open();
-	setprop("/systems/acconfig/autoconfig-running", 1);
-	setprop("/controls/gear/brake-left", 1);
-	setprop("/controls/gear/brake-right", 1);
-	# First, we set everything to cold and dark.
-	setprop("/controls/engines/engine-start-switch", 1);
-	setprop("/controls/engines/engine[0]/cutoff-switch", 1);
-	setprop("/controls/engines/engine[1]/cutoff-switch", 1);
-	setprop("/controls/flight/slats", 0.000);
-	setprop("/controls/flight/flaps", 0.000);
-	setprop("/controls/flight/flap-lever", 0);
-	setprop("/controls/flight/flap-pos", 0);
-	setprop("/controls/flight/flap-txt", " ");
-	libraries.flaptimer.stop();
-	setprop("/controls/flight/speedbrake-arm", 0);
-	setprop("/controls/flight/speedbrake", 0);
-	setprop("/controls/gear/gear-down", 1);
-	setprop("/controls/flight/elevator-trim", 0);
-	libraries.systemsInit();
-	failReset();
-	setprop("/controls/APU/master", 0);
-	setprop("/controls/APU/start", 0);
-	
-	# Now the Startup!
-	setprop("/controls/electrical/switches/battery1", 1);
-	setprop("/controls/electrical/switches/battery2", 1);
-	setprop("/controls/APU/master", 1);
-	setprop("/controls/APU/start", 1);
-	var apu_rpm_chk = setlistener("/systems/apu/rpm", func {
-		if (getprop("/systems/apu/rpm") >= 98) {
-			removelistener(apu_rpm_chk);
-			beforestart_b();
-		}
-	});
+	if (getprop("/systems/acconfig/mismatch-code") == "0x000") {
+		spinning.start();
+		ps_loaded_dlg.close();
+		ps_load_dlg.open();
+		setprop("/systems/acconfig/autoconfig-running", 1);
+		setprop("/controls/gear/brake-left", 1);
+		setprop("/controls/gear/brake-right", 1);
+		# First, we set everything to cold and dark.
+		setprop("/controls/engines/engine-start-switch", 1);
+		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
+		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
+		setprop("/controls/flight/slats", 0.000);
+		setprop("/controls/flight/flaps", 0.000);
+		setprop("/controls/flight/flap-lever", 0);
+		setprop("/controls/flight/flap-pos", 0);
+		setprop("/controls/flight/flap-txt", " ");
+		libraries.flaptimer.stop();
+		setprop("/controls/flight/speedbrake-arm", 0);
+		setprop("/controls/flight/speedbrake", 0);
+		setprop("/controls/gear/gear-down", 1);
+		setprop("/controls/flight/elevator-trim", 0);
+		libraries.systemsInit();
+		failReset();
+		setprop("/controls/APU/master", 0);
+		setprop("/controls/APU/start", 0);
+		
+		# Now the Startup!
+		setprop("/controls/electrical/switches/battery1", 1);
+		setprop("/controls/electrical/switches/battery2", 1);
+		setprop("/controls/APU/master", 1);
+		setprop("/controls/APU/start", 1);
+		var apu_rpm_chk = setlistener("/systems/apu/rpm", func {
+			if (getprop("/systems/apu/rpm") >= 98) {
+				removelistener(apu_rpm_chk);
+				beforestart_b();
+			}
+		});
+	}
 }
 var beforestart_b = func {
 	# Continue with engine start prep.
@@ -314,41 +357,44 @@ var beforestart_b = func {
 
 # Ready to Taxi
 var taxi = func {
-	spinning.start();
-	ps_load_dlg.open();
-	setprop("/systems/acconfig/autoconfig-running", 1);
-	setprop("/controls/gear/brake-left", 1);
-	setprop("/controls/gear/brake-right", 1);
-	# First, we set everything to cold and dark.
-	setprop("/controls/engines/engine-start-switch", 1);
-	setprop("/controls/engines/engine[0]/cutoff-switch", 1);
-	setprop("/controls/engines/engine[1]/cutoff-switch", 1);
-	setprop("/controls/flight/slats", 0.000);
-	setprop("/controls/flight/flaps", 0.000);
-	setprop("/controls/flight/flap-lever", 0);
-	setprop("/controls/flight/flap-pos", 0);
-	setprop("/controls/flight/flap-txt", " ");
-	libraries.flaptimer.stop();
-	setprop("/controls/flight/speedbrake-arm", 0);
-	setprop("/controls/flight/speedbrake", 0);
-	setprop("/controls/gear/gear-down", 1);
-	setprop("/controls/flight/elevator-trim", 0);
-	libraries.systemsInit();
-	failReset();
-	setprop("/controls/APU/master", 0);
-	setprop("/controls/APU/start", 0);
-	
-	# Now the Startup!
-	setprop("/controls/electrical/switches/battery1", 1);
-	setprop("/controls/electrical/switches/battery2", 1);
-	setprop("/controls/APU/master", 1);
-	setprop("/controls/APU/start", 1);
-	var apu_rpm_chk = setlistener("/systems/apu/rpm", func {
-		if (getprop("/systems/apu/rpm") >= 98) {
-			removelistener(apu_rpm_chk);
-			taxi_b();
-		}
-	});
+	if (getprop("/systems/acconfig/mismatch-code") == "0x000") {
+		spinning.start();
+		ps_loaded_dlg.close();
+		ps_load_dlg.open();
+		setprop("/systems/acconfig/autoconfig-running", 1);
+		setprop("/controls/gear/brake-left", 1);
+		setprop("/controls/gear/brake-right", 1);
+		# First, we set everything to cold and dark.
+		setprop("/controls/engines/engine-start-switch", 1);
+		setprop("/controls/engines/engine[0]/cutoff-switch", 1);
+		setprop("/controls/engines/engine[1]/cutoff-switch", 1);
+		setprop("/controls/flight/slats", 0.000);
+		setprop("/controls/flight/flaps", 0.000);
+		setprop("/controls/flight/flap-lever", 0);
+		setprop("/controls/flight/flap-pos", 0);
+		setprop("/controls/flight/flap-txt", " ");
+		libraries.flaptimer.stop();
+		setprop("/controls/flight/speedbrake-arm", 0);
+		setprop("/controls/flight/speedbrake", 0);
+		setprop("/controls/gear/gear-down", 1);
+		setprop("/controls/flight/elevator-trim", 0);
+		libraries.systemsInit();
+		failReset();
+		setprop("/controls/APU/master", 0);
+		setprop("/controls/APU/start", 0);
+		
+		# Now the Startup!
+		setprop("/controls/electrical/switches/battery1", 1);
+		setprop("/controls/electrical/switches/battery2", 1);
+		setprop("/controls/APU/master", 1);
+		setprop("/controls/APU/start", 1);
+		var apu_rpm_chk = setlistener("/systems/apu/rpm", func {
+			if (getprop("/systems/apu/rpm") >= 98) {
+				removelistener(apu_rpm_chk);
+				taxi_b();
+			}
+		});
+	}
 }
 var taxi_b = func {
 	# Continue with engine start prep, and start engines.
@@ -406,24 +452,26 @@ var taxi_d = func {
 
 # Ready to Takeoff
 var takeoff = func {
-	# The same as taxi, except we set some things afterwards.
-	taxi();
-	var eng_one_chk_c = setlistener("/engines/engine[0]/state", func {
-		if (getprop("/engines/engine[0]/state") == 3) {
-			removelistener(eng_one_chk_c);
-			setprop("/controls/lighting/strobe", 1);
-			setprop("/controls/lighting/landing-lights[1]", 1);
-			setprop("/controls/lighting/landing-lights[2]", 1);
-			setprop("/controls/flight/speedbrake-arm", 1);
-			setprop("/controls/flight/flaps", 0.290);
-			setprop("/controls/flight/slats", 0.666);
-			setprop("/controls/flight/flap-lever", 1);
-			setprop("/controls/flight/flap-pos", 2);
-			setprop("/controls/flight/flap-txt", "1+F");
-			libraries.flaptimer.start();
-			setprop("/controls/flight/elevator-trim", -0.07);
-			systems.arm_autobrake(3);
-			libraries.ECAM.toConfig();
-		}
-	});
+	if (getprop("/systems/acconfig/mismatch-code") == "0x000") {
+		# The same as taxi, except we set some things afterwards.
+		taxi();
+		var eng_one_chk_c = setlistener("/engines/engine[0]/state", func {
+			if (getprop("/engines/engine[0]/state") == 3) {
+				removelistener(eng_one_chk_c);
+				setprop("/controls/lighting/strobe", 1);
+				setprop("/controls/lighting/landing-lights[1]", 1);
+				setprop("/controls/lighting/landing-lights[2]", 1);
+				setprop("/controls/flight/speedbrake-arm", 1);
+				setprop("/controls/flight/flaps", 0.290);
+				setprop("/controls/flight/slats", 0.666);
+				setprop("/controls/flight/flap-lever", 1);
+				setprop("/controls/flight/flap-pos", 2);
+				setprop("/controls/flight/flap-txt", "1+F");
+				libraries.flaptimer.start();
+				setprop("/controls/flight/elevator-trim", -0.07);
+				systems.arm_autobrake(3);
+				libraries.ECAM.toConfig();
+			}
+		});
+	}
 }

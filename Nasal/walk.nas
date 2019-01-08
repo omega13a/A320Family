@@ -1,6 +1,4 @@
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 # view nodes and offsets --------------------------------------------
 var zNoseNode = props.globals.getNode("sim/view/config/y-offset-m", 1);

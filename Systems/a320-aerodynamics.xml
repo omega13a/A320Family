@@ -1,11 +1,7 @@
 <!-- Airbus A320 Aerodynamics -->
 <!-- Joshua Davidson (it0uchpods) -->
 
-<!--
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
--->
+<!-- Copyright (c) 2019 Joshua Davidson (it0uchpods) -->
 
 <aerodynamics>
 	
@@ -66,8 +62,8 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/elevator-l/final-deg-aero</property></toradians>
-				<value>0.11975</value>
+				<toradians><property>hydraulics/elevator-l/final-deg</property></toradians>
+				<value>0.0936445</value>
 			</product>
 		</function>
 		
@@ -76,8 +72,8 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/elevator-r/final-deg-aero</property></toradians>
-				<value>0.11975</value>
+				<toradians><property>hydraulics/elevator-r/final-deg</property></toradians>
+				<value>0.0936445</value>
 			</product>
 		</function>
 		
@@ -86,8 +82,8 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<toradians><property>hydraulics/elevator-trim/final-deg-aero</property></toradians>
-				<value>0.0151</value>
+				<toradians><property>hydraulics/elevator-trim/final-deg</property></toradians>
+				<value>0.0118082</value>
 			</product>
 		</function>
 		
@@ -245,8 +241,8 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<abs><toradians><property>hydraulics/elevator-l/final-deg-aero</property></toradians></abs>
-				<value>0.01</value>
+				<abs><toradians><property>hydraulics/elevator-l/final-deg</property></toradians></abs>
+				<value>0.00782</value>
 			</product>
 		</function>
 		
@@ -255,8 +251,8 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<abs><toradians><property>hydraulics/elevator-r/final-deg-aero</property></toradians></abs>
-				<value>0.01</value>
+				<abs><toradians><property>hydraulics/elevator-r/final-deg</property></toradians></abs>
+				<value>0.00782</value>
 			</product>
 		</function>
 		
@@ -265,8 +261,8 @@
 			<product>
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
-				<abs><toradians><property>hydraulics/elevator-trim/final-deg-aero</property></toradians></abs>
-				<value>0.02</value>
+				<abs><toradians><property>hydraulics/elevator-trim/final-deg</property></toradians></abs>
+				<value>0.01564</value>
 			</product>
 		</function>
 		
@@ -526,8 +522,8 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/cbarw-ft</property>
-				<toradians><property>hydraulics/elevator-l/final-deg-aero</property></toradians>
-				<value>-0.7125</value>
+				<toradians><property>hydraulics/elevator-l/final-deg</property></toradians>
+				<value>-0.557175</value>
 			</product>
 		</function>
 		
@@ -537,8 +533,8 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/cbarw-ft</property>
-				<toradians><property>hydraulics/elevator-r/final-deg-aero</property></toradians>
-				<value>-0.7125</value>
+				<toradians><property>hydraulics/elevator-r/final-deg</property></toradians>
+				<value>-0.557175</value>
 			</product>
 		</function>
 		
@@ -548,8 +544,8 @@
 				<property>aero/qbar-psf</property>
 				<property>metrics/Sw-sqft</property>
 				<property>metrics/cbarw-ft</property>
-				<toradians><property>hydraulics/elevator-trim/final-deg-aero</property></toradians>
-				<value>-2.845</value>
+				<toradians><property>hydraulics/elevator-trim/final-deg</property></toradians>
+				<value>-2.22479</value>
 			</product>
 		</function>
 		

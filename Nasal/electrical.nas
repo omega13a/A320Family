@@ -1,9 +1,7 @@
 # A3XX Electrical System
 # Joshua Davidson (it0uchpods) and Jonathan Redpath (legoboyvdlp)
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 var ac_volt_std = 115;
 var ac_volt_min = 110;
@@ -162,6 +160,8 @@ var ELEC = {
 		setprop("/systems/electrical/battery2-amps", 0);
 		setprop("/systems/electrical/battery1-percent", 68);
 		setprop("/systems/electrical/battery2-percent", 68);
+		setprop("/systems/electrical/battery1-time", 0);
+		setprop("/systems/electrical/battery2-time", 0);
 		setprop("/systems/electrical/bus/dc1", 0);
 		setprop("/systems/electrical/bus/dc2", 0);
 		setprop("/systems/electrical/bus/dcbat", 0);

@@ -2,9 +2,7 @@
 # Joshua Davidson (it0uchpods)
 # Based on work by artix
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 var version = getprop("sim/version/flightgear");
 var v = split(".", version);

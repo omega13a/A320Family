@@ -1,9 +1,7 @@
 # A3XX Autobrake
 # Joshua Davidson (it0uchpods)
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 var thr1 = 0;
 var thr2 = 0;

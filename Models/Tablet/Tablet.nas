@@ -1,9 +1,7 @@
 # IDG Tablet
 # Joshua Davidson (it0uchpods)
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 var Tablet1 = nil;
 var Tablet_1 = nil;

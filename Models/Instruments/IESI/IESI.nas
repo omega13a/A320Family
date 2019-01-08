@@ -1,9 +1,6 @@
 # A3XX IESI
-# Joshua Davidson (it0uchpods)
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 var IESI = nil;
 var IESI_display = nil;
@@ -233,5 +230,5 @@ var roundabout = func(x) {
 
 var roundaboutAlt = func(x) {
 	var y = x * 0.2 - int(x * 0.2);
-	return y < 0.5 ? 5 * int(x*0.2) : 5 + 5 * int(x*0.2);
+	return y < 0.5 ? 5 * int(x * 0.2) : 5 + 5 * int(x * 0.2);
 };

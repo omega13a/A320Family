@@ -1,9 +1,7 @@
 # A3XX IAE V2500 Engine
 # Joshua Davidson (it0uchpods)
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 #####################
 # Initializing Vars #

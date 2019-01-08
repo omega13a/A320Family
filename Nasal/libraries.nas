@@ -1,15 +1,21 @@
 # A320 Main Libraries
 # Joshua Davidson (it0uchpods)
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 print("-----------------------------------------------------------------------------");
-print("Copyright (c) 2017-2018 Joshua Davidson (it0uchpods)");
+print("Copyright (c) 2016-2019 Joshua Davidson (it0uchpods)");
 print("-----------------------------------------------------------------------------");
 
 setprop("/sim/replay/was-active", 0);
+
+setprop("/sim/menubar/default/menu[0]/item[0]/enabled", 0);
+setprop("/sim/menubar/default/menu[2]/item[0]/enabled", 0);
+setprop("/sim/menubar/default/menu[2]/item[2]/enabled", 0);
+setprop("/sim/menubar/default/menu[3]/enabled", 0);
+setprop("/sim/menubar/default/menu[5]/item[9]/enabled", 0);
+setprop("/sim/menubar/default/menu[5]/item[10]/enabled", 0);
+setprop("/sim/menubar/default/menu[5]/item[11]/enabled", 0);
 
 # Dimmers
 setprop("/controls/lighting/ndl-norm", 1);
@@ -186,7 +192,6 @@ var systemsInit = func {
 	systemsLoop.start();
 	icing.icingInit();
 	lightsLoop.start();
-	var autopilot = gui.Dialog.new("sim/gui/dialogs/autopilot/dialog", "Aircraft/IDG-A32X/Systems/autopilot-dlg.xml");
 	setprop("/it-autoflight/input/fd1", 1);
 	setprop("/it-autoflight/input/fd2", 1);
 	libraries.ECAM.init();
@@ -271,7 +276,7 @@ setlistener("/options/steep-ils", func {
 
 canvas.Text._lastText = canvas.Text["_lastText"];
 canvas.Text.setText = func(text) {
-	if (text == me._lastText) {return me;}
+	if (text == me._lastText and text != nil and size(text) == size(me._lastText)) {return me;}
 	me._lastText = text;
 	me.set("text", typeof(text) == 'scalar' ? text : "");
 };

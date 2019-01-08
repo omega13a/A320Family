@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!--
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
--->
+<!-- Copyright (c) 2019 Joshua Davidson (it0uchpods) -->
 
 <!-- A3XX Aircraft Config Dialog -->
 
@@ -47,14 +43,14 @@
 			
 			<text>
 				<halign>left</halign>
-				<label>You are now running Revision: </label>
+				<label>You have been upgraded to revision:</label>
 			</text>
 			
 			<text>
 				<halign>left</halign>
 				<border>1</border>
 				<label>99999</label>
-				<property>/systems/acconfig/options/revision</property>
+				<property>/systems/acconfig/revision</property>
 				<live>1</live>
 			</text>
 			

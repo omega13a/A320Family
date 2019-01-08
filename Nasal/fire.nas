@@ -1,9 +1,7 @@
 # A3XX Fire System
 # Jonathan Redpath
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 #############
 # Init Vars #

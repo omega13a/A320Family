@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!--
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
--->
+<!-- Copyright (c) 2019 Joshua Davidson (it0uchpods) -->
 
 <PropertyList>
 
@@ -5608,9 +5604,9 @@
 		<object-name>AnnunciatorLtSwtch</object-name>
 		<property>controls/switches/annun-test</property>
 		<interpolation>
-			<entry><ind>-1</ind><dep>35</dep></entry>
-			<entry><ind>0</ind><dep>0</dep></entry>
-			<entry><ind>1</ind><dep>-35</dep></entry>
+			<entry><ind>-1</ind><dep> 35</dep></entry>
+			<entry><ind> 0</ind><dep>  0</dep></entry>
+			<entry><ind> 1</ind><dep>-35</dep></entry>
 		</interpolation>
 		<axis>
 			<x>0</x>
@@ -5634,11 +5630,11 @@
 			<button>3</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-adjust</command>
+				<command>property-cycle</command>
 				<property>controls/switches/seatbelt-sign</property>
-				<step>1</step>
-				<min>0</min>
-				<max>1</max>
+				<value>0.0</value>
+				<!--value>0.5</value-->
+				<value>1.0</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -5650,11 +5646,11 @@
 			<button>4</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-adjust</command>
+				<command>property-cycle</command>
 				<property>controls/switches/seatbelt-sign</property>
-				<step>-1</step>
-				<min>0</min>
-				<max>1</max>
+				<value>1.0</value>
+				<!--value>0.5</value-->
+				<value>0.0</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -5669,9 +5665,9 @@
 		<object-name>SeatBeltSwtch</object-name>
 		<property>controls/switches/seatbelt-sign</property>
 		<interpolation>
-			<entry><ind>0</ind><dep>35</dep></entry>
-			<entry><ind>0.5</ind><dep>0</dep></entry>
-			<entry><ind>1</ind><dep>-35</dep></entry>
+			<entry><ind>0.0</ind><dep> 35</dep></entry>
+			<entry><ind>0.5</ind><dep>  0</dep></entry>
+			<entry><ind>1.0</ind><dep>-35</dep></entry>
 		</interpolation>
 		<axis>
 			<x>0</x>
@@ -5728,9 +5724,9 @@
 		<object-name>NoSmokingSwtch</object-name>
 		<property>controls/switches/no-smoking-sign</property>
 		<interpolation>
-			<entry><ind>0</ind><dep>35</dep></entry>
-			<entry><ind>0.5</ind><dep>0</dep></entry>
-			<entry><ind>1</ind><dep>-35</dep></entry>
+			<entry><ind>0.0</ind><dep> 35</dep></entry>
+			<entry><ind>0.5</ind><dep>  0</dep></entry>
+			<entry><ind>1.0</ind><dep>-35</dep></entry>
 		</interpolation>
 		<axis>
 			<x>0</x>

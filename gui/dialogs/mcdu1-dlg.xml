@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<!--
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
--->
+<!-- Copyright (c) 2019 Joshua Davidson (it0uchpods) -->
 
 <PropertyList>
 
-	<name>mcdu2</name>
+	<name>mcdu1</name>
 	<layout>table</layout>
 	<x>0</x>
 	<y>0</y>
@@ -19,7 +15,7 @@
 		<layout>hbox</layout>
 		<text>
 			<halign>left</halign>
-			<label>Right MCDU</label>
+			<label>Left MCDU</label>
 		</text>
 		<button>
 			<halign>right</halign>
@@ -56,7 +52,7 @@
 				<pref-width>30</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.lskbutton("1", 1);</script>
+					<script>mcdu.lskbutton("1", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -72,7 +68,7 @@
 				<pref-width>30</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.lskbutton("2", 1);</script>
+					<script>mcdu.lskbutton("2", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -88,7 +84,7 @@
 				<pref-width>30</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.lskbutton("3", 1);</script>
+					<script>mcdu.lskbutton("3", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -104,7 +100,7 @@
 				<pref-width>30</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.lskbutton("4", 1);</script>
+					<script>mcdu.lskbutton("4", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -120,7 +116,7 @@
 				<pref-width>30</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.lskbutton("5", 1);</script>
+					<script>mcdu.lskbutton("5", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -136,7 +132,7 @@
 				<pref-width>30</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.lskbutton("6", 1);</script>
+					<script>mcdu.lskbutton("6", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -165,7 +161,7 @@
 						var root = mcdu_canvas_dlg.createGroup();
 						root.setScale(0.285, 0.25);
 						mcdu_canvas_dlg.setColorBackground(0, 0, 0, 1.0);
-						root.createChild("image").set("src", "canvas://by-index/texture[11]");
+						root.createChild("image").set("src", "canvas://by-index/texture[10]");
 					]]>
 				</load>
 				<unload>
@@ -191,7 +187,7 @@
 				<pref-width>30</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.rskbutton("1", 1);</script>
+					<script>mcdu.rskbutton("1", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -207,7 +203,7 @@
 				<pref-width>30</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.rskbutton("2", 1);</script>
+					<script>mcdu.rskbutton("2", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -223,7 +219,7 @@
 				<pref-width>30</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.rskbutton("3", 1);</script>
+					<script>mcdu.rskbutton("3", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -239,7 +235,7 @@
 				<pref-width>30</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.rskbutton("4", 1);</script>
+					<script>mcdu.rskbutton("4", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -255,7 +251,7 @@
 				<pref-width>30</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.rskbutton("5", 1);</script>
+					<script>mcdu.rskbutton("5", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -271,7 +267,7 @@
 				<pref-width>30</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.rskbutton("6", 1);</script>
+					<script>mcdu.rskbutton("6", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -310,7 +306,7 @@
 			<pref-width>40</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("perf", 1);</script>
+				<script>mcdu.pagebutton("perf", 0);</script>
 				<condition>
 					<greater-than-equals>
 						<property>systems/electrical/bus/ac1</property>
@@ -326,7 +322,7 @@
 			<pref-width>40</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("init", 1);</script>
+				<script>mcdu.pagebutton("init", 0);</script>
 				<condition>
 					<greater-than-equals>
 						<property>systems/electrical/bus/ac1</property>
@@ -342,7 +338,7 @@
 			<pref-width>40</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("data", 1);</script>
+				<script>mcdu.pagebutton("data", 0);</script>
 				<condition>
 					<greater-than-equals>
 						<property>systems/electrical/bus/ac1</property>
@@ -376,7 +372,7 @@
 			<pref-width>40</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("f-pln", 1);</script>
+				<script>mcdu.pagebutton("f-pln", 0);</script>
 				<condition>
 					<greater-than-equals>
 						<property>systems/electrical/bus/ac1</property>
@@ -392,7 +388,7 @@
 			<pref-width>40</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("radnav", 1);</script>
+				<script>mcdu.pagebutton("radnav", 0);</script>
 				<condition>
 					<greater-than-equals>
 						<property>systems/electrical/bus/ac1</property>
@@ -408,7 +404,7 @@
 			<pref-width>40</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("fuel-pred", 1);</script>
+				<script>mcdu.pagebutton("fuel-pred", 0);</script>
 				<condition>
 					<greater-than-equals>
 						<property>systems/electrical/bus/ac1</property>
@@ -436,7 +432,7 @@
 			<pref-width>40</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>mcdu.pagebutton("mcdu", 1);</script>
+				<script>mcdu.pagebutton("mcdu", 0);</script>
 				<condition>
 					<greater-than-equals>
 						<property>systems/electrical/bus/ac1</property>
@@ -480,7 +476,7 @@
 					<pref-width>40</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.arrowbutton("left", 1);</script>
+						<script>mcdu.arrowbutton("left", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -498,7 +494,7 @@
 					<pref-width>40</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.arrowbutton("right", 1);</script>
+						<script>mcdu.arrowbutton("right", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -524,7 +520,7 @@
 					<pref-width>40</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.arrowbutton("up", 1);</script>
+						<script>mcdu.arrowbutton("up", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -542,7 +538,7 @@
 					<pref-width>40</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.arrowbutton("down", 1);</script>
+						<script>mcdu.arrowbutton("down", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -564,7 +560,7 @@
 					<pref-width>25</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.button("1", 1);</script>
+						<script>mcdu.button("1", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -582,7 +578,7 @@
 					<pref-width>25</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.button("4", 1);</script>
+						<script>mcdu.button("4", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -600,7 +596,7 @@
 					<pref-width>25</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.button("7", 1);</script>
+						<script>mcdu.button("7", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -618,7 +614,7 @@
 					<pref-width>25</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.button("DOT", 1);</script>
+						<script>mcdu.button("DOT", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -636,7 +632,7 @@
 					<pref-width>25</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.button("2", 1);</script>
+						<script>mcdu.button("2", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -654,7 +650,7 @@
 					<pref-width>25</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.button("5", 1);</script>
+						<script>mcdu.button("5", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -672,7 +668,7 @@
 					<pref-width>25</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.button("8", 1);</script>
+						<script>mcdu.button("8", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -690,7 +686,7 @@
 					<pref-width>25</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.button("0", 1);</script>
+						<script>mcdu.button("0", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -708,7 +704,7 @@
 					<pref-width>25</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.button("3", 1);</script>
+						<script>mcdu.button("3", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -726,7 +722,7 @@
 					<pref-width>25</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.button("6", 1);</script>
+						<script>mcdu.button("6", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -744,7 +740,7 @@
 					<pref-width>25</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.button("9", 1);</script>
+						<script>mcdu.button("9", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -762,7 +758,7 @@
 					<pref-width>25</pref-width>
 					<binding>
 						<command>nasal</command>
-						<script>mcdu.button("PLUSMINUS", 1);</script>
+						<script>mcdu.button("PLUSMINUS", 0);</script>
 						<condition>
 							<greater-than-equals>
 								<property>systems/electrical/bus/ac1</property>
@@ -785,7 +781,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("A", 1);</script>
+					<script>mcdu.button("A", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -803,7 +799,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("F", 1);</script>
+					<script>mcdu.button("F", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -821,7 +817,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("K", 1);</script>
+					<script>mcdu.button("K", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -839,7 +835,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("P", 1);</script>
+					<script>mcdu.button("P", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -857,7 +853,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("U", 1);</script>
+					<script>mcdu.button("U", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -875,7 +871,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("Z", 1);</script>
+					<script>mcdu.button("Z", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -893,7 +889,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("B", 1);</script>
+					<script>mcdu.button("B", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -911,7 +907,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("G", 1);</script>
+					<script>mcdu.button("G", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -929,7 +925,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("L", 1);</script>
+					<script>mcdu.button("L", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -947,7 +943,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("Q", 1);</script>
+					<script>mcdu.button("Q", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -965,7 +961,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("V", 1);</script>
+					<script>mcdu.button("V", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -983,7 +979,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("SLASH", 1);</script>
+					<script>mcdu.button("SLASH", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1001,7 +997,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("C", 1);</script>
+					<script>mcdu.button("C", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1019,7 +1015,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("H", 1);</script>
+					<script>mcdu.button("H", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1037,7 +1033,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("M", 1);</script>
+					<script>mcdu.button("M", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1055,7 +1051,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("R", 1);</script>
+					<script>mcdu.button("R", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1073,7 +1069,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("W", 1);</script>
+					<script>mcdu.button("W", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1091,7 +1087,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("SP", 1);</script>
+					<script>mcdu.button("SP", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1109,7 +1105,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("D", 1);</script>
+					<script>mcdu.button("D", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1127,7 +1123,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("I", 1);</script>
+					<script>mcdu.button("I", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1145,7 +1141,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("N", 1);</script>
+					<script>mcdu.button("N", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1163,7 +1159,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("S", 1);</script>
+					<script>mcdu.button("S", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1181,7 +1177,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("X", 1);</script>
+					<script>mcdu.button("X", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1199,7 +1195,7 @@
 				<pref-width>25</pref-width>
 				<!--binding>
 					<command>nasal</command>
-					<script>mcdu.button("OVFY", 1);</script>
+					<script>mcdu.button("OVFY", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1217,7 +1213,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("E", 1);</script>
+					<script>mcdu.button("E", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1235,7 +1231,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("J", 1);</script>
+					<script>mcdu.button("J", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1253,7 +1249,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("O", 1);</script>
+					<script>mcdu.button("O", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1271,7 +1267,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("T", 1);</script>
+					<script>mcdu.button("T", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1289,7 +1285,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("Y", 1);</script>
+					<script>mcdu.button("Y", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>
@@ -1307,7 +1303,7 @@
 				<pref-width>25</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>mcdu.button("CLR", 1);</script>
+					<script>mcdu.button("CLR", 0);</script>
 					<condition>
 						<greater-than-equals>
 							<property>systems/electrical/bus/ac1</property>

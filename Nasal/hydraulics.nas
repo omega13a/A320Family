@@ -1,9 +1,7 @@
 # A3XX Hydraulic System
 # Joshua Davidson (it0uchpods)
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 var eng1_pump_sw = 0;
 var eng2_pump_sw = 0;

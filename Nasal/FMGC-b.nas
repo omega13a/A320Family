@@ -1,9 +1,7 @@
 # A3XX FMGC/Autoflight
 # Joshua Davidson (it0uchpods) and Jonathan Redpath (legoboyvdlp)
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 #################################
 # IT-AUTOFLIGHT Based Autopilot #
@@ -96,6 +94,14 @@ var APinit = func {
 # AP 1 Master System
 setlistener("/it-autoflight/input/ap1", func {
 	var apmas = getprop("/it-autoflight/input/ap1");
+	var apout = getprop("/it-autoflight/output/ap1");
+	if (apmas != apout) {
+		AP1Master();
+	}
+});
+
+var AP1Master = func {
+	var apmas = getprop("/it-autoflight/input/ap1");
 	var ac_ess = getprop("/systems/electrical/bus/ac-ess");
 	var law = getprop("/it-fbw/law");
 	if (apmas == 0) {
@@ -127,10 +133,24 @@ setlistener("/it-autoflight/input/ap1", func {
 			fmabox();
 		}
 	}
-});
+	
+	var apout = getprop("/it-autoflight/output/ap1");
+	if (apmas != apout) {
+		setprop("/it-autoflight/input/ap1", apout);
+	}
+}
 
 # AP 2 Master System
 setlistener("/it-autoflight/input/ap2", func {
+	var apmas = getprop("/it-autoflight/input/ap2");
+	var apout = getprop("/it-autoflight/output/ap2");
+	
+	if (apmas != apout) {
+		AP2Master();
+	}
+});
+
+var AP2Master = func {
 	var apmas = getprop("/it-autoflight/input/ap2");
 	var ac_ess = getprop("/systems/electrical/bus/ac-ess");
 	var law = getprop("/it-fbw/law");
@@ -163,44 +183,95 @@ setlistener("/it-autoflight/input/ap2", func {
 			fmabox();
 		}
 	}
+	
+	var apout = getprop("/it-autoflight/output/ap2");
+	if (apmas != apout) {
+		setprop("/it-autoflight/input/ap2", apout);
+	}
+}
+
+# ATHR Master System
+setlistener("/it-autoflight/input/athr", func {
+	var athrmas = getprop("/it-autoflight/input/athr");
+	var athrout = getprop("/it-autoflight/output/athr");
+	
+	if (athrmas != athrout) {
+		ATHRMaster();
+	}
 });
 
-# AT Master System
-setlistener("/it-autoflight/input/athr", func {
-	var atmas = getprop("/it-autoflight/input/athr");
-	if (atmas == 0) {
+var ATHRMaster = func {
+	var athrmas = getprop("/it-autoflight/input/athr");
+	if (athrmas == 0) {
 		setprop("/it-autoflight/output/athr", 0);
-	} else if (atmas == 1) {
+	} else if (athrmas == 1) {
 		thrustmode();
 		setprop("/it-autoflight/output/athr", 1);
 	}
-});
+	
+	var athrout = getprop("/it-autoflight/output/athr");
+	if (athrmas != athrout) {
+		setprop("/it-autoflight/input/athr", athrout);
+	}
+}
 
 # Flight Director 1 Master System
 setlistener("/it-autoflight/input/fd1", func {
 	var fdmas = getprop("/it-autoflight/input/fd1");
+	var fdout = getprop("/it-autoflight/output/fd1");
+	
+	if (fdmas != fdout) {
+		FD1Master();
+	}
+});
+
+var FD1Master = func {
+	var fdmas = getprop("/it-autoflight/input/fd1");
 	if (fdmas == 0) {
 		setprop("/it-autoflight/output/fd1", 0);
-		fmabox();
+		if (getprop("/it-autoflight/output/fd1") == 0 and getprop("/it-autoflight/output/fd2") == 0) {
+			fmabox();
+		}
 		updateTimers();
 	} else if (fdmas == 1) {
 		setprop("/it-autoflight/output/fd1", 1);
 		fmabox();
 	}
-});
+	
+	var fdout = getprop("/it-autoflight/output/fd1");
+	if (fdmas != fdout) {
+		setprop("/it-autoflight/input/fd1", fdout);
+	}
+}
 
 # Flight Director 2 Master System
 setlistener("/it-autoflight/input/fd2", func {
 	var fdmas = getprop("/it-autoflight/input/fd2");
+	var fdout = getprop("/it-autoflight/output/fd2");
+	
+	if (fdmas != fdout) {
+		FD2Master();
+	}
+});
+
+var FD2Master = func {
+	var fdmas = getprop("/it-autoflight/input/fd2");
 	if (fdmas == 0) {
 		setprop("/it-autoflight/output/fd2", 0);
-		fmabox();
+		if (getprop("/it-autoflight/output/fd1") == 0 and getprop("/it-autoflight/output/fd2") == 0) {
+			fmabox();
+		}
 		updateTimers();
 	} else if (fdmas == 1) {
 		setprop("/it-autoflight/output/fd2", 1);
 		fmabox();
 	}
-});
+	
+	var fdout = getprop("/it-autoflight/output/fd2");
+	if (fdmas != fdout) {
+		setprop("/it-autoflight/input/fd2", fdout);
+	}
+}
 
 # FMA Boxes and Mode
 var fmabox = func {

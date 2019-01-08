@@ -1,9 +1,7 @@
 # A3XX ADIRS System
 # Joshua Davidson (it0uchpods)
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 var knob = 0;
 var roll = 0;

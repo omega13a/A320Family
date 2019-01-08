@@ -1,9 +1,7 @@
 # A3XX ECAM
 # Joshua Davidson (it0uchpods)
 
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
+# Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
 var stateL = 0;
 var stateR = 0;

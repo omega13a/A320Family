@@ -1,18 +1,13 @@
 <!-- Airbus A320 FCS/FBW -->
-<!-- Joshua Davidson (it0uchpods) -->
 
-<!--
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
--->
+<!-- Copyright (c) 2019 Joshua Davidson (it0uchpods) -->
 
 <system name="A320: FCS">
 	
 	<property value="0">fbw/roll/pid</property>
 	<property value="0">fbw/pitch/g-pi</property>
 	<property value="0">fbw/pitch/pid</property>
-	<property value="0">fbw/yaw/tc-pid</property>
+	<property value="0">fbw/yaw/tc-pd</property>
 	<property value="0">fbw/spoiler-output</property>
 	
 	<!-- Default gains for tuning -->
@@ -281,8 +276,8 @@
 						<tableData>
 							          -1         0         1
 							-0.575959  0.261799  0.000000  0.000000
-							-0.575958  0.000000  0.000000  0.000000
-							 0.575958  0.000000  0.000000  0.000000
+							-0.488692  0.000000  0.000000  0.000000
+							 0.488692  0.000000  0.000000  0.000000
 							 0.575959  0.000000  0.000000 -0.261799
 						</tableData>
 					</table>
@@ -310,11 +305,11 @@
 						<independentVar lookup="row">attitude/roll-rad</independentVar>
 						<independentVar lookup="column">fbw/roll/a-i</independentVar>
 						<tableData>
-							          -1         0         1
-							-1.169370  0.261799  0.000000  0.000000
-							-1.169369  0.000000  0.000000  0.000000
-							 1.169369  0.000000  0.000000  0.000000
-							 1.169370  0.000000  0.000000 -0.261799
+							          -1.0      -0.1       0.0       0.1       1.0
+							-1.169370  0.261799  0.000000  0.000000  0.000000  0.000000
+							-1.082100  0.000000  0.000000  0.000000  0.000000  0.000000
+							 1.082100  0.000000  0.000000  0.000000  0.000000  0.000000
+							 1.169370  0.000000  0.000000  0.000000  0.000000 -0.261799
 						</tableData>
 					</table>
 					<table>
@@ -371,8 +366,8 @@
 						<tableData>
 							          -1         0         1
 							-0.698132  0.261799  0.000000  0.000000
-							-0.698131  0.000000  0.000000  0.000000
-							 0.698131  0.000000  0.000000  0.000000
+							-0.610865  0.000000  0.000000  0.000000
+							 0.610865  0.000000  0.000000  0.000000
 							 0.698132  0.000000  0.000000 -0.261799
 						</tableData>
 					</table>
@@ -440,14 +435,10 @@
 			</test>
 		</switch>
 		
-		<fcs_function name="fbw/roll/rate-error">
-			<function>
-				<difference>
-					<property>fbw/roll/p-r_s-s</property>
-					<property>fbw/roll/rate-demand-lag</property>
-				</difference>
-			</function>
-		</fcs_function>
+		<summer name="fbw/roll/rate-error">
+			<input>fbw/roll/p-r_s-s</input>
+			<input>-fbw/roll/rate-demand-lag</input>
+		</summer>
 		
 		<switch name="fbw/roll/trigger">
 			<default value="0"/>
@@ -739,14 +730,10 @@
 			</function>
 		</fcs_function>
 		
-		<fcs_function name="fbw/pitch/g-error">
-			<function>
-				<difference>
-					<property>fbw/pitch/g-computed</property>
-					<property>fbw/pitch/g-demand</property>
-				</difference>
-			</function>
-		</fcs_function>
+		<summer name="fbw/pitch/g-error">
+			<input>fbw/pitch/g-computed</input>
+			<input>-fbw/pitch/g-demand</input>
+		</summer>
 		
 		<!-- Goes to Systems/fbw-pitch.xml then back as fbw/pitch/g-pi -->
 		
@@ -781,8 +768,8 @@
 						<tableData>
 							          -1         0         1
 							-0.261799  0.000000  0.000000  0.087266
-							-0.261798  0.000000  0.000000  0.000000
-							 0.523598  0.000000  0.000000  0.000000
+							-0.174533  0.000000  0.000000  0.000000
+							 0.436332  0.000000  0.000000  0.000000
 							 0.523599 -0.087266  0.000000  0.000000
 						</tableData>
 					</table>
@@ -819,7 +806,7 @@
 						<independentVar lookup="column">fbw/pitch/g-pi-switched</independentVar>
 						<tableData>
 							          -1         0       
-							 0.523598 -0.026180  0.000000
+							 0.436332 -0.026180  0.000000
 							 0.523599 -0.087266  0.000000
 						</tableData>
 					</table>
@@ -887,14 +874,10 @@
 			</test>
 		</switch>
 		
-		<fcs_function name="fbw/pitch/rate-error">
-			<function>
-				<difference>
-					<property>fbw/pitch/t-r_s-s</property>
-					<property>fbw/pitch/rate-demand-lag</property>
-				</difference>
-			</function>
-		</fcs_function>
+		<summer name="fbw/pitch/rate-error">
+			<input>fbw/pitch/t-r_s-s</input>
+			<input>-fbw/pitch/rate-demand-lag</input>
+		</summer>
 		
 		<switch name="fbw/pitch/trigger">
 			<default value="0"/>
@@ -1113,7 +1096,7 @@
 			</test>
 		</switch>
 		
-		<pid name="fbw/yaw/tc-pid-v">
+		<pid name="fbw/yaw/tc-pd-v">
 			<input>fbw/yaw/slip-skid</input>
 			<kp>fbw/yaw/tc-p-gain</kp>
 			<ki>0.0</ki>
@@ -1122,11 +1105,11 @@
 				<min>-0.4</min>
 				<max>0.4</max>
 			</clipto>
-			<output>fbw/yaw/tc-pid</output>
+			<output>fbw/yaw/tc-pd</output>
 		</pid>
 		
-		<switch name="fbw/yaw/tc-pid-s">
-			<default value="fbw/yaw/tc-pid"/>
+		<switch name="fbw/yaw/tc-pd-s">
+			<default value="fbw/yaw/tc-pd"/>
 			<test logic="OR" value="0">
 				position/wow eq 1
 				fbw/yaw/rudder-nul gt 0
@@ -1143,7 +1126,7 @@
 		
 		<summer name="fbw/yaw/output-sum">
 			<input>fbw/yaw/yd-f</input>
-			<input>fbw/yaw/tc-pid-s</input>
+			<input>fbw/yaw/tc-pd-s</input>
 			<input>fbw/yaw/fmgc-cmd</input>
 		</summer>
 		
@@ -1499,49 +1482,6 @@
 	
 	</channel>
 	
-	<channel name="Pitch Aero">
-		
-		<scheduled_gain name="hydraulics/elevator-l/final-deg-aero">
-			<input>hydraulics/elevator-l/final-deg</input>
-			<table>
-				<independentVar lookup="row">velocities/mach</independentVar>
-				<independentVar lookup="column">atmosphere/density-altitude</independentVar>
-				<tableData>
-					     0     43000
-					0.0  1.00  0.850
-					0.9  0.02  0.750
-				</tableData>
-			</table>
-		</scheduled_gain>
-		
-		<scheduled_gain name="hydraulics/elevator-r/final-deg-aero">
-			<input>hydraulics/elevator-r/final-deg</input>
-			<table>
-				<independentVar lookup="row">velocities/mach</independentVar>
-				<independentVar lookup="column">atmosphere/density-altitude</independentVar>
-				<tableData>
-					     0     43000
-					0.0  1.00  0.850
-					0.9  0.02  0.750
-				</tableData>
-			</table>
-		</scheduled_gain>
-		
-		<scheduled_gain name="hydraulics/elevator-trim/final-deg-aero">
-			<input>hydraulics/elevator-trim/final-deg</input>
-			<table>
-				<independentVar lookup="row">velocities/mach</independentVar>
-				<independentVar lookup="column">atmosphere/density-altitude</independentVar>
-				<tableData>
-					     0     43000
-					0.0  1.00  0.850
-					0.9  0.02  0.750
-				</tableData>
-			</table>
-		</scheduled_gain>
-	
-	</channel>
-	
 	<channel name="Rudder">
 		
 		<fcs_function name="hydraulics/rudder/max-deg-fac">
@@ -1887,15 +1827,27 @@
 		
 		<fcs_function name="hydraulics/tiller/function">
 			<function>
-				<table>
-					<independentVar lookup="row">/velocities/groundspeed-kt</independentVar>
-					<independentVar lookup="column">hydraulics/tiller/switch</independentVar>
-					<tableData>
-						       -1     0  1
-						30.000 -70.0  0  70.0
-						30.001 -10.0  0  10.0
-					</tableData>
-				</table>
+				<ifthen>
+					<eq>
+						<property>/sim/model/pushback/connected</property>
+						<value>1</value>
+					</eq>
+					<product>
+						<property>hydraulics/tiller/autopush-cmd</property>
+						<value>70</value>
+					</product>
+					<table>
+						<independentVar lookup="row">/velocities/groundspeed-kt</independentVar>
+						<independentVar lookup="column">hydraulics/tiller/switch</independentVar>
+						<tableData>
+								   -1     0    1
+							 0.500  00.0  0.0  00.0
+							 1.000 -70.0  0.0  70.0
+							30.000 -70.0  0.0  70.0
+							30.001 -10.0  0.0  10.0
+						</tableData>
+					</table>
+				</ifthen>
 			</function>
 		</fcs_function>
 		
@@ -1908,7 +1860,7 @@
 		<switch name="fcs/pushback-steer-deg">
 			<default value="0"/>
 			<test value="fcs/steer-deg">
-				/sim/model/pushback/position-norm gt 0.999
+				/sim/model/pushback/connected eq 1
 			</test>
 		</switch>
 	
