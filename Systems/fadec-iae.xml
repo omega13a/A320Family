@@ -217,7 +217,7 @@
 				<difference>
 					<table>
 						<property>/fdm/jsbsim/atmosphere/density-altitude</property> 
-						<entry><ind>    0</ind><dep>0.9813</dep></entry>
+						<entry><ind>    0</ind><dep>0.9824</dep></entry>
 						<entry><ind>43000</ind><dep>0.8581</dep></entry>
 					</table>
 					<table>
@@ -247,95 +247,6 @@
 		<input>/engines/epr-scale-b-cmd</input>
 		<output>/engines/epr-scale-b</output>
 		<filter-time>0.32</filter-time>
-	</filter>
-	
-	<!-- -->
-	
-	<filter>
-		<name>EPR THR Input Engine 1</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<expression>
-				<product>
-					<table>
-						<property>/controls/engines/engine[0]/throttle-cmd-man</property> 
-						<entry><ind>0.0</ind><dep> 22.4</dep></entry>
-						<entry><ind>1.0</ind><dep>103.8</dep></entry>
-					</table>
-					<table>
-						<table>
-							<property>/controls/engines/engine[0]/throttle-cmd-man</property> 
-							<entry><ind>0.0</ind><dep> 22.4</dep></entry>
-							<entry><ind>1.0</ind><dep>103.8</dep></entry>
-						</table>
-						<entry><ind> 22.4</ind><dep> 1</dep></entry>
-						<entry><ind>103.8</ind><dep>50</dep></entry>
-					</table>
-				</product>
-			</expression>
-		</input>
-		<output>/engines/engine[0]/epr-thr-input</output>
-	</filter>
-	
-	<filter>
-		<name>EPR THR Input Engine 2</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<expression>
-				<product>
-					<table>
-						<property>/controls/engines/engine[1]/throttle-cmd-man</property> 
-						<entry><ind>0.0</ind><dep> 22.4</dep></entry>
-						<entry><ind>1.0</ind><dep>103.8</dep></entry>
-					</table>
-					<table>
-						<table>
-							<property>/controls/engines/engine[1]/throttle-cmd-man</property> 
-							<entry><ind>0.0</ind><dep> 22.4</dep></entry>
-							<entry><ind>1.0</ind><dep>103.8</dep></entry>
-						</table>
-						<entry><ind> 22.4</ind><dep> 1</dep></entry>
-						<entry><ind>103.8</ind><dep>50</dep></entry>
-					</table>
-				</product>
-			</expression>
-		</input>
-		<output>/engines/engine[1]/epr-thr-input</output>
-	</filter>
-	
-	<filter>
-		<name>EPR THR Input Flex</name>
-		<type>gain</type>
-		<gain>1.0</gain>
-		<input>
-			<expression>
-				<product>
-					<table>
-						<product>
-							<value>0.99</value>
-							<property>/engines/flx-throttle</property>
-						</product>
-						<entry><ind>0.0</ind><dep> 22.4</dep></entry>
-						<entry><ind>1.0</ind><dep>103.8</dep></entry>
-					</table>
-					<table>
-						<table>
-							<product>
-								<value>0.99</value>
-								<property>/engines/flx-throttle</property>
-							</product>
-							<entry><ind>0.0</ind><dep> 22.4</dep></entry>
-							<entry><ind>1.0</ind><dep>103.8</dep></entry>
-						</table>
-						<entry><ind> 22.4</ind><dep> 1</dep></entry>
-						<entry><ind>103.8</ind><dep>50</dep></entry>
-					</table>
-				</product>
-			</expression>
-		</input>
-		<output>/engines/epr-flex-input</output>
 	</filter>
 	
 	<!-- -->

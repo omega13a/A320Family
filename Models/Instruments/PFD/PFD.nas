@@ -451,7 +451,6 @@ var canvas_PFD_base = {
 		fbw_curlaw = fbw_law.getValue();
 		me["FMA_combined"].setText(sprintf("%s", pitch_mode_act));
 		
-		
 		if (pitch_mode_act == "LAND" or pitch_mode_act == "FLARE" or pitch_mode_act == "ROLL OUT") {
 			me["FMA_pitch"].hide();
 			me["FMA_roll"].hide();
