@@ -37,6 +37,10 @@
 						<property>/gear/gear[2]/wow</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/systems/thrust/thr-locked</property>
+						<value>1</value>
+					</not-equals>
 				</and>
 			</condition>
 			<value>10</value>
@@ -75,6 +79,10 @@
 						<property>/gear/gear[2]/wow</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/systems/thrust/thr-locked</property>
+						<value>1</value>
+					</not-equals>
 				</and>
 			</condition>
 			<value>0.1</value>
@@ -111,6 +119,10 @@
 						<property>/it-autoflight/input/kts-mach</property>
 						<value>0</value>
 					</equals>
+					<not-equals>
+						<property>/systems/thrust/thr-locked</property>
+						<value>1</value>
+					</not-equals>
 					<or>
 						<and>
 							<equals>
@@ -230,6 +242,10 @@
 						<property>/it-autoflight/input/kts-mach</property>
 						<value>1</value>
 					</equals>
+					<not-equals>
+						<property>/systems/thrust/thr-locked</property>
+						<value>1</value>
+					</not-equals>
 					<or>
 						<and>
 							<equals>
@@ -353,6 +369,10 @@
 						<property>/it-autoflight/output/athr</property>
 						<value>1</value>
 					</equals>
+					<not-equals>
+						<property>/systems/thrust/thr-locked</property>
+						<value>1</value>
+					</not-equals>
 					<or>
 						<equals>
 							<property>/it-autoflight/output/fd1</property>
@@ -460,6 +480,10 @@
 						<property>/it-autoflight/output/athr</property>
 						<value>1</value>
 					</equals>
+					<not-equals>
+						<property>/systems/thrust/thr-locked</property>
+						<value>1</value>
+					</not-equals>
 					<or>
 						<equals>
 							<property>/it-autoflight/output/fd1</property>
@@ -567,6 +591,10 @@
 						<property>/it-autoflight/output/athr</property>
 						<value>0</value>
 					</equals>
+					<equals>
+						<property>/systems/thrust/thr-locked</property>
+						<value>1</value>
+					</equals>
 					<and>
 						<not>
 							<equals>
@@ -636,6 +664,28 @@
 				</or>
 			</condition>
 		</enable>
+		<input>
+			<condition>
+				<equals>
+					<property>/systems/thrust/thr-locked</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<expression>
+				<div>
+					<max>
+						<property>/systems/thrust/thr-lock-cmd[0]</property>
+						<property>/systems/thrust/thr-lock-cmd[1]</property>
+					</max>
+					<table>
+						<property>/environment/temperature-degc</property>
+						<entry><ind> 70</ind><dep>0.797</dep></entry>
+						<entry><ind> 40</ind><dep>0.822</dep></entry>
+						<entry><ind>-60</ind><dep>1.000</dep></entry>
+					</table>
+				</div>
+			</expression>
+		</input>
 		<input>
 			<condition>
 				<and>

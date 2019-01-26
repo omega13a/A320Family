@@ -33,28 +33,47 @@
 
 	<group>
 		<layout>hbox</layout>
+		
 		<button>
 			<legend>A/THR</legend>
 			<pref-width>43</pref-width>
 			<binding>
-			<command>property-toggle</command>
-			<property>/it-autoflight/input/athr</property>
+				<command>nasal</command>
+				<script>
+					if (getprop("/it-autoflight/input/athr") == 0) {
+						setprop("it-autoflight/input/athr", 1);
+					} else {
+						libraries.athrOff("hard");
+					}
+				</script>
 			</binding>
 		</button>
 		<button>
 			<legend>AP1</legend>
 			<pref-width>43</pref-width>
 			<binding>
-			<command>property-toggle</command>
-			<property>/it-autoflight/input/ap1</property>
+				<command>nasal</command>
+				<script>
+					if (getprop("/it-autoflight/input/ap1") == 0) {
+						setprop("it-autoflight/input/ap1", 1);
+					} else {
+						libraries.apOff("hard", 1);
+					}
+				</script>
 			</binding>
 		</button>
 		<button>
 			<legend>AP2</legend>
 			<pref-width>43</pref-width>
 			<binding>
-			<command>property-toggle</command>
-			<property>/it-autoflight/input/ap2</property>
+				<command>nasal</command>
+				<script>
+					if (getprop("/it-autoflight/input/ap2") == 0) {
+						setprop("it-autoflight/input/ap2", 1);
+					} else {
+						libraries.apOff("hard", 2);
+					}
+				</script>
 			</binding>
 		</button>
 		<button>
@@ -71,6 +90,47 @@
 			<binding>
 			<command>property-toggle</command>
 			<property>/it-autoflight/input/fd2</property>
+			</binding>
+		</button>
+	</group>
+	
+	<group>
+		<layout>hbox</layout>
+		
+		<button>
+			<legend>A/THR DISC</legend>
+			<pref-width>119</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>
+					if (getprop("/it-autoflight/input/athr") == 1) {
+						libraries.athrOff("soft");
+					} else {
+						if (getprop("/it-autoflight/output/athr-warning") == 1) {
+							setprop("/it-autoflight/output/athr-warning", 0);
+							setprop("/ECAM/warnings/master-caution-light", 0);
+						}
+					}
+				</script>
+			</binding>
+		</button>
+		<button>
+			<legend>AP DISC</legend>
+			<pref-width>119</pref-width>
+			<binding>
+				<command>nasal</command>
+				<script>
+					if (getprop("/it-autoflight/input/ap1") == 1 or getprop("/it-autoflight/input/ap1") == 2) {
+						libraries.apOff("soft", 0);
+					} else {
+						if (getprop("/it-autoflight/sound/apoffsound") == 1 or getprop("/it-autoflight/sound/apoffsound2") == 1) {
+							setprop("/it-autoflight/sound/apoffsound", 0);
+							setprop("/it-autoflight/sound/apoffsound2", 0);
+						}
+						setprop("/it-autoflight/output/ap-warning", 0);
+						setprop("/ECAM/warnings/master-warning-light", 0);
+					}
+				</script>
 			</binding>
 		</button>
 	</group>

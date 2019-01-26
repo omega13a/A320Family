@@ -813,10 +813,15 @@
 		</retard>
 		
 		<apoff>
-			<name>apoff</name>
-			<path>/Aircraft/IDG-A32X/Sounds/apoff.wav</path>
+			<name>apoff-looped</name>
+			<mode>looped</mode>
+			<path>Aircraft/IDG-A32X/Sounds/apoff.wav</path>
 			<condition>
 				<and>
+					<equals>
+						<property>/it-autoflight/output/ap-warning</property>
+						<value>2</value>
+					</equals>
 					<equals>
 						<property>/it-autoflight/output/ap1</property>
 						<value>0</value>
@@ -829,6 +834,52 @@
 						<property>/it-autoflight/sound/apoffsound</property>
 						<property>/it-autoflight/sound/apoffsound2</property>
 					</or>
+				</and>
+			</condition>
+			<volume>
+				<factor>40.0</factor>
+			</volume>
+		</apoff>
+		
+		<apoff>
+			<name>apoff-single</name>
+			<mode>once</mode>
+			<path>Aircraft/IDG-A32X/Sounds/apoff.wav</path>
+			<condition>
+				<and>
+					<equals>
+						<property>/it-autoflight/output/ap-warning</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>/it-autoflight/output/ap1</property>
+						<value>0</value>
+					</equals>
+					<equals>
+						<property>/it-autoflight/output/ap2</property>
+						<value>0</value>
+					</equals>
+					<or>
+						<property>/it-autoflight/sound/apoffsound</property>
+						<property>/it-autoflight/sound/apoffsound2</property>
+					</or>
+				</and>
+			</condition>
+			<volume>
+				<factor>40.0</factor>
+			</volume>
+		</apoff>
+		
+		<apoff>
+			<name>athroff</name>
+			<path>Aircraft/IDG-A32X/Sounds/Cockpit/chime.wav</path>
+			<condition>
+				<and>
+					<equals>
+						<property>/it-autoflight/output/athr</property>
+						<value>0</value>
+					</equals>
+					<property>/it-autoflight/sound/athrsound</property>
 				</and>
 			</condition>
 			<volume>

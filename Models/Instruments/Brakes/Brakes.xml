@@ -56,5 +56,22 @@
 			<object-name>brakes_accum_psi.axis</object-name>
     	</axis>
     </animation>
+	
+	<animation>
+		<name>Panel lighting</name>
+		<type>material</type>
+		<object-name>brakes_body</object-name>
+		<emission>
+			<red>0.3</red>
+			<green>0.3</green>
+			<blue>0.3</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission>
+	</animation>
+	
+	<effect>
+		<inherits-from>Aircraft/IDG-A32X/Models/Effects/brake</inherits-from>
+		<object-name>brakes_body</object-name>
+	</effect>
 
 </PropertyList>

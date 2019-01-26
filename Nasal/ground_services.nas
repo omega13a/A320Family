@@ -62,9 +62,6 @@ var ground_services = {
 			if (me.ice_time == 900) {
 				ground_message("De-icing Completed!", 1, 1, 1);
 				setprop("/services/deicing_truck/de-ice", 0);
-				setprop("/controls/ice/wing/temp", 30);
-				setprop("/controls/ice/wing/eng1", 30);
-				setprop("/controls/ice/wing/eng2", 30);
 			}
 		
 		} else {

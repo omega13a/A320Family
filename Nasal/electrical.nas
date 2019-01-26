@@ -116,7 +116,7 @@ var light = {
 	power_consumption: func() {
 		
 		if (getprop(me.control_prop) != 0 and getprop(me.elec_prop) != 0) {
-			light_power_consumption = me.max_watts;
+			light_power_consumption = me.max_watts * getprop(me.control_prop);
 		} else {
 			light_power_consumption = 0;
 		} 
@@ -265,7 +265,10 @@ var ELEC = {
 			light.new(name: "left-turnoff", max_watts:21, control_prop:"/controls/lighting/leftturnoff", elec_prop:"/systems/electrical/bus/ac1"),
 			light.new(name: "right-turnoff", max_watts:21, control_prop:"/controls/lighting/rightturnoff", elec_prop:"/systems/electrical/bus/ac2"),
 			light.new(name: "left-wing", max_watts:24, control_prop:"/controls/lighting/wing-lights", elec_prop:"/systems/electrical/bus/ac1"),
-			light.new(name: "right-wing", max_watts:24, control_prop:"/controls/lighting/wing-lights", elec_prop:"/systems/electrical/bus/ac2")];
+			light.new(name: "right-wing", max_watts:24, control_prop:"/controls/lighting/wing-lights", elec_prop:"/systems/electrical/bus/ac2"),
+			
+			light.new(name: "left-dome", max_watts:10, control_prop:"/controls/lighting/dome-norm", elec_prop:"/systems/electrical/bus/dc-ess"),
+			light.new(name: "right-dome", max_watts:10, control_prop:"/controls/lighting/dome-norm", elec_prop:"/systems/electrical/bus/dc-ess")];
 	},
 	loop: func() {
 		galley_sw = getprop("/controls/electrical/switches/galley");
@@ -679,14 +682,26 @@ var ELEC = {
 			setprop("/systems/electrical/battery2-volts", math.clamp(battery2_percent * (24) / (10), 0, 24));
 		}
 		
-		if (getprop("/systems/electrical/bus/ac-ess") < 110) {
-			if (getprop("/it-autoflight/output/ap1") == 1) {
-				setprop("/it-autoflight/input/ap1", 0);
-			}
+		dc_ess = getprop("/systems/electrical/bus/dc-ess");
+		
+		if (dc2 < 25) {
 			if (getprop("/it-autoflight/output/ap2") == 1) {
-				setprop("/it-autoflight/input/ap2", 0);
+				libraries.apOff("hard", 2);
+			}
+		}
+		
+		if (dc_ess < 25 and dc2 < 25) {
+			if (getprop("/it-autoflight/output/athr") == 1) {
+				libraries.athrOff("hard");
+			}
+		}
+		
+		if (dc_ess < 25) {
+			if (getprop("/it-autoflight/output/ap1") == 1) {
+				libraries.apOff("hard", 1);
 			}
 			setprop("systems/electrical/on", 0);
+			setprop("/systems/thrust/thr-locked", 0);
 			setprop("/systems/electrical/outputs/adf", 0);
 			setprop("/systems/electrical/outputs/audio-panel", 0);
 			setprop("/systems/electrical/outputs/audio-panel[1]", 0);

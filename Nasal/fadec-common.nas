@@ -1,5 +1,4 @@
 # A3XX FADEC/Throttle Control System
-# Joshua Davidson (it0uchpods)
 
 # Copyright (c) 2019 Joshua Davidson (it0uchpods)
 
@@ -52,6 +51,9 @@ setprop("/systems/thrust/clb-lim", 0.0);
 setprop("/systems/thrust/lim-flex", 0);
 setprop("/engines/flex-derate", 0);
 setprop("/systems/thrust/eng-out", 0);
+setprop("/systems/thrust/thr-locked", 0);
+setprop("/systems/thrust/thr-lock-cmd[0]", 0);
+setprop("/systems/thrust/thr-lock-cmd[1]", 0);
 
 setlistener("/sim/signals/fdm-initialized", func {
 	thrust_loop.start();
@@ -194,7 +196,11 @@ var atoff_request = func {
 	state1 = getprop("/systems/thrust/state1");
 	state2 = getprop("/systems/thrust/state2");
 	if ((state1 == "IDLE") and (state2 == "IDLE") and (getprop("/systems/thrust/alpha-floor") == 0) and (getprop("/systems/thrust/toga-lk") == 0)) {
-		setprop("/it-autoflight/input/athr", 0);
+		if (getprop("/it-autoflight/input/athr") == 1 and getprop("/position/gear-agl-ft") > 50) {
+			libraries.athrOff("soft");
+		} elsif (getprop("/position/gear-agl-ft") < 50) {
+			libraries.athrOff("none");
+		}
 	}
 }
 
@@ -275,10 +281,14 @@ var thrust_loop = maketimer(0.04, func {
 			setprop("/systems/thrust/alpha-floor", 1);
 			setprop("/systems/thrust/toga-lk", 0);
 			setprop("/it-autoflight/input/athr", 1);
+			setprop("/controls/engines/engine[0]/throttle-fdm", 0.99);
+			setprop("/controls/engines/engine[1]/throttle-fdm", 0.99);
 		} else if (getprop("/systems/thrust/alpha-floor") == 1 and alpha < togaLock) {
 			setprop("/systems/thrust/alpha-floor", 0);
 			setprop("/it-autoflight/input/athr", 1);
 			setprop("/systems/thrust/toga-lk", 1);
+			setprop("/controls/engines/engine[0]/throttle-fdm", 0.99);
+			setprop("/controls/engines/engine[1]/throttle-fdm", 0.99);
 		}
 	} else {
 		setprop("/systems/thrust/alpha-floor", 0);
@@ -329,3 +339,10 @@ var thrust_flash = maketimer(0.5, func {
 		}
 	}
 });
+
+setlistener("/systems/thrust/thr-locked", func {
+	if (getprop("/systems/thrust/thr-locked") == 1) {
+		setprop("/systems/thrust/thr-lock-cmd[0]", getprop("/controls/engines/engine[0]/throttle-output"));
+		setprop("/systems/thrust/thr-lock-cmd[1]", getprop("/controls/engines/engine[1]/throttle-output"));
+	}
+}, 0, 0);

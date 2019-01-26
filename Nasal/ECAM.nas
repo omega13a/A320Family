@@ -20,6 +20,7 @@ var mode = "XX";
 var modeI = "XX";
 var man_sel = 0;
 var fault_sel = 0;
+var fault_page = "";
 var warnPhase = 1;
 var page = "door";
 var aileron = 0;
@@ -39,6 +40,10 @@ var ENGCounting = 0;
 var flapLever = 0;
 var CRZTime = 0;
 var CRZCondition = 0;
+var CRZCounting = 0;
+var agl = 0;
+var ap_active = 0;
+var athr_active = 0;
 setprop("/ECAM/left-msg", "NONE");
 setprop("/position/gear-agl-ft", 0);
 # w = White, b = Blue, g = Green, a = Amber, r = Red
@@ -54,6 +59,7 @@ var ECAM = {
 		setprop("/ECAM/Lower/page", "door");
 		setprop("/ECAM/Lower/man-select", 0);
 		setprop("/ECAM/Lower/fault-select", 0);
+		setprop("/ECAM/Lower/fault-page", "");
 		setprop("/ECAM/Lower/apu-timer", 0);
 		setprop("/ECAM/Lower/eng-timer", 0);
 		setprop("/ECAM/Lower/fctl-timer", 0);
@@ -69,8 +75,15 @@ var ECAM = {
 		setprop("/ECAM/Lower/light/press", 0);
 		setprop("/ECAM/Lower/light/sts", 0);
 		setprop("/ECAM/Lower/light/wheel", 0);
+		setprop("/ECAM/Lower/light/clr", 0);
 		setprop("/ECAM/warning-phase", 1);
 		setprop("/ECAM/warning-phase-10-time", 0);
+		setprop("/ECAM/ap-off-time", 0);
+		setprop("/ECAM/athr-off-time", 0);
+		setprop("/it-autoflight/output/ap-warning", 0);
+		setprop("/it-autoflight/output/athr-warning", 0);
+		var ap_off_time = getprop("/ECAM/ap-off-time");
+		var athr_off_time = getprop("/ECAM/athr-off-time");
 		LowerECAM.reset();
 	},
 	MSGclr: func() {
@@ -130,9 +143,9 @@ var ECAM = {
 			}
 		}
 		
-		if (wow == 0) {
+		if (getprop("/ECAM/warning-phase") >= 3) {
 			setprop("/ECAM/to-memo-enable", 0);
-		} else if ((stateL != 3 or stateR != 3) and wow == 1) {
+		} else {
 			setprop("/ECAM/to-memo-enable", 1);
 		}
 		
@@ -144,12 +157,12 @@ var ECAM = {
 			setprop("/ECAM/ldg-memo-enable", 0);
 		}
 		
-		if (getprop("/ECAM/show-left-msg") == 1) {
-			setprop("/ECAM/left-msg", "MSG");
-		} else if (getprop("/FMGC/status/phase") == 0 and stateL == 3 and stateR == 3 and getprop("/ECAM/engine-start-time") + 120 < getprop("/sim/time/elapsed-sec") and getprop("/ECAM/to-memo-enable") == 1 and wow == 1) {
+		if (stateL == 3 and stateR == 3 and getprop("/ECAM/engine-start-time") + 120 < getprop("/sim/time/elapsed-sec") and getprop("/ECAM/to-memo-enable") == 1 and wow == 1) {
 			setprop("/ECAM/left-msg", "TO-MEMO");
-		} else if (getprop("/ECAM/ldg-memo-enable") == 1) {
+		} elsif (getprop("/ECAM/ldg-memo-enable") == 1) {
 			setprop("/ECAM/left-msg", "LDG-MEMO");
+		} elsif (getprop("/ECAM/show-left-msg") == 1) {
+			setprop("/ECAM/left-msg", "MSG"); # messages should have priority over memos - how?
 		} else {
 			setprop("/ECAM/left-msg", "NONE");
 		}
@@ -182,6 +195,36 @@ var ECAM = {
 				toPowerSet = 0;
 			}
 		}
+		
+		# AP / ATHR warnings
+		# No evidence found that re-engagement disconnects warnings - if anyone has any evidence to the contrary let me know
+		if (ap_active == 1 and getprop("/it-autoflight/output/ap-warning") == 0) {
+			ap_active = 0;
+		} elsif (ap_active == 1 and getprop("/it-autoflight/output/ap-warning") == 1 and getprop("/sim/time/elapsed-sec") > (getprop("/ECAM/ap-off-time") + 9)) {
+			ap_active = 0;
+			setprop("/it-autoflight/output/ap-warning", 0);
+		} elsif (ap_active == 0 and getprop("/it-autoflight/output/ap-warning") != 0) {
+			ap_active = 1;
+		}
+		
+		if (ap_active == 1 and getprop("/it-autoflight/output/ap-warning") == 1 and getprop("/sim/time/elapsed-sec") > (getprop("/ECAM/ap-off-time") + 3) and getprop("/ECAM/warnings/master-warning-light") == 1) {
+			setprop("/ECAM/warnings/master-warning-light", 0);
+		}
+		
+		if (athr_active == 1 and getprop("/it-autoflight/output/athr-warning") == 0) {
+			athr_active = 0;
+		} elsif (athr_active == 1 and getprop("/it-autoflight/output/athr-warning") == 1 and getprop("/sim/time/elapsed-sec") > (getprop("/ECAM/athr-off-time") + 9)) {
+			athr_active = 0;
+			setprop("/it-autoflight/output/athr-warning", 0);
+		} elsif (athr_active == 0 and getprop("/it-autoflight/output/athr-warning") != 0) {
+			athr_active = 1;
+		}
+		
+		
+		if (athr_active == 1 and getprop("/it-autoflight/output/athr-warning") == 1 and getprop("/sim/time/elapsed-sec") > (getprop("/ECAM/athr-off-time") + 3) and getprop("/ECAM/warnings/master-caution-light") == 1) {
+			setprop("/ECAM/warnings/master-caution-light", 0);
+		}
+		
 		
 		# Warning Phases
 		if (getprop("/systems/electrical/bus/ac1") < 110 and getprop("/systems/electrical/bus/ac2") < 110 and getprop("/systems/electrical/bus/ac-ess") < 110) { # Reset warning phases
@@ -228,12 +271,12 @@ var ECAM = {
 		stateR = getprop("/engines/engine[1]/state");
 		wow = getprop("/gear/gear[0]/wow");
 		
-		if (wow == 1 and stateL == 3 and stateR == 3 and getprop("/ECAM/left-msg") != "TO-MEMO") {
+		if ((getprop("/ECAM/warning-phase") == 2 or getprop("/ECAM/warning-phase") == 9) and wow == 1 and (stateL == 3 or stateR == 3) and getprop("/ECAM/left-msg") != "TO-MEMO") {
 			setprop("/ECAM/to-memo-enable", 1);
 			setprop("/ECAM/engine-start-time", getprop("/ECAM/engine-start-time") - 120);
 		}
 		
-		if (getprop("/controls/autobrake/mode") == 3 and getprop("/controls/lighting/no-smoking-sign") == 1 and getprop("/controls/lighting/seatbelt-sign") == 1 and getprop("/controls/flight/speedbrake-arm") == 1 and getprop("/controls/flight/flap-pos") > 0 
+		if (getprop("/controls/autobrake/mode") == 3 and getprop("/controls/switches/no-smoking-sign") == 1 and getprop("/controls/switches/seatbelt-sign") == 1 and getprop("/controls/flight/speedbrake-arm") == 1 and getprop("/controls/flight/flap-pos") > 0 
 		and getprop("/controls/flight/flap-pos") < 5) {
 			setprop("/ECAM/to-config", 1);
 		}
@@ -247,17 +290,58 @@ ECAM.MSGclr();
 var LowerECAM = {
 	button: func(b) {
 		man_sel = getprop("/ECAM/Lower/man-select");
+		if (b == "clr" and getprop("/it-autoflight/output/athr-warning") == 2) {
+			setprop("/it-autoflight/output/athr-warning", 0);
+			setprop("/ECAM/Lower/light/clr", 0);
+			setprop("/ECAM/warnings/master-caution-light", 0);
+			LowerECAM.failCall("sts");
+			return;
+		}
 		
-		if (!getprop("/ECAM/lower/fault-select")) {
-			if (!man_sel) {
+		if (b == "clr" and getprop("/it-autoflight/output/ap-warning") == 2) {
+			setprop("/it-autoflight/output/ap-warning", 0);
+			setprop("/ECAM/Lower/light/clr", 0);
+			setprop("/ECAM/warnings/master-warning-light", 0);
+			LowerECAM.failCall("sts");
+			return;
+		}
+		
+		if (getprop("/ECAM/Lower/fault-select") == 0) {
+			if (b != "clr") {
+				if (!man_sel) {
+					setprop("/ECAM/Lower/man-select", 1);
+					setprop("/ECAM/Lower/page", b);
+					setprop("/ECAM/Lower/light/" ~ b, 1);
+				} else {
+					if (b == getprop("/ECAM/Lower/page")) {
+						setprop("/ECAM/Lower/man-select", 0);
+						LowerECAM.loop();
+						setprop("/ECAM/Lower/light/" ~ b, 0);
+					} else {
+						setprop("/ECAM/Lower/light/" ~ getprop("/ECAM/Lower/page"), 0);
+						setprop("/ECAM/Lower/page", b);
+						setprop("/ECAM/Lower/light/" ~ b, 1);
+					}
+				}
+			} elsif (getprop("/ECAM/Lower/light/clr") == 1) {
+				setprop("/ECAM/Lower/light/clr", 0);
+			}
+		} else {
+			if (b == "clr") {
+				setprop("/ECAM/Lower/light/clr", 0);
+				setprop("/ECAM/Lower/fault-select", 0);
+				setprop("/ECAM/Lower/fault-page", "");
+				LowerECAM.loop();
+			} elsif (!man_sel) {
 				setprop("/ECAM/Lower/man-select", 1);
 				setprop("/ECAM/Lower/page", b);
 				setprop("/ECAM/Lower/light/" ~ b, 1);
 			} else {
 				if (b == getprop("/ECAM/Lower/page")) {
 					setprop("/ECAM/Lower/man-select", 0);
-					LowerECAM.loop();
 					setprop("/ECAM/Lower/light/" ~ b, 0);
+					setprop("/ECAM/Lower/fault-select", 1);
+					setprop("/ECAM/Lower/page", getprop("/ECAM/Lower/fault-page"));
 				} else {
 					setprop("/ECAM/Lower/light/" ~ getprop("/ECAM/Lower/page"), 0);
 					setprop("/ECAM/Lower/page", b);
@@ -269,68 +353,72 @@ var LowerECAM = {
 	loop: func() {
 		man_sel = getprop("/ECAM/Lower/man-select");
 		fault_sel = getprop("/ECAM/Lower/fault-select");
+		fault_page = getprop("/ECAM/Lower/fault-page");
 		page = getprop("/ECAM/Lower/page");
-		aileron = getprop("/fdm/jsbsim/fbw/aileron-sidestick");
-		elevator = getprop("/fdm/jsbsim/fbw/elevator-sidestick");
-		APUMaster = getprop("/controls/APU/master");
-		APURPM = getprop("/systems/apu/rpm");
-		stateL = getprop("/engines/engine[0]/state");
-		stateR = getprop("/engines/engine[1]/state");
-		engModeSel = getprop("/controls/engines/engine-start-switch");
-		
-		if (warnPhase == 2) {
-			if (abs(aileron) > 0.3 or abs(elevator) > 0.3) {
-				fctlTime = elapsedSec;
-				fctlCounting = 1;
-			} else if (fctlCounting) {
-				if (fctlTime + 20 < elapsedSec) {
-					fctlCounting = 0;
-				}
-			}
-		} else {
-			fctlCounting = 0;
-		}
-		
-		if (APURPM > 95) {
-			if (APUTime + 10 < elapsedSec) {
-				APUCounting = 0;
-			}
-		} else {
-			if (APUMaster) {
-				APUTime = elapsedSec;
-				APUCounting = 1;
-			} else {
-				APUCounting = 0;
-			}
-		}
-		
-		if ((APURPM <= 95 or APUCounting) and APUMaster) {
-			showAPUPage = 1;
-		} else {
-			showAPUPage = 0;
-		}
-		
-		if (stateL == 3 and stateR == 3) {
-			if (ENGCounting and ENGTime + 10 < elapsedSec) {
-				ENGCounting = 0;
-			}
-		} else if ((stateL > 0 or stateR > 0) and engModeSel == 2) {
-			ENGTime = elapsedSec;
-			ENGCounting = 1;
-		} else if ((stateL == 0 and stateR == 0) or engModeSel < 2) {
-			ENGCounting = 0;
-		}
-		
-		if (ENGCounting or engModeSel != 1) {
-			showENGPage = 1;
-		} else {
-			showENGPage = 0;
-		}
 		
 		if (!man_sel) {
 			if (!fault_sel) {
 				warnPhase = getprop("/ECAM/warning-phase");
+				aileron = getprop("/fdm/jsbsim/fbw/aileron-sidestick");
+				elevator = getprop("/fdm/jsbsim/fbw/elevator-sidestick");
+				APUMaster = getprop("/controls/APU/master");
+				APURPM = getprop("/systems/apu/rpm");
+				stateL = getprop("/engines/engine[0]/state");
+				stateR = getprop("/engines/engine[1]/state");
+				engModeSel = getprop("/controls/engines/engine-start-switch");
+				elapsedSec = getprop("/sim/time/elapsed-sec");
 				
+				if (warnPhase == 2) {
+					if (abs(aileron) > 0.3 or abs(elevator) > 0.3) {
+						fctlTime = elapsedSec;
+						fctlCounting = 1;
+					} else if (fctlCounting) {
+						if (fctlTime + 20 < elapsedSec) {
+							fctlCounting = 0;
+						}
+					}
+				} else {
+					fctlCounting = 0;
+				}
+
+				if (APURPM > 95) {
+					if (APUTime + 10 < elapsedSec) {
+						APUCounting = 0;
+					}
+				} else {
+					if (APUMaster) {
+						APUTime = elapsedSec;
+						APUCounting = 1;
+					} else {
+						APUCounting = 0;
+					}
+				}
+
+				if ((APURPM <= 95 or APUCounting) and APUMaster) {
+					showAPUPage = 1;
+				} else {
+					showAPUPage = 0;
+				}
+
+				if (stateL == 3 or stateR == 3) {
+					if (ENGCounting and ENGTime + 10 < elapsedSec) {
+						ENGCounting = 0;
+					}
+				}
+
+				if (((stateL > 0 and stateL != 3) or (stateR > 0 and stateR != 3)) and engModeSel == 2) {
+					ENGTime = elapsedSec;
+					ENGCounting = 1;
+				} else if ((stateL == 0 and stateR == 0) or engModeSel == 1) {
+					ENGCounting = 0;
+				}
+				
+				if (ENGCounting or engModeSel == 0) {
+					showENGPage = 1;
+				} else {
+					showENGPage = 0;
+				}
+
 				if (warnPhase == 1 or warnPhase == 10) {
 					if (showENGPage) {
 						if (page != "eng") {
@@ -344,7 +432,6 @@ var LowerECAM = {
 						setprop("/ECAM/Lower/page", "door");
 					}
 				} else if (warnPhase == 2) {
-					elapsedSec = getprop("/sim/time/elapsed-sec");
 					
 					if (showENGPage) {
 						if (page != "eng") {
@@ -361,22 +448,48 @@ var LowerECAM = {
 					} else if (page != "wheel") {
 						setprop("/ECAM/Lower/page", "wheel");
 					}
-				} else if (warnPhase >= 3 and warnPhase < 10) {
+				} else if (warnPhase >= 3 and warnPhase <= 5) {
+					if (page != "eng") {
+						setprop("/ECAM/Lower/page", "eng");
+					}
+				} else if (warnPhase >= 7 and warnPhase <= 9) {
+					if (showENGPage) {
+						if (page != "eng") {
+							setprop("/ECAM/Lower/page", "eng");
+						}
+					} else if (showAPUPage) {
+						if (page != "apu") {
+							setprop("/ECAM/Lower/page", "apu");
+						}
+					} else if (page != "wheel") {
+						setprop("/ECAM/Lower/page", "wheel");
+					}
+				} else if (warnPhase == 6) {
 					flapLever = getprop("/controls/flight/flap-lever");
+					gearLever = getprop("/controls/gear/gear-down");
+					agl = getprop("/position/gear-agl-ft");
 					
-					if ((toPowerSet or flapLever > 0) and warnPhase == 6) {
+					if (CRZCounting and (toPowerSet or flapLever > 0) and !CRZCondition) {
 						if (CRZTime + 60 < elapsedSec) {
 							CRZCondition = 1;
+							CRZCounting = 0;
 						} else {
 							CRZCondition = 0;
 						}
-					} else {
+					} 
+
+					if (!CRZCounting and (toPowerSet or flapLever > 0) and !CRZCondition) {
 						CRZTime = elapsedSec;
 						CRZCondition = 0;
+						CRZCounting = 1;
 					}
 					
-					if (CRZCondition or (warnPhase == 6 and flapLever == 0 and !toPowerSet)) {
-						if (page != "crz") {
+					if (CRZCondition or (flapLever == 0 and !toPowerSet)) {
+						if (gearLever and agl <= 16000) {
+							if (page != "wheel") {
+								setprop("/ECAM/Lower/page", "wheel");
+							}
+						} else if (page != "crz") {
 							setprop("/ECAM/Lower/page", "crz");
 						}
 					} else {
@@ -393,6 +506,19 @@ var LowerECAM = {
 						}
 					}
 				}
+			} else {
+				setprop("/ECAM/Lower/light/apu", 0);
+				setprop("/ECAM/Lower/light/bleed", 0);
+				setprop("/ECAM/Lower/light/cond", 0);
+				setprop("/ECAM/Lower/light/door", 0);
+				setprop("/ECAM/Lower/light/elec", 0);
+				setprop("/ECAM/Lower/light/eng", 0);
+				setprop("/ECAM/Lower/light/fctl", 0);
+				setprop("/ECAM/Lower/light/fuel", 0);
+				setprop("/ECAM/Lower/light/hyd", 0);
+				setprop("/ECAM/Lower/light/press", 0);
+				setprop("/ECAM/Lower/light/sts", 0);
+				setprop("/ECAM/Lower/light/wheel", 0);
 			}
 		}
 	},
@@ -413,4 +539,14 @@ var LowerECAM = {
 		setprop("/ECAM/Lower/light/sts", 0);
 		setprop("/ECAM/Lower/light/wheel", 0);
 	},
+	failCall: func(page) {
+		setprop("/ECAM/Lower/man-select", 0);
+		setprop("/ECAM/Lower/fault-select", 1);
+		setprop("/ECAM/Lower/fault-page", page);
+		setprop("/ECAM/Lower/page", page);
+		setprop("/ECAM/Lower/light/clr", 1);
+	},
+	clrLight: func() {
+		setprop("/ECAM/Lower/light/clr", 1);
+	}
 };

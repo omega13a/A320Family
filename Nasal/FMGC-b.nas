@@ -206,9 +206,15 @@ var ATHRMaster = func {
 	var athrmas = getprop("/it-autoflight/input/athr");
 	if (athrmas == 0) {
 		setprop("/it-autoflight/output/athr", 0);
+		if (getprop("/it-autoflight/sound/enableathrsound") == 1 and getprop("/it-autoflight/output/athr") == 0 and getprop("/position/gear-agl-ft") > 50) {
+			setprop("/it-autoflight/sound/athrsound", 1);	
+			setprop("/it-autoflight/sound/enableathrsound", 0);	  
+		}
 	} else if (athrmas == 1) {
 		thrustmode();
 		setprop("/it-autoflight/output/athr", 1);
+		setprop("/it-autoflight/sound/athrsound", 0);	
+		setprop("/it-autoflight/sound/enableathrsound", 1);	  
 	}
 	
 	var athrout = getprop("/it-autoflight/output/athr");
@@ -704,9 +710,10 @@ var ap_various = func {
 	}
 	
 	if (getprop("/it-autoflight/output/ap1") == 1 or getprop("/it-autoflight/output/ap2") == 1) {
-		if (getprop("/controls/flight/aileron") > 0.2 or getprop("/controls/flight/aileron") < -0.2 or getprop("/controls/flight/elevator") > 0.2 or getprop("/controls/flight/elevator") < -0.2) {
+		if (getprop("/controls/flight/aileron") > 0.2 or getprop("/controls/flight/aileron") < -0.2 or getprop("/controls/flight/elevator") > 0.2 or getprop("/controls/flight/elevator") < -0.2 or getprop("/controls/flight/rudder") > 0.2 or getprop("/controls/flight/rudder") < -0.2) {
 			setprop("/it-autoflight/input/ap1", 0);
 			setprop("/it-autoflight/input/ap2", 0);
+			libraries.apOff("hard", 0);
 		}
 	}
 }

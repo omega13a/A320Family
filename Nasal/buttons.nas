@@ -249,3 +249,74 @@ var decreaseManVS = func {
 		setprop("/systems/pressurization/outflowpos-man", manvs - 0.001);
 	}
 }
+
+var apOff = func(type, side) {
+	if (side == 0) {
+		setprop("/it-autoflight/input/ap1", 0);
+		setprop("/it-autoflight/input/ap2", 0);
+	} elsif (side == 1) {
+		setprop("/it-autoflight/input/ap1", 0);
+	} elsif (side == 2) {
+		setprop("/it-autoflight/input/ap2", 0);
+	}
+	apWarn(type);
+}
+
+var apWarn = func(type) {
+	if (type == "none") {
+		return;
+	} elsif (type == "soft") {
+		setprop("/ECAM/ap-off-time", getprop("/sim/time/elapsed-sec"));
+		setprop("/it-autoflight/output/ap-warning", 1);
+		setprop("/ECAM/warnings/master-warning-light", 1);
+	} else {
+		setprop("/it-autoflight/output/ap-warning", 2);
+		# master warning handled by warning system in this case
+		libraries.LowerECAM.clrLight();
+	}
+}
+
+var athrOff = func(type) {
+	if (type == "hard") {
+		lockThr();
+	}
+	
+	setprop("/it-autoflight/input/athr", 0);
+	
+	athrWarn(type);
+}
+
+var athrWarn = func(type) {
+	if (type == "none") { 
+		return; 
+	} elsif (type == "soft") {
+		setprop("/ECAM/athr-off-time", getprop("/sim/time/elapsed-sec"));
+		setprop("/it-autoflight/output/athr-warning", 1);
+	} else {
+		libraries.LowerECAM.clrLight();
+		setprop("/it-autoflight/output/athr-warning", 2);
+	}
+	setprop("/ECAM/warnings/master-caution-light", 1);
+}
+
+var lockThr = func() {
+	state1 = getprop("/systems/thrust/state1");
+	state2 = getprop("/systems/thrust/state2");
+	if ((state1 == "CL" and state2 == "CL" and getprop("/systems/thrust/eng-out") == 0) or (state1 == "MCT" and state2 == "MCT" and getprop("/systems/thrust/eng-out") == 1)) {
+		setprop("/systems/thrust/thr-locked", 1);
+	}
+	
+	lockTimer.start();
+}
+
+var checkLockThr = func() {
+	state1 = getprop("/systems/thrust/state1");
+	state2 = getprop("/systems/thrust/state2");
+	if ((state1 != "CL" and state2 != "CL" and getprop("/systems/thrust/eng-out") == 0) or (state1 != "MCT" and state2 != "MCT" and getprop("/systems/thrust/eng-out") == 1)) {
+		setprop("/systems/thrust/thr-locked", 0);
+		lockTimer.stop();
+	}
+}
+
+
+var lockTimer = maketimer(0.02, checkLockThr);

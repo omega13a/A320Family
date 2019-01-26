@@ -1136,6 +1136,15 @@
 		</input>
 		<input>
 			<condition>
+				<equals>
+					<property>/systems/thrust/thr-locked</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<property>/systems/thrust/thr-lock-cmd[0]</property>
+		</input>
+		<input>
+			<condition>
 				<and>
 					<equals>
 						<property>/controls/engines/thrust-limit</property>
@@ -1181,6 +1190,15 @@
 				</equals>
 			</condition>
 			<property>/controls/engines/engine[1]/throttle-rev</property>
+		</input>
+		<input>
+			<condition>
+				<equals>
+					<property>/systems/thrust/thr-locked</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<property>/systems/thrust/thr-lock-cmd[1]</property>
 		</input>
 		<input>
 			<condition>

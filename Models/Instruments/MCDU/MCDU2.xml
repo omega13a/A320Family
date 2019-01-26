@@ -1887,4 +1887,22 @@
 		</action>
 	</animation>
 	
+	<animation>
+		<name>Panel lighting</name>
+		<type>material</type>
+		<object-name>mcdu_body</object-name>
+		<emission>
+			<red>0.3</red>
+			<green>0.3</green>
+			<blue>0.3</blue>
+			<factor-prop>sim/model/lights/dome-light</factor-prop>
+		</emission>
+	</animation>
+	
+	<effect>
+		<inherits-from>Aircraft/IDG-A32X/Models/Effects/cockpit-irradiance</inherits-from>
+		<object-name>mcdu_body</object-name>
+		<object-name>mcdu_glare</object-name>
+	</effect>
+	
 </PropertyList>

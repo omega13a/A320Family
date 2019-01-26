@@ -2,6 +2,11 @@
 # in east/north/up coordinates the renderer uses
 # Thanks to BAWV12 / Thorsten
 
+
+var als_on = props.globals.getNode("/sim/rendering/shaders/skydome");
+var alt_agl = props.globals.getNode("/position/gear-agl-ft");
+var cur_alt = 0;
+
 var light_manager = {
 
 	run: 0,
@@ -86,7 +91,7 @@ var light_manager = {
 	nd_ref_light5_y: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-y-m[4]", 1),
 	nd_ref_light5_z: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/eyerel-z-m[4]", 1),
 	nd_ref_light5_dir: props.globals.getNode("/sim/rendering/als-secondary-lights/lightspot/dir[4]", 1),
-
+	
 	init: func {
 		# define your lights here
 
@@ -171,11 +176,8 @@ var light_manager = {
 			return;
 		}
 		
-		als_on = getprop("/sim/rendering/shaders/skydome");
-		alt_agl = getprop("/position/gear-agl-ft");
-		type_of_view = getprop("sim/current-view/internal");
-		
-		if (als_on == 1 and alt_agl < 100.0) {
+		cur_alt = alt_agl.getValue();
+		if (als_on.getValue() == 1 and alt_agl.getValue() < 100.0) {
 			ll1 = getprop("controls/lighting/landing-lights[1]");
 			ll2 = getprop("controls/lighting/landing-lights[2]");
 			ll3 = getprop("sim/model/lights/nose-lights");
@@ -237,11 +239,8 @@ var light_manager = {
 			
 
 			# light 1 position
-	 
-			#var alt_agl = getprop("/position/altitude-agl-ft");
-	 
-			var proj_x = alt_agl;
-			var proj_z = alt_agl/10.0;
+			var proj_x = cur_alt;
+			var proj_z = cur_alt/10.0;
 	 
 			apos.set_lat(lat + ((me.light1_xpos + proj_x) * ch + me.light1_ypos * sh) / me.lat_to_m);
 			apos.set_lon(lon + ((me.light1_xpos + proj_x)* sh - me.light1_ypos * ch) / me.lon_to_m);
@@ -316,7 +315,7 @@ var light_manager = {
 			me.nd_ref_light5_dir.setValue(heading);
 		}
 		
-		settimer ( func me.update(), 0.0);
+		settimer ( func me.update(), 0.00);
 	},
 
 	light1_on : func {
