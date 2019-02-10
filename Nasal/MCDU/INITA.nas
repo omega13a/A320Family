@@ -8,7 +8,7 @@ var initInputA = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/MCDUC/flight-num", "");
 			setprop("/MCDUC/flight-num-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var flts = size(scratchpad);
@@ -24,7 +24,7 @@ var initInputA = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/cost-index", 0);
 			setprop("/FMGC/internal/cost-index-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var ci = int(scratchpad);
@@ -48,7 +48,7 @@ var initInputA = func(key, i) {
 			setprop("/FMGC/internal/cruise-ft", 10000);
 			setprop("/FMGC/internal/cruise-fl", 100);
 			setprop("/FMGC/internal/cruise-lvl-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var crz = int(scratchpad);
@@ -74,7 +74,7 @@ var initInputA = func(key, i) {
 			setprop("/FMGC/internal/arr-arpt", "");
 			setprop("/FMGC/internal/tofrom-set", 0);
 			fmgc.updateARPT();
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -103,7 +103,7 @@ var initInputA = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/tropo", 36090);
 			setprop("/FMGC/internal/tropo-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tropo = size(scratchpad);

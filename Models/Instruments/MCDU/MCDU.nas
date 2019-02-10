@@ -6,23 +6,11 @@ var MCDU_1 = nil;
 var MCDU_2 = nil;
 var MCDU1_display = nil;
 var MCDU2_display = nil;
-var updateL = 0;
-var updateR = 0;
 var default = "BoeingCDU-Large.ttf";
 var symbol = "helvetica_medium.txf";
 var normal = 70;
 var small = 56;
 var page = "";
-var page1 = getprop("/MCDU[0]/page");
-var page2 = getprop("/MCDU[1]/page");
-var vor1 = "";
-var vor2 = "";
-var ils = "";
-var adf1 = "";
-var adf2 = "";
-var engrdy = "";
-setprop("/MCDU[0]/internal/switch", 0);
-setprop("/MCDU[1]/internal/switch", 0);
 setprop("/MCDUC/colors/wht/r", 1);
 setprop("/MCDUC/colors/wht/g", 1);
 setprop("/MCDUC/colors/wht/b", 1);
@@ -38,6 +26,80 @@ setprop("/MCDUC/colors/amb/b", 0.0000);
 setprop("/MCDUC/colors/yel/r", 0.9333);
 setprop("/MCDUC/colors/yel/g", 0.9333);
 setprop("/MCDUC/colors/yel/b", 0.0000);
+
+# Fetch nodes:
+var ac1 = props.globals.getNode("/systems/electrical/bus/ac1", 1);
+var ac2 = props.globals.getNode("/systems/electrical/bus/ac2", 1);
+var mcdu1_lgt = props.globals.getNode("/controls/lighting/DU/mcdu1", 1);
+var mcdu2_lgt = props.globals.getNode("/controls/lighting/DU/mcdu2", 1);
+var acType = props.globals.getNode("/MCDUC/type", 1);
+var engType = props.globals.getNode("/MCDUC/eng", 1);
+var database1 = props.globals.getNode("/FMGC/internal/navdatabase", 1);
+var database2 = props.globals.getNode("/FMGC/internal/navdatabase2", 1);
+var databaseCode = props.globals.getNode("/FMGC/internal/navdatabasecode", 1);
+var vor1 = props.globals.getNode("/FMGC/internal/vor1-mcdu", 1);
+var vor2 = props.globals.getNode("/FMGC/internal/vor2-mcdu", 1);
+var ils1 = props.globals.getNode("/FMGC/internal/ils1-mcdu", 1);
+var adf1 = props.globals.getNode("/FMGC/internal/adf1-mcdu", 1);
+var adf2 = props.globals.getNode("/FMGC/internal/adf2-mcdu", 1);
+var vor1FreqSet = props.globals.getNode("/FMGC/internal/vor1freq-set", 1);
+var vor1CRSSet = props.globals.getNode("/FMGC/internal/vor1crs-set", 1);
+var vor2FreqSet = props.globals.getNode("/FMGC/internal/vor2freq-set", 1);
+var vor2CRSSet = props.globals.getNode("/FMGC/internal/vor2crs-set", 1);
+var ils1FreqSet = props.globals.getNode("/FMGC/internal/ils1freq-set", 1);
+var ils1CRSSet = props.globals.getNode("/FMGC/internal/ils1crs-set", 1);
+var adf1FreqSet = props.globals.getNode("/FMGC/internal/adf1freq-set", 1);
+var adf2FreqSet = props.globals.getNode("/FMGC/internal/adf2freq-set", 1);
+var ils1CRS = props.globals.getNode("/instrumentation/nav[0]/radials/selected-deg", 1);
+var vor1CRS = props.globals.getNode("/instrumentation/nav[2]/radials/selected-deg", 1);
+var vor2CRS = props.globals.getNode("/instrumentation/nav[3]/radials/selected-deg", 1);
+var flightNum = props.globals.getNode("/MCDUC/flight-num", 1);
+var flightNumSet = props.globals.getNode("/MCDUC/flight-num-set", 1);
+var depArpt = props.globals.getNode("/FMGC/internal/dep-arpt", 1);
+var arrArpt = props.globals.getNode("/FMGC/internal/arr-arpt", 1);
+var toFromSet = props.globals.getNode("/FMGC/internal/tofrom-set", 1);
+var costIndex = props.globals.getNode("/FMGC/internal/cost-index", 1);
+var costIndexSet = props.globals.getNode("/FMGC/internal/cost-index-set", 1);
+var cruiseFL = props.globals.getNode("/FMGC/internal/cruise-fl", 1);
+var cruiseSet = props.globals.getNode("/FMGC/internal/cruise-lvl-set", 1);
+var tropo = props.globals.getNode("/FMGC/internal/tropo", 1);
+var tropoSet = props.globals.getNode("/FMGC/internal/tropo-set", 1);
+var ADIRSMCDUBTN = props.globals.getNode("/controls/adirs/mcducbtn", 1);
+var zfwcg = props.globals.getNode("/FMGC/internal/zfwcg", 1);
+var zfwcgSet = props.globals.getNode("/FMGC/internal/zfwcg-set", 1);
+var zfw = props.globals.getNode("/FMGC/internal/zfw", 1);
+var zfwSet = props.globals.getNode("/FMGC/internal/zfw-set", 1);
+var block = props.globals.getNode("/FMGC/internal/block", 1);
+var blockSet = props.globals.getNode("/FMGC/internal/block-set", 1);
+var state1 = props.globals.getNode("/engines/engine[0]/state", 1);
+var state2 = props.globals.getNode("/engines/engine[1]/state", 1);
+var engrdy = props.globals.getNode("/engines/ready", 1);
+var v1 = props.globals.getNode("/FMGC/internal/v1", 1);
+var v1Set = props.globals.getNode("/FMGC/internal/v1-set", 1);
+var vr = props.globals.getNode("/FMGC/internal/vr", 1);
+var vrSet = props.globals.getNode("/FMGC/internal/vr-set", 1);
+var v2 = props.globals.getNode("/FMGC/internal/v2", 1);
+var v2Set = props.globals.getNode("/FMGC/internal/v2-set", 1);
+var clbReducFt = props.globals.getNode("/systems/thrust/clbreduc-ft", 1);
+var reducFt = props.globals.getNode("/FMGC/internal/reduc-agl-ft", 1); # It's not AGL anymore
+var thrAccSet = props.globals.getNode("/MCDUC/thracc-set", 1);
+var flapTO = props.globals.getNode("/FMGC/internal/to-flap", 1);
+var THSTO = props.globals.getNode("/FMGC/internal/to-ths", 1);
+var flapTHSSet = props.globals.getNode("/FMGC/internal/flap-ths-set", 1);
+var flex = props.globals.getNode("/FMGC/internal/flex", 1);
+var flexSet = props.globals.getNode("/FMGC/internal/flex-set", 1);
+var engOutAcc = props.globals.getNode("/FMGC/internal/eng-out-reduc", 1);
+var engOutAccSet = props.globals.getNode("/MCDUC/reducacc-set", 1);
+var transAlt = props.globals.getNode("/FMGC/internal/trans-alt", 1);
+var managedSpeed = props.globals.getNode("/it-autoflight/input/spd-managed", 1);
+
+# Fetch nodes into vectors
+var pageProp = [props.globals.getNode("/MCDU[0]/page", 1), props.globals.getNode("/MCDU[1]/page", 1)];
+var active = [props.globals.getNode("/MCDU[0]/active", 1), props.globals.getNode("/MCDU[1]/active", 1)];
+var scratchpad = [props.globals.getNode("/MCDU[0]/scratchpad", 1), props.globals.getNode("/MCDU[1]/scratchpad", 1)];
+
+# Create Nodes:
+var pageSwitch = [props.globals.initNode("/MCDU[0]/internal/switch", 0, "BOOL"), props.globals.initNode("/MCDU[1]/internal/switch", 0, "BOOL")];
 
 var canvas_MCDU_base = {
 	init: func(canvas_group, file) {
@@ -91,37 +153,23 @@ var canvas_MCDU_base = {
 		"PERFTO_V2","PERFTO_FE","PERFTO_SE","PERFTO_OE"];
 	},
 	update: func() {
-		if (getprop("/systems/electrical/bus/ac1") >= 110 and getprop("/controls/lighting/DU/mcdu1") > 0.01) {
+		if (ac1.getValue() >= 110 and mcdu1_lgt.getValue() > 0.01) {
 			MCDU_1.update();
-			MCDU_1.updateFast();
-			updateL = 1;
 			MCDU_1.page.show();
 		} else {
-			updateL = 0;
 			MCDU_1.page.hide();
 		}
-		if (getprop("/systems/electrical/bus/ac2") >= 110 and getprop("/controls/lighting/DU/mcdu2") > 0.01) {
+		if (ac2.getValue() >= 110 and mcdu2_lgt.getValue() > 0.01) {
 			MCDU_2.update();
-			MCDU_2.updateFast();
-			updateR = 1;
 			MCDU_2.page.show();
 		} else {
-			updateR = 0;
 			MCDU_2.page.hide();
 		}
 	},
-	updateFast: func() {
-		if (updateL) {
-			MCDU_1.updateFast();
-		}
-		if (updateR) {
-			MCDU_2.updateFast();
-		}
-	},
 	updateCommon: func(i) {
-		page = getprop("/MCDU[" ~ i ~ "]/page");
+		page = pageProp[i].getValue();
 		if (page == "MCDU") {
-			if (getprop("/MCDU[" ~ i ~ "]/internal/switch") != 1) {
+			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
 				me["INITA"].hide();
@@ -184,16 +232,16 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
-				setprop("/MCDU[" ~ i ~ "]/internal/switch", 1);
+				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/MCDU[" ~ i ~ "]/active") == 0) {
+			if (active[i].getValue() == 0) {
 				me["Simple_L1"].setText(" FMGC");
 				me["Simple_L1"].setColor(1,1,1);
-			} else if (getprop("/MCDU[" ~ i ~ "]/active") == 1) {
+			} else if (active[i].getValue() == 1) {
 				me["Simple_L1"].setText(" FMGC(SEL)");
 				me["Simple_L1"].setColor(0.0901,0.6039,0.7176);
-			} else if (getprop("/MCDU[" ~ i ~ "]/active") == 2) {
+			} else if (active[i].getValue() == 2) {
 				me["Simple_L1"].setText(" FMGC");
 				me["Simple_L1"].setColor(0.0509,0.7529,0.2941);
 			}
@@ -202,13 +250,13 @@ var canvas_MCDU_base = {
 			me["Simple_L4"].setText(" CFDS");
 			me["Simple_R6"].setText("RETURN ");
 		} else if (page == "STATUS") {
-			if (getprop("/MCDU[" ~ i ~ "]/internal/switch") != 1) {
+			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
 				me["PERFTO"].hide();
-				me["Simple_Title"].setText(sprintf("%s", "    " ~ getprop("/MCDUC/type")));
+				me["Simple_Title"].setText(sprintf("%s", "    " ~ acType.getValue()));
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
 				me["ArrowLeft"].hide();
@@ -266,12 +314,12 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
-				setprop("/MCDU[" ~ i ~ "]/internal/switch", 1);
+				pageSwitch[i].setBoolValue(1);
 			}
 			
-			me["Simple_L1"].setText(sprintf("%s", getprop("/MCDUC/eng")));
-			me["Simple_L2"].setText(sprintf("%s", " " ~ getprop("/FMGC/internal/navdatabase")));
-			me["Simple_L3"].setText(sprintf("%s", " " ~ getprop("/FMGC/internal/navdatabase2")));
+			me["Simple_L1"].setText(sprintf("%s", engType.getValue()));
+			me["Simple_L2"].setText(sprintf("%s", " " ~ database1.getValue()));
+			me["Simple_L3"].setText(sprintf("%s", " " ~ database2.getValue()));
 			me["Simple_L5"].setText("[   ]");
 			me["Simple_L6"].setText("+4.0/+0.0");
 			me["Simple_L1S"].setText(" ENG");
@@ -279,11 +327,11 @@ var canvas_MCDU_base = {
 			me["Simple_L3S"].setText(" SECOND NAV DATA BASE");
 			me["Simple_L5S"].setText("CHG CODE");
 			me["Simple_L6S"].setText("IDLE/PERF");
-			me["Simple_R2"].setText(sprintf("%s", getprop("/FMGC/internal/navdatabasecode") ~ " "));
+			me["Simple_R2"].setText(sprintf("%s", databaseCode.getValue() ~ " "));
 			me["Simple_R6"].setText("STATUS/XLOAD ");
 			me["Simple_R6S"].setText("SOFTWARE ");
 		} else if (page == "DATA") {
-			if (getprop("/MCDU[" ~ i ~ "]/internal/switch") != 1) {
+			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
 				me["INITA"].hide();
@@ -347,7 +395,7 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
-				setprop("/MCDU[" ~ i ~ "]/internal/switch", 1);
+				pageSwitch[i].setBoolValue(1);
 			}
 			
 			me["Simple_L1"].setText(" MONITOR");
@@ -362,7 +410,7 @@ var canvas_MCDU_base = {
 			me["Simple_R5S"].setText("PRINT ");
 			me["Simple_R6S"].setText("AOC ");
 		} else if (page == "DATA2") {
-			if (getprop("/MCDU[" ~ i ~ "]/internal/switch") != 1) {
+			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
 				me["INITA"].hide();
@@ -426,7 +474,7 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
-				setprop("/MCDU[" ~ i ~ "]/internal/switch", 1);
+				pageSwitch[i].setBoolValue(1);
 			}
 			
 			me["Simple_L1"].setText(" WAYPOINTS");
@@ -446,7 +494,7 @@ var canvas_MCDU_base = {
 			me["Simple_R3S"].setText("PILOTS ");
 			me["Simple_R4S"].setText("PILOTS ");
 		} else if (page == "POSMON") {
-			if (getprop("/MCDU[" ~ i ~ "]/internal/switch") != 1) {
+			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["INITA"].hide();
@@ -522,7 +570,7 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
-				setprop("/MCDU[" ~ i ~ "]/internal/switch", 1);
+				pageSwitch[i].setBoolValue(1);
 			}
 			
 			me["Simple_L1"].setText("FMGC1");
@@ -542,7 +590,7 @@ var canvas_MCDU_base = {
 			me["Simple_C5"].setText("NAV -.-");
 			me["Simple_C5S"].setText("IRS2");
 		} else if (page == "RADNAV") {
-			if (getprop("/MCDU[" ~ i ~ "]/internal/switch") != 1) {
+			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
 				me["INITA"].hide();
@@ -608,76 +656,70 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
-				setprop("/MCDU[" ~ i ~ "]/internal/switch", 1);
+				pageSwitch[i].setBoolValue(1);
 			}
 			
-			vor1 = getprop("FMGC/internal/vor1-mcdu");
-			vor2 = getprop("FMGC/internal/vor2-mcdu");
-			ils = getprop("FMGC/internal/ils1-mcdu");
-			adf1 = getprop("FMGC/internal/adf1-mcdu");
-			adf2 = getprop("FMGC/internal/adf2-mcdu");
-			
-			if (getprop("/FMGC/internal/vor1freq-set") == 1) {
+			if (vor1FreqSet.getValue() == 1) {
 				me["Simple_L1"].setFontSize(normal); 
 			} else {
 				me["Simple_L1"].setFontSize(small); 
 			}
-			if (getprop("/FMGC/internal/vor1crs-set") == 1) {
+			if (vor1CRSSet.getValue() == 1) {
 				me["Simple_L2"].setFontSize(normal); 
 			} else {
 				me["Simple_L2"].setFontSize(small); 
 			}
-			if (getprop("/FMGC/internal/ils1freq-set") == 1) {
+			if (ils1FreqSet.getValue() == 1) {
 				me["Simple_L3"].setFontSize(normal); 
 			} else {
 				me["Simple_L3"].setFontSize(small); 
 			}
-			if (getprop("/FMGC/internal/ils1crs-set") == 1) {
+			if (ils1CRSSet.getValue() == 1) {
 				me["Simple_L4"].setFontSize(normal); 
 			} else {
 				me["Simple_L4"].setFontSize(small); 
 			}
-			if (getprop("/FMGC/internal/adf1freq-set") == 1) {
+			if (adf1FreqSet.getValue() == 1) {
 				me["Simple_L5"].setFont(default); 
 				me["Simple_L5"].setFontSize(normal); 
-				me["Simple_L5"].setText(sprintf("%s", adf1));
+				me["Simple_L5"].setText(sprintf("%s", adf1.getValue()));
 			} else {
 				me["Simple_L5"].setFont(symbol); 
 				me["Simple_L5"].setFontSize(small); 
 				me["Simple_L5"].setText("[    ]/[     . ]");
 			}
 			
-			if (getprop("/FMGC/internal/vor2freq-set") == 1) {
+			if (vor2FreqSet.getValue() == 1) {
 				me["Simple_R1"].setFontSize(normal); 
 			} else {
 				me["Simple_R1"].setFontSize(small); 
 			}
-			if (getprop("/FMGC/internal/vor2crs-set") == 1) {
+			if (vor2CRSSet.getValue() == 1) {
 				me["Simple_R2"].setFontSize(normal); 
 			} else {
 				me["Simple_R2"].setFontSize(small); 
 			}
-			if (getprop("/FMGC/internal/adf2freq-set") == 1) {
+			if (adf2FreqSet.getValue() == 1) {
 				me["Simple_R5"].setFont(default); 
 				me["Simple_R5"].setFontSize(normal); 
-				me["Simple_R5"].setText(sprintf("%s", adf2));
+				me["Simple_R5"].setText(sprintf("%s", adf2.getValue()));
 			} else {
 				me["Simple_R5"].setFont(symbol); 
 				me["Simple_R5"].setFontSize(small); 
 				me["Simple_R5"].setText("[     . ]/[    ]");
 			}
 			
-			me["Simple_L1"].setText(" " ~ vor1);
-			me["Simple_L2"].setText(sprintf("%3.0f", getprop("/instrumentation/nav[2]/radials/selected-deg")));
-			me["Simple_L3"].setText(" " ~ ils);
-			me["Simple_L4"].setText(sprintf("%3.0f", getprop("/instrumentation/nav[0]/radials/selected-deg")));
+			me["Simple_L1"].setText(" " ~ vor1.getValue());
+			me["Simple_L2"].setText(sprintf("%3.0f", vor1CRS.getValue()));
+			me["Simple_L3"].setText(" " ~ ils1.getValue());
+			me["Simple_L4"].setText(sprintf("%3.0f", ils1CRS.getValue()));
 			me["Simple_L1S"].setText("VOR1/FREQ");
 			me["Simple_L2S"].setText("CRS");
 			me["Simple_L3S"].setText("ILS /FREQ");
 			me["Simple_L4S"].setText("CRS");
 			me["Simple_L5S"].setText("ADF1/FREQ");
-			me["Simple_R1"].setText(" " ~ vor2);
-			me["Simple_R2"].setText(sprintf("%3.0f", getprop("/instrumentation/nav[3]/radials/selected-deg")));
+			me["Simple_R1"].setText(" " ~ vor2.getValue());
+			me["Simple_R2"].setText(sprintf("%3.0f", vor2CRS.getValue()));
 			me["Simple_R3"].setText("[   ]/[    ]");
 			me["Simple_R4"].setText("-.-   [   ]");
 			me["Simple_R1S"].setText("FREQ/VOR2");
@@ -686,7 +728,7 @@ var canvas_MCDU_base = {
 			me["Simple_R4S"].setText("SLOPE   CRS");
 			me["Simple_R5S"].setText("FREQ/ADF2");
 		} else if (page == "INITA") {
-			if (getprop("/MCDU[" ~ i ~ "]/internal/switch") != 1) {
+			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].hide();
 				me["INITA"].show();
@@ -695,8 +737,6 @@ var canvas_MCDU_base = {
 				me["Simple_Title"].setText("INIT");
 				me["Simple_PageNum"].setText("X/X");
 				me["Simple_PageNum"].hide();
-				me["ArrowLeft"].show();
-				me["ArrowRight"].show();
 				
 				me["Simple_L2"].show();
 				me["Simple_L4"].show();
@@ -743,44 +783,52 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "amb", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
-				setprop("/MCDU[" ~ i ~ "]/internal/switch", 1);
+				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/MCDUC/flight-num-set") == 1) {
+			if (state1.getValue() != 3 and state2.getValue() != 3) {
+				me["ArrowLeft"].show();
+				me["ArrowRight"].show();
+			} else {
+				me["ArrowLeft"].hide();
+				me["ArrowRight"].hide();
+			}
+			
+			if (flightNumSet.getValue() == 1) {
 				me["INITA_FltNbr"].hide();
 				me["Simple_L3"].show();
 			} else {
 				me["INITA_FltNbr"].show();
 				me["Simple_L3"].hide();
 			}
-			if (getprop("/FMGC/internal/tofrom-set") != 1 and getprop("/FMGC/internal/cost-index-set") != 1) {
+			if (toFromSet.getValue() != 1 and costIndexSet.getValue() != 1) {
 				me["INITA_CostIndex"].hide();
 				me["Simple_L5"].setColor(1,1,1);
 				me["Simple_L5"].show();
 				me["Simple_L5"].setText("---");
-			} else if (getprop("/FMGC/internal/cost-index-set") == 1) {
+			} else if (costIndexSet.getValue() == 1) {
 				me["INITA_CostIndex"].hide();
 				me["Simple_L5"].setColor(0.0901,0.6039,0.7176);
 				me["Simple_L5"].show();
-				me["Simple_L5"].setText(sprintf("%s", getprop("/FMGC/internal/cost-index")));
+				me["Simple_L5"].setText(sprintf("%s", costIndex.getValue()));
 			} else {
 				me["INITA_CostIndex"].show();
 				me["Simple_L5"].hide();
 			}
-			if (getprop("/FMGC/internal/tofrom-set") != 1 and getprop("/FMGC/internal/cruise-lvl-set") != 1) {
+			if (toFromSet.getValue() != 1 and cruiseSet.getValue() != 1) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(1,1,1);
 				me["Simple_L6"].setText("-----/---g");
-			} else if (getprop("/FMGC/internal/cruise-lvl-set") == 1) {
+			} else if (cruiseSet.getValue() == 1) {
 				me["INITA_CruiseFLTemp"].hide();
 				me["Simple_L6"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L6"].setText(sprintf("%s", "FL" ~ getprop("/FMGC/internal/cruise-fl") ~ "/---g"));
+				me["Simple_L6"].setText(sprintf("%s", "FL" ~ cruiseFL.getValue() ~ "/---g"));
 			} else {
 				me["INITA_CruiseFLTemp"].show();
 				me["Simple_L6"].setColor(0.7333,0.3803,0);
 				me["Simple_L6"].setText("         g");
 			}
-			if (getprop("/FMGC/internal/tofrom-set") == 1) {
+			if (toFromSet.getValue() == 1) {
 				me["INITA_CoRoute"].hide();
 				me["INITA_FromTo"].hide();
 				me["Simple_L1"].show();
@@ -801,14 +849,14 @@ var canvas_MCDU_base = {
 				me["Simple_R2S"].show();
 				me["INITA_InitRequest"].show();
 			}
-			if (getprop("/FMGC/internal/tofrom-set") == 1 and getprop("/controls/adirs/mcducbtn") != 1) {
+			if (toFromSet.getValue() == 1 and ADIRSMCDUBTN.getValue() != 1) {
 				me["INITA_AlignIRS"].show();
 				me["Simple_R3"].show();
 			} else {
 				me["INITA_AlignIRS"].hide();
 				me["Simple_R3"].hide();
 			}
-			if (getprop("/FMGC/internal/tropo-set") == 1) {
+			if (tropoSet.getValue() == 1) {
 				me["Simple_R6"].setFontSize(normal); 
 			} else {
 				me["Simple_R6"].setFontSize(small); 
@@ -821,20 +869,20 @@ var canvas_MCDU_base = {
 			me["Simple_L5S"].setText("COST INDEX");
 			me["Simple_L6S"].setText("CRZ FL/TEMP");
 			me["Simple_L1"].setText("NONE");
-			me["Simple_L3"].setText(sprintf("%s", getprop("/MCDUC/flight-num")));
+			me["Simple_L3"].setText(sprintf("%s", flightNum.getValue()));
 			me["Simple_L4"].setText("----.-");
 			me["Simple_R1S"].setText("FROM/TO   ");
 			me["Simple_R2S"].setText("INIT ");
 			me["Simple_R4S"].setText("LONG");
 			me["Simple_R6S"].setText("TROPO");
-			me["Simple_R1"].setText(sprintf("%s", getprop("/FMGC/internal/dep-arpt") ~ "/" ~ getprop("/FMGC/internal/arr-arpt")));
+			me["Simple_R1"].setText(sprintf("%s", depArpt.getValue() ~ "/" ~ arrArpt.getValue()));
 			me["Simple_R2"].setText("REQUEST ");
 			me["Simple_R3"].setText("ALIGN IRS ");
 			me["Simple_R4"].setText("-----.--");
 			me["Simple_R5"].setText("WIND ");
-			me["Simple_R6"].setText(sprintf("%5.0f", getprop("/FMGC/internal/tropo")));
+			me["Simple_R6"].setText(sprintf("%5.0f", tropo.getValue()));
 		} else if (page == "INITB") {
-			if (getprop("/MCDU[" ~ i ~ "]/internal/switch") != 1) {
+			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["INITA"].hide();
@@ -911,20 +959,20 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
-				setprop("/MCDU[" ~ i ~ "]/internal/switch", 1);
+				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/FMGC/internal/zfwcg-set") == 1) {
+			if (zfwcgSet.getValue() == 1) {
 				me["Simple_C1"].setFontSize(normal); 
-				me["Simple_C1"].setText("        " ~ sprintf("%3.1f", getprop("/FMGC/internal/zfwcg")));
+				me["Simple_C1"].setText("        " ~ sprintf("%3.1f", zfwcg.getValue()));
 				me["INITB_ZFWCG"].hide();
 			} else {
 				me["Simple_C1"].setFontSize(small);
-				me["Simple_C1"].setText("           " ~ sprintf("%3.1f", getprop("/FMGC/internal/zfwcg")));
+				me["Simple_C1"].setText("           " ~ sprintf("%3.1f", zfwcg.getValue()));
 				me["INITB_ZFWCG"].hide();
 			}
 			
-			if (getprop("/FMGC/internal/zfw-set") == 1) {
+			if (zfwSet.getValue() == 1) {
 				me["INITB_ZFW"].hide();
 				me["INITB_ZFW_S"].show();
 				me["Simple_R1"].show(); 
@@ -934,7 +982,7 @@ var canvas_MCDU_base = {
 				me["Simple_R1"].hide(); 
 			}
 			
-			if (getprop("/FMGC/internal/block-set") == 1) {
+			if (blockSet.getValue() == 1) {
 				me["INITB_Block"].hide();
 				me["Simple_R2"].show(); 
 			} else {
@@ -954,8 +1002,8 @@ var canvas_MCDU_base = {
 			me["Simple_L4S"].setText("ALTN/TIME");
 			me["Simple_L5S"].setText("FINAL/TIME");
 			me["Simple_L6S"].setText("EXTRA/TIME");
-			me["Simple_R1"].setText(sprintf("%3.1f", getprop("/FMGC/internal/zfw")));
-			me["Simple_R2"].setText(sprintf("%3.1f", getprop("/FMGC/internal/block")));
+			me["Simple_R1"].setText(sprintf("%3.1f", zfw.getValue()));
+			me["Simple_R2"].setText(sprintf("%3.1f", block.getValue()));
 			me["Simple_R4"].setText("---.-");
 			me["Simple_R5"].setText("---.-");
 			me["Simple_R1S"].setText("ZFWCG/   ZFW");
@@ -963,7 +1011,7 @@ var canvas_MCDU_base = {
 			me["Simple_R4S"].setText("TOW");
 			me["Simple_R5S"].setText("LW");
 		} else if (page == "FUELPRED") {
-			if (getprop("/MCDU[" ~ i ~ "]/internal/switch") != 1) {
+			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["INITA"].hide();
@@ -1041,15 +1089,13 @@ var canvas_MCDU_base = {
 				me.colorRightS("wht", "wht", "wht", "wht", "wht", "wht");
 				me.colorRightArrow("wht", "wht", "wht", "wht", "wht", "wht");
 				
-				setprop("/MCDU[" ~ i ~ "]/internal/switch", 1);
+				pageSwitch[i].setBoolValue(1);
 			}
 			
-			engrdy = getprop("/engines/ready");
-			
-			if (!engrdy or getprop("/FMGC/internal/arr-arpt") == "") {
+			if (!engrdy.getBoolValue() or toFromSet.getValue() != 1) {
 				me["Simple_L1"].setText("----");
 			} else {
-				me["Simple_L1"].setText(getprop("/FMGC/internal/arr-arpt"));
+				me["Simple_L1"].setText(arrArpt.getValue());
 			}
 			
 			me["Simple_L2"].setText("----");
@@ -1075,9 +1121,8 @@ var canvas_MCDU_base = {
 			me["Simple_R1S"].setText("EFOB");
 			me["Simple_R3S"].setText("FOB");
 			me["Simple_R4S"].setText("CRZTEMP/TROPO");
-			
 		} else if (page == "TO") {
-			if (getprop("/MCDU[" ~ i ~ "]/internal/switch") != 1) {
+			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["INITA"].hide();
@@ -1155,64 +1200,64 @@ var canvas_MCDU_base = {
 				me.colorCenter("grn", "grn", "grn", "wht", "wht", "wht");
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
 				
-				setprop("/MCDU[" ~ i ~ "]/internal/switch", 1);
+				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/FMGC/internal/v1-set") == 1) {
+			if (v1Set.getValue() == 1) {
 				me["PERFTO_V1"].hide();
 				me["Simple_L1"].show();
 			} else {
 				me["PERFTO_V1"].show();
 				me["Simple_L1"].hide();
 			}
-			if (getprop("/FMGC/internal/vr-set") == 1) {
+			if (vrSet.getValue() == 1) {
 				me["PERFTO_VR"].hide();
 				me["Simple_L2"].show();
 			} else {
 				me["PERFTO_VR"].show();
 				me["Simple_L2"].hide();
 			}
-			if (getprop("/FMGC/internal/v2-set") == 1) {
+			if (v2Set.getValue() == 1) {
 				me["PERFTO_V2"].hide();
 				me["Simple_L3"].show();
 			} else {
 				me["PERFTO_V2"].show();
 				me["Simple_L3"].hide();
 			}
-			if (getprop("/MCDUC/thracc-set") == 1) {
+			if (thrAccSet.getValue() == 1) {
 				me["Simple_L5"].setFontSize(normal);
 			} else {
 				me["Simple_L5"].setFontSize(small);
 			}
-			if (getprop("/FMGC/internal/flap-ths-set") == 1) {
+			if (flapTHSSet.getValue() == 1) {
 				me["Simple_R3"].setFont(default); 
 				me["Simple_R3"].setFontSize(normal); 
-				me["Simple_R3"].setText(sprintf("%s", getprop("/FMGC/internal/to-flap") ~ "/UP" ~ getprop("/FMGC/internal/to-ths")));
+				me["Simple_R3"].setText(sprintf("%s", flapTO.getValue() ~ "/UP" ~ THSTO.getValue()));
 			} else {
 				me["Simple_R3"].setFont(symbol); 
 				me["Simple_R3"].setFontSize(small); 
 				me["Simple_R3"].setText("[  ]/[      ]");
 			}
-			if (getprop("/FMGC/internal/flex-set") == 1) {
+			if (flexSet.getValue() == 1) {
 				me["Simple_R4"].setFont(default); 
 				me["Simple_R4"].setFontSize(normal); 
-				me["Simple_R4"].setText(sprintf("%3.0f", getprop("/FMGC/internal/flex")));
+				me["Simple_R4"].setText(sprintf("%3.0f", flex.getValue()));
 			} else {
 				me["Simple_R4"].setFont(symbol); 
 				me["Simple_R4"].setFontSize(small); 
 				me["Simple_R4"].setText("[   ]");
 			}
-			if (getprop("/MCDUC/reducacc-set") == 1) {
+			if (engOutAccSet.getValue() == 1) {
 				me["Simple_R5"].setFontSize(normal);
 			} else {
 				me["Simple_R5"].setFontSize(small);
 			}
 			
-			me["Simple_L1"].setText(sprintf("%3.0f", getprop("/FMGC/internal/v1")));
-			me["Simple_L2"].setText(sprintf("%3.0f", getprop("/FMGC/internal/vr")));
-			me["Simple_L3"].setText(sprintf("%3.0f", getprop("/FMGC/internal/v2")));
-			me["Simple_L4"].setText(sprintf("%3.0f", getprop("/FMGC/internal/trans-alt")));
-			me["Simple_L5"].setText(sprintf("%s", getprop("/systems/thrust/clbreduc-ft") ~ "/" ~ getprop("/FMGC/internal/reduc-agl-ft")));
+			me["Simple_L1"].setText(sprintf("%3.0f", v1.getValue()));
+			me["Simple_L2"].setText(sprintf("%3.0f", vr.getValue()));
+			me["Simple_L3"].setText(sprintf("%3.0f", v2.getValue()));
+			me["Simple_L4"].setText(sprintf("%3.0f", transAlt.getValue()));
+			me["Simple_L5"].setText(sprintf("%s", clbReducFt.getValue() ~ "/" ~ reducFt.getValue()));
 			me["Simple_L6"].setText(" TO DATA");
 			me["Simple_L1S"].setText(" V1");
 			me["Simple_L2S"].setText(" VR");
@@ -1222,7 +1267,7 @@ var canvas_MCDU_base = {
 			me["Simple_L6S"].setText(" UPLINK");
 			me["Simple_R1"].setText("--- ");
 			me["Simple_R2"].setText("[    ]  ");
-			me["Simple_R5"].setText(sprintf("%3.0f", getprop("/FMGC/internal/eng-out-reduc")));
+			me["Simple_R5"].setText(sprintf("%3.0f", engOutAcc.getValue()));
 			me["Simple_R6"].setText("PHASE ");
 			me["Simple_R1S"].setText("RWY ");
 			me["Simple_R2S"].setText("TO SHIFT ");
@@ -1234,7 +1279,7 @@ var canvas_MCDU_base = {
 			me["Simple_C2S"].setText("SLT RETR        ");
 			me["Simple_C3S"].setText("CLEAN      ");
 		} else if (page == "CLB" or page == "CRZ" or page == "DES") {
-			if (getprop("/MCDU[" ~ i ~ "]/internal/switch") != 1) {
+			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].show();
 				me["Simple_Center"].show();
 				me["INITA"].hide();
@@ -1310,18 +1355,18 @@ var canvas_MCDU_base = {
 				me.colorCenter("wht", "wht", "wht", "wht", "blu", "wht");
 				me.colorCenterS("wht", "wht", "wht", "wht", "wht", "wht");
 				
-				setprop("/MCDU[" ~ i ~ "]/internal/switch", 1);
+				pageSwitch[i].setBoolValue(1);
 			}
 			
-			if (getprop("/it-autoflight/input/spd-managed") == 1) {
+			if (managedSpeed.getValue() == 1) {
 				me["Simple_L1"].setText("MANAGED");
 			} else {
 				me["Simple_L1"].setText("SELECTED");
 			}
 			
-			if (getprop("/FMGC/internal/cost-index-set") == 1) {
+			if (costIndexSet.getValue() == 1) {
 				me["Simple_L2"].setColor(0.0901,0.6039,0.7176);
-				me["Simple_L2"].setText(sprintf("%s", getprop("/FMGC/internal/cost-index")));
+				me["Simple_L2"].setText(sprintf("%s", costIndex.getValue()));
 			} else {
 				me["Simple_L2"].setColor(1,1,1);
 				me["Simple_L2"].setText("---");
@@ -1355,7 +1400,7 @@ var canvas_MCDU_base = {
 			me["Simple_C5"].setText("             -350");
 			me["Simple_C1S"].setText("TIME  ");
 		} else {
-			if (getprop("/MCDU[" ~ i ~ "]/internal/switch") != 1) {
+			if (!pageSwitch[i].getBoolValue()) {
 				me["Simple"].hide();
 				me["INITA"].hide();
 				me["INITB"].hide();
@@ -1363,12 +1408,11 @@ var canvas_MCDU_base = {
 				me["ArrowLeft"].hide();
 				me["ArrowRight"].hide();
 				
-				setprop("/MCDU[" ~ i ~ "]/internal/switch", 1);
+				pageSwitch[i].setBoolValue(1);
 			}
 		}
-	},
-	updateCommonFast: func(i) {
-		me["Scratchpad"].setText(sprintf("%s", getprop("/MCDU[" ~ i ~ "]/scratchpad")));
+		
+		me["Scratchpad"].setText(sprintf("%s", scratchpad[i].getValue()));
 	},
 	# ack = ignore, wht = white, grn = green, blu = blue, amb = amber, yel = yellow
 	colorLeft: func(a, b, c, d, e, f) {
@@ -1684,9 +1728,6 @@ var canvas_MCDU_1 = {
 	update: func() {
 		me.updateCommon(0);
 	},
-	updateFast: func() {
-		me.updateCommonFast(0);
-	},
 };
 
 var canvas_MCDU_2 = {
@@ -1698,9 +1739,6 @@ var canvas_MCDU_2 = {
 	},
 	update: func() {
 		me.updateCommon(1);
-	},
-	updateFast: func() {
-		me.updateCommonFast(1);
 	},
 };
 
@@ -1726,15 +1764,10 @@ setlistener("sim/signals/fdm-initialized", func {
 	MCDU_2 = canvas_MCDU_2.new(group_MCDU2, "Aircraft/IDG-A32X/Models/Instruments/MCDU/res/mcdu.svg");
 	
 	MCDU_update.start();
-	MCDU_update_fast.start();
 });
 
-var MCDU_update = maketimer(0.2, func {
+var MCDU_update = maketimer(0.125, func {
 	canvas_MCDU_base.update();
-});
-
-var MCDU_update_fast = maketimer(0.125, func {
-	canvas_MCDU_base.updateFast();
 });
 
 var showMCDU1 = func {
@@ -1746,9 +1779,9 @@ var showMCDU2 = func {
 }
 
 setlistener("/MCDU[0]/page", func {
-	setprop("/MCDU[0]/internal/switch", 0);
-});
+	pageSwitch[0].setBoolValue(0);
+}, 0, 0);
 
 setlistener("/MCDU[1]/page", func {
-	setprop("/MCDU[1]/internal/switch", 0);
-});
+	pageSwitch[1].setBoolValue(0);
+}, 0, 0);

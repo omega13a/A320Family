@@ -1386,10 +1386,20 @@
 		<type>select</type>
 		<object-name>rmp-active-test</object-name>
 		<condition>
-			<equals>
-				<property>controls/switches/annun-test</property>
-				<value>1</value>
-			</equals>
+			<and>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>controls/radio/rmp[1]/on</property>
+					<value>1</value>
+				</equals>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+			</and>
 		</condition>
 	</animation>
 
@@ -1470,10 +1480,20 @@
 		<type>select</type>
 		<object-name>rmp-standby-test</object-name>
 		<condition>
-			<equals>
-				<property>controls/switches/annun-test</property>
-				<value>1</value>
-			</equals>
+			<and>
+				<equals>
+					<property>controls/switches/annun-test</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>controls/radio/rmp[1]/on</property>
+					<value>1</value>
+				</equals>
+				<greater-than-equals>
+					<property>systems/electrical/bus/dc-ess</property>
+					<value>25</value>
+				</greater-than-equals>
+			</and>
 		</condition>
 	</animation>
 

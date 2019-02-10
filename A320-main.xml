@@ -405,7 +405,7 @@
 		
 		 <minimum-fg-version>2018.1.0</minimum-fg-version>
 	</sim>
-
+	
 	<consumables>
 		<fuel>
 			<tank n="0">
@@ -446,22 +446,40 @@
 			<max-lb type="double">440</max-lb>
 		</weight>
 		<weight n="1">
-			<name>Passengers</name>
+			<name>Forward Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[1]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">24360</max-lb>
+			<max-lb type="double">4649</max-lb>
 		</weight>
 		<weight n="2">
-			<name>Forward Cargo</name>
+			<name>Center Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[2]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">9400</max-lb>
+			<max-lb type="double">13949</max-lb>
 		</weight>
 		<weight n="3">
-			<name>Aft Cargo</name>
+			<name>Aft Cabin</name>
 			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[3]"/>
 			<min-lb type="double">0</min-lb>
-			<max-lb type="double">9400</max-lb>
+			<max-lb type="double">10462</max-lb>
+		</weight>
+		<weight n="4">
+			<name>Forward Cargo</name>
+			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[4]"/>
+			<min-lb type="double">0</min-lb>
+			<max-lb type="double">5000</max-lb>
+		</weight>
+		<weight n="5">
+			<name>Aft Cargo</name>
+			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[5]"/>
+			<min-lb type="double">0</min-lb>
+			<max-lb type="double">6662</max-lb>
+		</weight>
+		<weight n="6">
+			<name>Aft Bulk Cargo</name>
+			<weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[6]"/>
+			<min-lb type="double">0</min-lb>
+			<max-lb type="double">3285</max-lb>
 		</weight>
 	</payload>
 	
@@ -1516,7 +1534,6 @@
 		</fmgc>
 		<mcdu>
 			<file>Aircraft/IDG-A32X/Nasal/MCDU/MCDU.nas</file>
-			<file>Aircraft/IDG-A32X/Nasal/MCDU/F-PLNA.nas</file>
 			<file>Aircraft/IDG-A32X/Nasal/MCDU/INITA.nas</file>
 			<file>Aircraft/IDG-A32X/Nasal/MCDU/INITB.nas</file>
 			<file>Aircraft/IDG-A32X/Nasal/MCDU/PERFCLB.nas</file>

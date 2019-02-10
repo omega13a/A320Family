@@ -7,7 +7,7 @@ var radnavInput = func(key, i) {
 	if (key == "L1") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/vor1freq-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -37,7 +37,7 @@ var radnavInput = func(key, i) {
 	} else if (key == "L2") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/vor1crs-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -56,7 +56,7 @@ var radnavInput = func(key, i) {
 	} else if (key == "L3") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/ils1freq-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -82,7 +82,7 @@ var radnavInput = func(key, i) {
 	} else if (key == "L4") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/ils1crs-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -101,7 +101,7 @@ var radnavInput = func(key, i) {
 	} else if (key == "L5") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/adf1freq-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -120,7 +120,7 @@ var radnavInput = func(key, i) {
 	} else if (key == "R1") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/vor2freq-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -150,7 +150,7 @@ var radnavInput = func(key, i) {
 	} else if (key == "R2") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/vor2crs-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -169,7 +169,7 @@ var radnavInput = func(key, i) {
 	} else if (key == "R5") {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/adf2freq-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);

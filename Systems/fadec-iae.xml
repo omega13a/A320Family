@@ -183,8 +183,8 @@
 			<expression>
 				<table>
 					<property>/fdm/jsbsim/atmosphere/density-altitude</property> 
-					<entry><ind>    0</ind><dep>0.677</dep></entry>
-					<entry><ind>42000</ind><dep>0.757</dep></entry>
+					<entry><ind>    0</ind><dep>0.6738</dep></entry>
+					<entry><ind>42000</ind><dep>0.7570</dep></entry>
 				</table>
 			</expression>
 		</input>
@@ -217,8 +217,8 @@
 				<difference>
 					<table>
 						<property>/fdm/jsbsim/atmosphere/density-altitude</property> 
-						<entry><ind>    0</ind><dep>0.9834</dep></entry>
-						<entry><ind>43000</ind><dep>0.8581</dep></entry>
+						<entry><ind>    0</ind><dep>0.9867</dep></entry>
+						<entry><ind>43000</ind><dep>0.8584</dep></entry>
 					</table>
 					<table>
 						<property>/fdm/jsbsim/velocities/mach</property>
@@ -262,8 +262,8 @@
 						<property>/engines/engine[0]/n1-actual</property> 
 						<value>3.5</value>
 					</pow>
-					<entry><ind>      18.0</ind><dep>0.00</dep></entry>
-					<entry><ind>      22.4</ind><dep>0.03</dep></entry>
+					<entry><ind>   24743.1</ind><dep>0.00</dep></entry>
+					<entry><ind>   53194.6</ind><dep>0.03</dep></entry>
 					<entry><ind>11394381.0</ind><dep>1.00</dep></entry>
 				</table>
 			</expression>
@@ -317,7 +317,7 @@
 						</table>
 						<value>3.5</value>
 					</pow>
-					<entry><ind>      22.4</ind><dep>0.03</dep></entry>
+					<entry><ind>   53194.6</ind><dep>0.03</dep></entry>
 					<entry><ind>11394381.0</ind><dep>1.00</dep></entry>
 				</table>
 			</expression>
@@ -334,7 +334,7 @@
 						</table>
 						<value>3.5</value>
 					</pow>
-					<entry><ind>      22.4</ind><dep>0.03</dep></entry>
+					<entry><ind>   53194.6</ind><dep>0.03</dep></entry>
 					<entry><ind>11394381.0</ind><dep>1.00</dep></entry>
 				</table>
 			</expression>
@@ -369,8 +369,8 @@
 						<property>/engines/engine[1]/n1-actual</property> 
 						<value>3.5</value>
 					</pow>
-					<entry><ind>      18.0</ind><dep>0.00</dep></entry>
-					<entry><ind>      22.4</ind><dep>0.03</dep></entry>
+					<entry><ind>   24743.1</ind><dep>0.00</dep></entry>
+					<entry><ind>   53194.6</ind><dep>0.03</dep></entry>
 					<entry><ind>11394381.0</ind><dep>1.00</dep></entry>
 				</table>
 			</expression>
@@ -424,7 +424,7 @@
 						</table>
 						<value>3.5</value>
 					</pow>
-					<entry><ind>      22.4</ind><dep>0.03</dep></entry>
+					<entry><ind>   53194.6</ind><dep>0.03</dep></entry>
 					<entry><ind>11394381.0</ind><dep>1.00</dep></entry>
 				</table>
 			</expression>
@@ -441,7 +441,7 @@
 						</table>
 						<value>3.5</value>
 					</pow>
-					<entry><ind>      22.4</ind><dep>0.03</dep></entry>
+					<entry><ind>   53194.6</ind><dep>0.03</dep></entry>
 					<entry><ind>11394381.0</ind><dep>1.00</dep></entry>
 				</table>
 			</expression>
@@ -1348,7 +1348,7 @@
 						</table>
 						<value>3.5</value>
 					</pow>
-					<entry><ind>      22.4</ind><dep>0.03</dep></entry>
+					<entry><ind>   53194.6</ind><dep>0.03</dep></entry>
 					<entry><ind>11394381.0</ind><dep>1.00</dep></entry>
 				</table>
 			</expression>
@@ -1392,7 +1392,7 @@
 						</table>
 						<value>3.5</value>
 					</pow>
-					<entry><ind>      22.4</ind><dep>0.03</dep></entry>
+					<entry><ind>   53194.6</ind><dep>0.03</dep></entry>
 					<entry><ind>11394381.0</ind><dep>1.00</dep></entry>
 				</table>
 			</expression>
@@ -1436,7 +1436,7 @@
 						</table>
 						<value>3.5</value>
 					</pow>
-					<entry><ind>      22.4</ind><dep>0.03</dep></entry>
+					<entry><ind>   53194.6</ind><dep>0.03</dep></entry>
 					<entry><ind>11394381.0</ind><dep>1.00</dep></entry>
 				</table>
 			</expression>
@@ -1480,7 +1480,7 @@
 						</table>
 						<value>3.5</value>
 					</pow>
-					<entry><ind>      22.4</ind><dep>0.03</dep></entry>
+					<entry><ind>   53194.6</ind><dep>0.03</dep></entry>
 					<entry><ind>11394381.0</ind><dep>1.00</dep></entry>
 				</table>
 			</expression>

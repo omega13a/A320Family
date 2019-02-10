@@ -8,7 +8,7 @@ var perfCLBInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/cost-index", 0);
 			setprop("/FMGC/internal/cost-index-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var ci = int(scratchpad);

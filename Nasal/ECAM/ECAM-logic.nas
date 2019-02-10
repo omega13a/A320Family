@@ -3,17 +3,15 @@
 # Copyright (c) 2019 Jonathan Redpath (legoboyvdlp)
 
 var messages_priority_3 = func {
-	if ((getprop("/position/gear-agl-ft") < 750 and getprop("/gear/gear[1]/position-norm") != 1 and (getprop("/ECAM/warning-phase") <= 3 and getprop("/ECAM/warning-phase") >= 5)) and ((((getprop("/engines/engine[0]/n1-actual") < 75.0 and getprop("/engines/engine[1]/n1-actual") < 75.0)) or ((getprop("/engines/engine[0]/n1-actual") < 77.0 and getprop("/controls/engines/engine[1]/cutoff-switch") == 0) or (getprop("/engines/engine[1]/n1-actual") < 77.0 and getprop("/controls/engines/engine[0]/cutoff-switch") == 0))) or getprop("/controls/flight/flap-pos") > 1)) {
-		lg_not_dn.active = 1;
-		setprop("/systems/gear/landing-gear-warning-light", 1);
+	# FCTL
+	if (getprop("/ECAM/warning-phase") == 6 and getprop("/controls/flight/flap-lever") != 0 and getprop("/instrumentation/altimeter/indicated-altitude-ft") > 22000) {
+		flap_not_zero.active = 1;
 	} else {
-		lg_not_dn.active = 0;
-		lg_not_dn.noRepeat = 0;
-		setprop("/systems/gear/landing-gear-warning-light", 0);
+		flap_not_zero.active = 0;
+		flap_not_zero.noRepeat = 0;
 	}
-}
-
-var messages_priority_2 = func {
+	
+	# AUTOFLT
 	if (getprop("/it-autoflight/output/ap-warning") == 2) {
 		ap_offw.active = 1;
 	} else {
@@ -52,43 +50,7 @@ var messages_priority_2 = func {
 	}
 }
 
-var messages_priority_2_old = func {
-	if ((((getprop("/ECAM/warning-phase") >= 1 and getprop("/ECAM/warning-phase") <= 2) or (getprop("/ECAM/warning-phase") >= 9 and getprop("/ECAM/warning-phase") <= 10) and (wow and getprop("/engines/engine[0]/state") == 3)) or getprop("/ECAM/warning-phase") == 6) and getprop("/systems/failures/pack1") == 1) {
-		pack1_fault.active = 1;
-	} else {
-		pack1_fault.active = 0;
-		pack1_fault.noRepeat = 0;
-	}
-	
-	if (pack1_fault.active == 1 and getprop("/controls/pneumatic/switches/pack1") == 1) {
-		pack1_fault_subwarn_1.active = 1;
-	} else {
-		pack1_fault_subwarn_1.active = 0;
-		pack1_fault_subwarn_1.noRepeat = 0;
-	}
-	
-	if ((((getprop("/ECAM/warning-phase") >= 1 and getprop("/ECAM/warning-phase") <= 2) or (getprop("/ECAM/warning-phase") >= 9 and getprop("/ECAM/warning-phase") <= 10) and (wow and getprop("/engines/engine[1]/state") == 3)) or getprop("/ECAM/warning-phase") == 6) and getprop("/systems/failures/pack2") == 1) {
-		pack2_fault.active = 1;
-	} else {
-		pack2_fault.active = 0;
-		pack2_fault.noRepeat = 0;
-	}
-	
-	if (pack2_fault.active == 1 and getprop("/controls/pneumatic/switches/pack2") == 1) {
-		pack2_fault_subwarn_1.active = 1;
-	} else {
-		pack2_fault_subwarn_1.active = 0;
-		pack2_fault_subwarn_1.noRepeat = 0;
-	}
-	
-	if (getprop("/controls/gear/brake-parking") and (getprop("/ECAM/warning-phase") >= 6 and getprop("/ECAM/warning-phase") <= 7)) {
-		park_brk_on.active = 1;
-	} else {
-		park_brk_on.active = 0;
-		park_brk_on.noRepeat = 0;
-	}
-}
-
+var messages_priority_2 = func {}
 var messages_priority_1 = func {}
 var messages_priority_0 = func {}
 

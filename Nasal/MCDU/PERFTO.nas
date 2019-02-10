@@ -8,7 +8,7 @@ var perfTOInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/v1", 0);
 			setprop("/FMGC/internal/v1-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -28,7 +28,7 @@ var perfTOInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/vr", 0);
 			setprop("/FMGC/internal/vr-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -49,7 +49,7 @@ var perfTOInput = func(key, i) {
 			setprop("/FMGC/internal/v2", 0);
 			setprop("/FMGC/internal/v2-set", 0);
 			setprop("/it-autoflight/settings/togaspd", 157);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -87,7 +87,7 @@ var perfTOInput = func(key, i) {
 			setprop("/systems/thrust/clbreduc-ft", "1500");
 			setprop("/FMGC/internal/reduc-agl-ft", "3000");
 			setprop("/MCDUC/thracc-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -112,7 +112,7 @@ var perfTOInput = func(key, i) {
 			setprop("/FMGC/internal/to-flap", 0);
 			setprop("/FMGC/internal/to-ths", "0.0");
 			setprop("/FMGC/internal/flap-ths-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -134,7 +134,7 @@ var perfTOInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/flex", 0);
 			setprop("/FMGC/internal/flex-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);
@@ -156,7 +156,7 @@ var perfTOInput = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/eng-out-reduc", "3500");
 			setprop("/MCDUC/reducacc-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);

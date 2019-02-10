@@ -138,10 +138,10 @@ var ECAM_controller = {
 	loop: func() {
 		# check active messages
 		# config_warnings();
-		# messages_priority_3();
+		messages_priority_3();
 		messages_priority_2();
-		# messages_priority_1();
-		# messages_priority_0();
+		messages_priority_1();
+		messages_priority_0();
 		messages_memo();
 		messages_right_memo();
 		
@@ -218,6 +218,9 @@ var ECAM_controller = {
 				m.active = 0;
 			}
 		}
+	},
+	clear: func() {
+		print("Clear!");
 	},
 };
 

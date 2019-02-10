@@ -31,7 +31,7 @@
 			<expression>
 				<dif>
 					<property>/position/altitude-agl-ft</property>
-					<value>15.001</value>
+					<value>14.201</value>
 				</dif>
 			</expression>
 		</input>

@@ -197,7 +197,6 @@ var ECAM = {
 		}
 		
 		# AP / ATHR warnings
-		# No evidence found that re-engagement disconnects warnings - if anyone has any evidence to the contrary let me know
 		if (ap_active == 1 and getprop("/it-autoflight/output/ap-warning") == 0) {
 			ap_active = 0;
 		} elsif (ap_active == 1 and getprop("/it-autoflight/output/ap-warning") == 1 and getprop("/sim/time/elapsed-sec") > (getprop("/ECAM/ap-off-time") + 9)) {
@@ -209,6 +208,10 @@ var ECAM = {
 		
 		if (ap_active == 1 and getprop("/it-autoflight/output/ap-warning") == 1 and getprop("/sim/time/elapsed-sec") > (getprop("/ECAM/ap-off-time") + 3) and getprop("/ECAM/warnings/master-warning-light") == 1) {
 			setprop("/ECAM/warnings/master-warning-light", 0);
+		}
+		
+		if (getprop("/it-autoflight/output/ap-warning") == 2 and (getprop("/it-autoflight/output/ap1") == 1 or getprop("/it-autoflight/output/ap2") == 1)) {
+			setprop("/it-autoflight/output/ap-warning", 0);
 		}
 		
 		if (athr_active == 1 and getprop("/it-autoflight/output/athr-warning") == 0) {
@@ -223,6 +226,10 @@ var ECAM = {
 		
 		if (athr_active == 1 and getprop("/it-autoflight/output/athr-warning") == 1 and getprop("/sim/time/elapsed-sec") > (getprop("/ECAM/athr-off-time") + 3) and getprop("/ECAM/warnings/master-caution-light") == 1) {
 			setprop("/ECAM/warnings/master-caution-light", 0);
+		}
+		
+		if (getprop("/it-autoflight/output/athr-warning") == 2 and getprop("/it-autoflight/output/athr") == 1) {
+			setprop("/it-autoflight/output/athr-warning", 0);
 		}
 		
 		

@@ -46,7 +46,7 @@ var initInputB = func(key, i) {
 		if (scratchpad == "CLR") {
 			setprop("/FMGC/internal/block", 0.0);
 			setprop("/FMGC/internal/block-set", 0);
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
 		} else {
 			var tfs = size(scratchpad);

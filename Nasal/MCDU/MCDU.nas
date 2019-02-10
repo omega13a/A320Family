@@ -81,19 +81,19 @@ var lskbutton = func(btn, i) {
 	if (btn == "1") {
 		if (getprop("/MCDU[" ~ i ~ "]/page") == "MCDU") {
 			if (getprop("/MCDU[" ~ i ~ "]/active") != 2) {
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "1");
+				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 				setprop("/MCDU[" ~ i ~ "]/scratchpad", "WAIT FOR SYSTEM RESPONSE");
 				setprop("/MCDU[" ~ i ~ "]/active", 1);
 				settimer(func(){
 					setprop("/MCDU[" ~ i ~ "]/page", getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
 					setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
-					setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+					setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 					setprop("/MCDU[" ~ i ~ "]/active", 2);
 				}, 2);
 			} else {
 				setprop("/MCDU[" ~ i ~ "]/page", getprop("/MCDU[" ~ i ~ "]/last-fmgc-page"));
 				setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			}
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "TO") {
 			perfTOInput("L1",i);
@@ -263,7 +263,7 @@ var rskbutton = func(btn, i) {
 			if (getprop("/MCDU[" ~ i ~ "]/last-page") != "NONE") {
 				setprop("/MCDU[" ~ i ~ "]/page", getprop("/MCDU[" ~ i ~ "]/last-page"));
 				setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			} else {
 				notAllowed(i);
 			}
@@ -277,7 +277,7 @@ var rskbutton = func(btn, i) {
 			if (getprop("/MCDU[" ~ i ~ "]/scratchpad") != "AOC DISABLED") {
 				setprop("/MCDU[" ~ i ~ "]/last-scratchpad", getprop("/MCDU[" ~ i ~ "]/scratchpad"));
 			}
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "1");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", "AOC DISABLED");
 		} else if (getprop("/MCDU[" ~ i ~ "]/page") == "INITA") {
 			initInputA("R6",i);
@@ -371,148 +371,148 @@ var button = func(btn, i) {
 		var scratchpad = getprop("/MCDU[" ~ i ~ "]/scratchpad");
 		if (btn == "A") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "A");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "B") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "B");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "C") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "C");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "D") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "D");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "E") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "E");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "F") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "F");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "G") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "G");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "H") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "H");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "I") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "I");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "J") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "J");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "K") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "K");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "L") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "L");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "M") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "M");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "N") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "N");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "O") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "O");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "P") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "P");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "Q") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "Q");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "R") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "R");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "S") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "S");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "T") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "T");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "U") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "U");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "V") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "V");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "W") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "W");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "X") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "X");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "Y") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "Y");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "Z") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "Z");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "SLASH") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "/");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "SP") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ " ");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "CLR") {
 			var scratchpad = getprop("/MCDU[" ~ i ~ "]/scratchpad");
 			if (size(scratchpad) == 0) {
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "1");
+				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 				setprop("/MCDU[" ~ i ~ "]/scratchpad", "CLR");
 			} else if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
 				setprop("/MCDU[" ~ i ~ "]/scratchpad", "");
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			} else if (size(scratchpad) > 0) {
 				setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
 				setprop("/MCDU[" ~ i ~ "]/scratchpad", left(scratchpad, size(scratchpad)-1));
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			}
 		} else if (btn == "0") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "0");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "1") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "1");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "2") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "2");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "3") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "3");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "4") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "4");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "5") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "5");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "6") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "6");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "7") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "7");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "8") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "8");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "9") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "9");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "DOT") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ ".");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		} else if (btn == "PLUSMINUS") {
 			setprop("/MCDU[" ~ i ~ "]/scratchpad", scratchpad ~ "-");
-			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+			setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 		}
 	} else {
 		if (btn == "CLR") {
 			var scratchpad = getprop("/MCDU[" ~ i ~ "]/scratchpad");
 			if (size(scratchpad) == 0) {
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "1");
+				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 				setprop("/MCDU[" ~ i ~ "]/scratchpad", "CLR");
 			} else if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) {
 				setprop("/MCDU[" ~ i ~ "]/scratchpad", getprop("/MCDU[" ~ i ~ "]/last-scratchpad"));
 				setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
-				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "0");
+				setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 0);
 			}
 		}
 	}
@@ -520,9 +520,13 @@ var button = func(btn, i) {
 
 var notAllowed = func(i) {
 	if (getprop("/MCDU[" ~ i ~ "]/scratchpad") != "NOT ALLOWED") {
-		setprop("/MCDU[" ~ i ~ "]/last-scratchpad", getprop("/MCDU[" ~ i ~ "]/scratchpad"));
+		if (getprop("/MCDU[" ~ i ~ "]/scratchpad-msg") == 1) { # Messages clear after NOT ALLOWED
+			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", "");
+		} else {
+			setprop("/MCDU[" ~ i ~ "]/last-scratchpad", getprop("/MCDU[" ~ i ~ "]/scratchpad"));
+		}
 	}
-	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", "1");
+	setprop("/MCDU[" ~ i ~ "]/scratchpad-msg", 1);
 	setprop("/MCDU[" ~ i ~ "]/scratchpad", "NOT ALLOWED");
 }
 
