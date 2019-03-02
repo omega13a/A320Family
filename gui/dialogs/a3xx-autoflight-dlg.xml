@@ -4,7 +4,6 @@
 
 <!-- IT-AUTOFLIGHT Autopilot Control Dialog -->
 
-
 <PropertyList>
 
 	<name>autopilot</name>
@@ -39,13 +38,7 @@
 			<pref-width>43</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>
-					if (getprop("/it-autoflight/input/athr") == 0) {
-						setprop("it-autoflight/input/athr", 1);
-					} else {
-						libraries.athrOff("hard");
-					}
-				</script>
+				<script>libraries.APPanel.ATHR();</script>
 			</binding>
 		</button>
 		<button>
@@ -53,13 +46,7 @@
 			<pref-width>43</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>
-					if (getprop("/it-autoflight/input/ap1") == 0) {
-						setprop("it-autoflight/input/ap1", 1);
-					} else {
-						libraries.apOff("hard", 1);
-					}
-				</script>
+				<script>libraries.APPanel.AP1();</script>
 			</binding>
 		</button>
 		<button>
@@ -67,29 +54,23 @@
 			<pref-width>43</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>
-					if (getprop("/it-autoflight/input/ap2") == 0) {
-						setprop("it-autoflight/input/ap2", 1);
-					} else {
-						libraries.apOff("hard", 2);
-					}
-				</script>
+				<script>libraries.APPanel.AP2();</script>
 			</binding>
 		</button>
 		<button>
 			<legend>FD1</legend>
 			<pref-width>43</pref-width>
 			<binding>
-			<command>property-toggle</command>
-			<property>/it-autoflight/input/fd1</property>
+				<command>nasal</command>
+				<script>libraries.APPanel.FD1();</script>
 			</binding>
 		</button>
 		<button>
 			<legend>FD2</legend>
 			<pref-width>43</pref-width>
 			<binding>
-			<command>property-toggle</command>
-			<property>/it-autoflight/input/fd2</property>
+				<command>nasal</command>
+				<script>libraries.APPanel.FD2();</script>
 			</binding>
 		</button>
 	</group>
@@ -102,16 +83,7 @@
 			<pref-width>119</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>
-					if (getprop("/it-autoflight/input/athr") == 1) {
-						libraries.athrOff("soft");
-					} else {
-						if (getprop("/it-autoflight/output/athr-warning") == 1) {
-							setprop("/it-autoflight/output/athr-warning", 0);
-							setprop("/ECAM/warnings/master-caution-light", 0);
-						}
-					}
-				</script>
+				<script>libraries.APPanel.ATDisc();</script>
 			</binding>
 		</button>
 		<button>
@@ -119,18 +91,7 @@
 			<pref-width>119</pref-width>
 			<binding>
 				<command>nasal</command>
-				<script>
-					if (getprop("/it-autoflight/input/ap1") == 1 or getprop("/it-autoflight/input/ap1") == 2) {
-						libraries.apOff("soft", 0);
-					} else {
-						if (getprop("/it-autoflight/sound/apoffsound") == 1 or getprop("/it-autoflight/sound/apoffsound2") == 1) {
-							setprop("/it-autoflight/sound/apoffsound", 0);
-							setprop("/it-autoflight/sound/apoffsound2", 0);
-						}
-						setprop("/it-autoflight/output/ap-warning", 0);
-						setprop("/ECAM/warnings/master-warning-light", 0);
-					}
-				</script>
+				<script>libraries.APPanel.APDisc();</script>
 			</binding>
 		</button>
 	</group>
@@ -359,9 +320,7 @@
 				<pref-width>65</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>
-					libraries.mcpSPDKnbPush();
-					</script>
+					<script>libraries.APPanel.SPDPush();</script>
 				</binding>
 			</button>
 			
@@ -370,19 +329,15 @@
 				<pref-width>65</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>
-					libraries.mcpSPDKnbPull();
-					</script>
+					<script>libraries.APPanel.SPDPull();</script>
 				</binding>
 			</button>
 			
 			<button>
 				<legend>Speed/Mach</legend>
 				<binding>
-					<command>property-cycle</command>
-					<property>/it-autoflight/input/kts-mach</property>
-					<value>0</value>
-					<value>1</value>
+					<command>nasal</command>
+					<script>libraries.APPanel.IASMach();</script>
 				</binding>
 			</button>
 			
@@ -416,12 +371,8 @@
 					</and>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/spd-kts</property>
-					<min>100</min>
-					<max>350</max>
-					<step>-10</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(-10);</script>
 				</binding>
 			</button>
 			<button>
@@ -443,12 +394,8 @@
 					</and>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/spd-kts</property>
-					<min>100</min>
-					<max>350</max>
-					<step>-1</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(-1);</script>
 				</binding>
 			</button>
 
@@ -470,9 +417,6 @@
 						</equals>
 					</and>
 				</enable>
-				<binding>
-					<command>dialog-apply</command>
-				</binding>
 			</input>
 			
 			<button>
@@ -494,12 +438,8 @@
 					</and>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/spd-kts</property>
-					<min>100</min>
-					<max>350</max>
-					<step>1</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(1);</script>
 				</binding>
 			</button>
 			<button>
@@ -522,12 +462,8 @@
 					</and>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/spd-kts</property>
-					<min>100</min>
-					<max>350</max>
-					<step>10</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(10);</script>
 				</binding>
 			</button>
 			
@@ -561,12 +497,8 @@
 					</and>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/spd-mach</property>
-					<min>0.50</min>
-					<max>0.82</max>
-					<step>-0.01</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(-10);</script>
 				</binding>
 			</button>
 			<button>
@@ -588,12 +520,8 @@
 					</and>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/spd-mach</property>
-					<min>0.50</min>
-					<max>0.82</max>
-					<step>-0.001</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(-1);</script>
 				</binding>
 			</button>
 
@@ -615,9 +543,6 @@
 						</equals>
 					</and>
 				</enable>
-				<binding>
-					<command>dialog-apply</command>
-				</binding>
 			</input>
 			
 			<button>
@@ -639,12 +564,8 @@
 					</and>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/spd-mach</property>
-					<min>0.50</min>
-					<max>0.82</max>
-					<step>0.001</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(1);</script>
 				</binding>
 			</button>
 			<button>
@@ -667,12 +588,8 @@
 					</and>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/spd-mach</property>
-					<min>0.50</min>
-					<max>0.82</max>
-					<step>0.01</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.SPDAdjust(10);</script>
 				</binding>
 			</button>
 			
@@ -700,7 +617,7 @@
 				<pref-width>75</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.mcpHDGKnbPush();</script>
+					<script>libraries.APPanel.HDGPush();</script>
 				</binding>
 			</button>
 			
@@ -709,7 +626,7 @@
 				<pref-width>75</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>libraries.mcpHDGKnbPull();</script>
+					<script>libraries.APPanel.HDGPull();</script>
 				</binding>
 			</button>
 			
@@ -717,9 +634,8 @@
 				<legend>LOC</legend>
 				<pref-width>75</pref-width>
 				<binding>
-					<command>property-assign</command>
-					<property>/it-autoflight/input/lat</property>
-					<value>2</value>
+					<command>nasal</command>
+					<script>libraries.APPanel.LOCButton();</script>
 				</binding>
 			</button>
 		</group>
@@ -746,12 +662,8 @@
 					</equals>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/hdg</property>
-					<min>1</min>
-					<max>361</max>
-					<step>-10</step>
-					<wrap>true</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.HDGAdjust(-10);</script>
 				</binding>
 			</button>
 			<button>
@@ -767,12 +679,8 @@
 					</equals>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/hdg</property>
-					<min>1</min>
-					<max>361</max>
-					<step>-1</step>
-					<wrap>true</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.HDGAdjust(-1);</script>
 				</binding>
 			</button>
 
@@ -788,9 +696,6 @@
 						<value>1</value>
 					</equals>
 				</enable>
-				<binding>
-					<command>dialog-apply</command>
-				</binding>
 			</input>
 			
 			<button>
@@ -806,12 +711,8 @@
 					</equals>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/hdg</property>
-					<min>1</min>
-					<max>361</max>
-					<step>1</step>
-					<wrap>true</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.HDGAdjust(1);</script>
 				</binding>
 			</button>
 			<button>
@@ -828,12 +729,8 @@
 					</equals>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/hdg</property>
-					<min>1</min>
-					<max>361</max>
-					<step>10</step>
-					<wrap>true</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.HDGAdjust(10);</script>
 				</binding>
 			</button>
 		</group>
@@ -900,48 +797,8 @@
 				<legend>V/S Push</legend>
 				<pref-width>75</pref-width>
 				<binding>
-					<condition>
-						<equals>
-							<property>/it-autoflight/custom/trk-fpa</property>
-							<value>0</value>
-						</equals>
-					</condition>
-					<command>property-assign</command>
-					<property>/it-autoflight/input/vert</property>
-					<value>1</value>
-				</binding>
-				<binding>
-					<condition>
-						<equals>
-							<property>/it-autoflight/custom/trk-fpa</property>
-							<value>0</value>
-						</equals>
-					</condition>
-					<command>property-assign</command>
-					<property>/it-autoflight/input/vs</property>
-					<value>0</value>
-				</binding>
-				<binding>
-					<condition>
-						<equals>
-							<property>/it-autoflight/custom/trk-fpa</property>
-							<value>1</value>
-						</equals>
-					</condition>
-					<command>property-assign</command>
-					<property>/it-autoflight/input/vert</property>
-					<value>5</value>
-				</binding>
-				<binding>
-					<condition>
-						<equals>
-							<property>/it-autoflight/custom/trk-fpa</property>
-							<value>1</value>
-						</equals>
-					</condition>
-					<command>property-assign</command>
-					<property>/it-autoflight/input/fpa</property>
-					<value>0.0</value>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSPush();</script>
 				</binding>
 			</button>
 			
@@ -950,13 +807,7 @@
 				<pref-width>75</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>
-					if (getprop("/it-autoflight/custom/trk-fpa") == 0) {
-						setprop("/it-autoflight/input/vert", 1);
-					} else if (getprop("/it-autoflight/custom/trk-fpa") == 1) {
-						setprop("/it-autoflight/input/vert", 5);
-					}
-					</script>
+					<script>libraries.APPanel.VSPull();</script>
 				</binding>
 			</button>
 			
@@ -964,9 +815,8 @@
 				<pref-width>75</pref-width>
 				<legend>APPR</legend>
 				<binding>
-					<command>property-assign</command>
-					<property>/it-autoflight/input/vert</property>
-					<value>2</value>
+					<command>nasal</command>
+					<script>libraries.APPanel.APPRButton();</script>
 				</binding>
 			</button>
 		</group>
@@ -987,12 +837,8 @@
 				<pref-height>25</pref-height>
 				<legend>&lt;&lt;</legend>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/alt</property>
-					<min>0</min>
-					<max>50000</max>
-					<step>-1000</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.ALTAdjust(-10);</script>
 				</binding>
 			</button>
 			<button>
@@ -1002,12 +848,8 @@
 				<pref-height>25</pref-height>
 				<legend>&lt;</legend>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/alt</property>
-					<min>0</min>
-					<max>50000</max>
-					<step>-100</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.ALTAdjust(-2);</script>
 				</binding>
 			</button>
 
@@ -1017,9 +859,6 @@
 				<pref-width>55</pref-width>
 				<property>/it-autoflight/input/alt</property>
 				<live type="bool">true</live>
-				<binding>
-					<command>dialog-apply</command>
-				</binding>
 			</input>
 			
 			<button>
@@ -1029,12 +868,8 @@
 				<pref-height>25</pref-height>
 				<legend>&gt;</legend>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/alt</property>
-					<min>0</min>
-					<max>50000</max>
-					<step>100</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.ALTAdjust(2);</script>
 				</binding>
 			</button>
 			<button>
@@ -1045,12 +880,8 @@
 				<pref-height>25</pref-height>
 				<legend>&gt;&gt;</legend>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/alt</property>
-					<min>0</min>
-					<max>50000</max>
-					<step>1000</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.ALTAdjust(10);</script>
 				</binding>
 			</button>
 		</group>
@@ -1077,12 +908,8 @@
 					</equals>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/vs</property>
-					<min>-6000</min>
-					<max>6000</max>
-					<step>-1000</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(-10);</script>
 				</binding>
 			</button>
 			<button>
@@ -1098,12 +925,8 @@
 					</equals>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/vs</property>
-					<min>-6000</min>
-					<max>6000</max>
-					<step>-100</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(-1);</script>
 				</binding>
 			</button>
 
@@ -1119,9 +942,6 @@
 						<value>1</value>
 					</equals>
 				</enable>
-				<binding>
-					<command>dialog-apply</command>
-				</binding>
 			</input>
 			
 			<button>
@@ -1137,12 +957,8 @@
 					</equals>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/vs</property>
-					<min>-6000</min>
-					<max>6000</max>
-					<step>100</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(1);</script>
 				</binding>
 			</button>
 			<button>
@@ -1159,12 +975,8 @@
 					</equals>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/vs</property>
-					<min>-6000</min>
-					<max>6000</max>
-					<step>1000</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(10);</script>
 				</binding>
 			</button>
 		</group>
@@ -1191,12 +1003,8 @@
 					</equals>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/fpa</property>
-					<min>-9.9</min>
-					<max>9.9</max>
-					<step>-1</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(-10);</script>
 				</binding>
 			</button>
 			<button>
@@ -1212,12 +1020,8 @@
 					</equals>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/fpa</property>
-					<min>-9.9</min>
-					<max>9.9</max>
-					<step>-0.1</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(-1);</script>
 				</binding>
 			</button>
 
@@ -1233,9 +1037,6 @@
 						<value>5</value>
 					</equals>
 				</enable>
-				<binding>
-					<command>dialog-apply</command>
-				</binding>
 			</input>
 			
 			<button>
@@ -1251,12 +1052,8 @@
 					</equals>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/fpa</property>
-					<min>-9.9</min>
-					<max>9.9</max>
-					<step>0.1</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(1);</script>
 				</binding>
 			</button>
 			<button>
@@ -1273,12 +1070,8 @@
 					</equals>
 				</enable>
 				<binding>
-					<command>property-adjust</command>
-					<property>/it-autoflight/input/fpa</property>
-					<min>-9.9</min>
-					<max>9.9</max>
-					<step>1</step>
-					<wrap>false</wrap>
+					<command>nasal</command>
+					<script>libraries.APPanel.VSAdjust(10);</script>
 				</binding>
 			</button>
 		</group>
@@ -1315,9 +1108,7 @@
 				<pref-width>120</pref-width>
 				<binding>
 					<command>nasal</command>
-					<script>
-					fmgc.toggle_trkfpa();
-					</script>
+					<script>libraries.APPanel.TRKFPA();</script>
 				</binding>
 			</button>
 			

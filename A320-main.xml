@@ -694,6 +694,10 @@
 			<windowprobeheat type="double">0.5</windowprobeheat>
 			<qnh-knb>100000</qnh-knb>
 			<strobe type="double">0.0</strobe>
+			<beacon type="bool">0</beacon>
+			<wing-lights type="bool">0</wing-lights>
+			<landing-lights-l type="float">0.0</landing-lights-l>
+			<landing-lights-r type="float">0.0</landing-lights-r>
 		</switches>
 		<tray n="0">
 			<lefttrayext type="double">0</lefttrayext>
@@ -1077,17 +1081,7 @@
 				<desc>Autothrottle Disconnect</desc>
 				<binding>
 					<command>nasal</command>
-					<script>
-						if (getprop("/it-autoflight/output/athr") == 1) {
-							libraries.athrOff("soft");
-							setprop("/ECAM/warnings/master-caution-light", 1);
-						} else {
-							if (getprop("/it-autoflight/output/athr-warning") == 1) {
-								setprop("/it-autoflight/output/athr-warning", 0);
-								setprop("/ECAM/warnings/master-caution-light", 0);
-							}
-						}
-					</script>
+					<script>libraries.APPanel.ATDisc();</script>
 				</binding>
 			</key>
 			<key n="6">
@@ -1326,18 +1320,7 @@
 				<desc>Autopilot Disconnect</desc>
 				<binding>
 					<command>nasal</command>
-					<script>
-						if (getprop("/it-autoflight/output/ap1") == 1 or getprop("/it-autoflight/output/ap2") == 1) {
-							libraries.apOff("soft", 0);
-						} else {
-							if (getprop("/it-autoflight/sound/apoffsound") == 1 or getprop("/it-autoflight/sound/apoffsound2") == 1) {
-								setprop("/it-autoflight/sound/apoffsound", 0);
-								setprop("/it-autoflight/sound/apoffsound2", 0);
-							}
-							setprop("/it-autoflight/output/ap-warning", 0);
-							setprop("/ECAM/warnings/master-warning-light", 0);
-						}
-					</script>
+					<script>libraries.APPanel.APDisc();</script>
 				</binding>
 			</key>
 			<key n="70">

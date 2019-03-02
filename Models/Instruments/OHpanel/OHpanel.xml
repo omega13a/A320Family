@@ -4680,7 +4680,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/lighting/beacon</property>
+				<property>controls/switches/beacon</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4692,7 +4692,7 @@
 		<name>Beacon lights rotate</name>
 		<type>rotate</type>
 		<object-name>BeaconLtSwtch</object-name>
-		<property>controls/lighting/beacon</property>
+		<property>controls/switches/beacon</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>35</dep></entry>
 			<entry><ind>1</ind><dep>-35</dep></entry>
@@ -4718,7 +4718,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-toggle</command>
-				<property>controls/lighting/wing-lights</property>
+				<property>controls/switches/wing-lights</property>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4730,7 +4730,7 @@
 		<name>Wing lights rotate</name>
 		<type>rotate</type>
 		<object-name>WingLtSwtch</object-name>
-		<property>controls/lighting/wing-lights</property>
+		<property>controls/switches/wing-lights</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>35</dep></entry>
 			<entry><ind>1</ind><dep>-35</dep></entry>
@@ -4868,7 +4868,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/lighting/landing-lights[1]</property>
+				<property>controls/switches/landing-lights-l</property>
 				<value>0</value>
 				<value>0.5</value>
 				<value>1</value>
@@ -4883,7 +4883,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/lighting/landing-lights[1]</property>
+				<property>controls/switches/landing-lights-l</property>
 				<value>1</value>
 				<value>0.5</value>
 				<value>0</value>
@@ -4904,7 +4904,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/lighting/landing-lights[2]</property>
+				<property>controls/switches/landing-lights-r</property>
 				<value>0</value>
 				<value>0.5</value>
 				<value>1</value>
@@ -4919,7 +4919,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>property-cycle</command>
-				<property>controls/lighting/landing-lights[2]</property>
+				<property>controls/switches/landing-lights-r</property>
 				<value>1</value>
 				<value>0.5</value>
 				<value>0</value>
@@ -4935,7 +4935,7 @@
 		<name>landing light rotate</name>
 		<type>rotate</type>
 		<object-name>LandingLtLSwtch</object-name>
-		<property>controls/lighting/landing-lights[1]</property>
+		<property>controls/switches/landing-lights-l</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>35</dep></entry>
 			<entry><ind>1</ind><dep>-35</dep></entry>
@@ -4956,7 +4956,7 @@
 		<name>landing light rotate</name>
 		<type>rotate</type>
 		<object-name>LandingLtRSwtch</object-name>
-		<property>controls/lighting/landing-lights[2]</property>
+		<property>controls/switches/landing-lights-r</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>35</dep></entry>
 			<entry><ind>1</ind><dep>-35</dep></entry>

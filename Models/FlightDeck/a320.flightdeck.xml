@@ -630,7 +630,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>ParkBrk</object-name>
-		<property>controls/gear/brake-parking</property>
+		<property>fdm/jsbsim/fcs/brake-lever</property>
 		<factor>90</factor>
 		<axis>
 			<object-name>ParkBrk.axis</object-name>
@@ -1640,7 +1640,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>Lcutoff</object-name>
-		<property>controls/engines/engine[0]/cutoff-switch</property>
+		<property>fdm/jsbsim/fcs/engine-cutoff[0]</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>  0</dep></entry>
 			<entry><ind>1</ind><dep>-70</dep></entry>
@@ -1666,7 +1666,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>Rcutoff</object-name>
-		<property>controls/engines/engine[1]/cutoff-switch</property>
+		<property>fdm/jsbsim/fcs/engine-cutoff[1]</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>  0</dep></entry>
 			<entry><ind>1</ind><dep>-70</dep></entry>
@@ -2196,14 +2196,11 @@
 			<button>0</button>
 			<repeatable type="bool">false</repeatable>
 			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>property-toggle</command>
-				<property>it-autoflight/input/fd1</property>
+				<command>nasal</command>
+				<script>
+					libraries.APPanel.FD1();
+					setprop("/sim/sounde/btn1", 1);
+				</script>
 			</binding>
 		</action>
 	</animation>
@@ -2301,14 +2298,11 @@
 			<button>0</button>
 			<repeatable type="bool">false</repeatable>
 			<binding>
-				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
-				</condition>
-				<command>property-toggle</command>
-				<property>it-autoflight/input/fd2</property>
+				<command>nasal</command>
+				<script>
+					libraries.APPanel.FD2();
+					setprop("/sim/sounde/btn1", 1);
+				</script>
 			</binding>
 		</action>
 	</animation>
@@ -3716,10 +3710,8 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-cycle</command>
-				<property>it-autoflight/input/kts-mach</property>
-				<value>0</value>
-				<value>1</value>
+				<command>nasal</command>
+				<script>libraries.APPanel.IASMach();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3736,9 +3728,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>
-				libraries.mcpSPDKnbPush();
-				</script>
+				<script>libraries.APPanel.SPDPush();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3750,9 +3740,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>
-				libraries.mcpSPDKnbPull();
-				</script>
+				<script>libraries.APPanel.SPDPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3763,42 +3751,8 @@
 			<button>3</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<condition>
-					<and>
-						<equals>
-							<property>it-autoflight/input/kts-mach</property>
-							<value>0</value>
-						</equals>
-						<equals>
-							<property>it-autoflight/input/spd-managed</property>
-							<value>0</value>
-						</equals>
-					</and>
-				</condition>
-				<command>property-adjust</command>
-				<property>it-autoflight/input/spd-kts</property>
-				<step>1</step>
-				<min>100</min>
-				<max>350</max>
-			</binding>
-			<binding>
-				<condition>
-					<and>
-						<equals>
-							<property>it-autoflight/input/kts-mach</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>it-autoflight/input/spd-managed</property>
-							<value>0</value>
-						</equals>
-					</and>
-				</condition>
-				<command>property-adjust</command>
-				<property>it-autoflight/input/spd-mach</property>
-				<step>0.001</step>
-				<min>0.50</min>
-				<max>0.82</max>
+				<command>nasal</command>
+				<script>libraries.APPanel.SPDAdjust(1);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -3813,42 +3767,8 @@
 			<button>4</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<condition>
-					<and>
-						<equals>
-							<property>it-autoflight/input/kts-mach</property>
-							<value>0</value>
-						</equals>
-						<equals>
-							<property>it-autoflight/input/spd-managed</property>
-							<value>0</value>
-						</equals>
-					</and>
-				</condition>
-				<command>property-adjust</command>
-				<property>it-autoflight/input/spd-kts</property>
-				<step>-1</step>
-				<min>100</min>
-				<max>350</max>
-			</binding>
-			<binding>
-				<condition>
-					<and>
-						<equals>
-							<property>it-autoflight/input/kts-mach</property>
-							<value>1</value>
-						</equals>
-						<equals>
-							<property>it-autoflight/input/spd-managed</property>
-							<value>0</value>
-						</equals>
-					</and>
-				</condition>
-				<command>property-adjust</command>
-				<property>it-autoflight/input/spd-mach</property>
-				<step>-0.001</step>
-				<min>0.50</min>
-				<max>0.82</max>
+				<command>nasal</command>
+				<script>libraries.APPanel.SPDAdjust(-1);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -3869,7 +3789,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.mcpHDGKnbPush();</script>
+				<script>libraries.APPanel.HDGPush();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3881,7 +3801,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>libraries.mcpHDGKnbPull();</script>
+				<script>libraries.APPanel.HDGPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -3892,28 +3812,8 @@
 			<button>3</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<condition>
-					<not-equals>
-						<property>it-autoflight/output/lat</property>
-						<value>0</value>
-					</not-equals>
-				</condition>
 				<command>nasal</command>
-				<script>libraries.hdgInput();</script>
-			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>it-autoflight/custom/show-hdg</property>
-						<value>1</value>
-					</equals>
-				</condition>
-				<command>property-adjust</command>
-				<property>it-autoflight/input/hdg</property>
-				<step>1</step>
-				<min>1</min>
-				<max>361</max>
-				<wrap>true</wrap>
+				<script>libraries.APPanel.HDGAdjust(1);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -3928,28 +3828,8 @@
 			<button>4</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<condition>
-					<not-equals>
-						<property>it-autoflight/output/lat</property>
-						<value>0</value>
-					</not-equals>
-				</condition>
 				<command>nasal</command>
-				<script>libraries.hdgInput();</script>
-			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>it-autoflight/custom/show-hdg</property>
-						<value>1</value>
-					</equals>
-				</condition>
-				<command>property-adjust</command>
-				<property>it-autoflight/input/hdg</property>
-				<step>-1</step>
-				<min>1</min>
-				<max>361</max>
-				<wrap>true</wrap>
+				<script>libraries.APPanel.HDGAdjust(-1);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -3969,9 +3849,8 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-assign</command>
-				<property>it-autoflight/input/lat</property>
-				<value>2</value>
+				<command>nasal</command>
+				<script>libraries.APPanel.LOCButton();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4024,9 +3903,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>
-				fmgc.toggle_trkfpa();
-				</script>
+				<script>libraries.APPanel.TRKFPA();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4043,16 +3920,9 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
-			</binding>
-			<binding>
-				<command>nasal</command>
 				<script>
-				if (getprop("/it-autoflight/input/ap1") == 0) {
-						setprop("it-autoflight/input/ap1", 1);
-					} else {
-						libraries.apOff("hard", 1);
-					}
+					libraries.APPanel.AP1();
+					setprop("/sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -4082,16 +3952,9 @@
 			<repeatable type="bool">false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
-			</binding>
-			<binding>
-				<command>nasal</command>
 				<script>
-				if (getprop("/it-autoflight/input/ap2") == 0) {
-						setprop("it-autoflight/input/ap2", 1);
-					} else {
-						libraries.apOff("hard", 2);
-					}
+					libraries.APPanel.AP2();
+					setprop("/sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -4121,16 +3984,9 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>setprop("/sim/sounde/btn1", 1);</script>
-			</binding>
-			<binding>
-				<command>nasal</command>
 				<script>
-					if (getprop("/it-autoflight/input/athr") == 0) {
-						setprop("it-autoflight/input/athr", 1);
-					} else {
-						libraries.athrOff("hard");
-					}
+					libraries.APPanel.ATHR();
+					setprop("/sim/sounde/btn1", 1);
 				</script>
 			</binding>
 		</action>
@@ -4155,27 +4011,24 @@
 	<animation>
 		<type>pick</type>
 		<object-name>alt-sel</object-name>
-		<!--action>
+		<action>
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-assign</command>
-				<property>it-autoflight/input/vert</property>
-				<value>8</value>
+				<command>nasal</command>
+				<script>libraries.APPanel.ALTPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
 				<script>setprop("/sim/sounde/btn1", 1);</script>
 			</binding>
-		</action-->
+		</action>
 		<action>
-			<button>0</button>
 			<button>1</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-assign</command>
-				<property>it-autoflight/input/vert</property>
-				<value>4</value>
+				<command>nasal</command>
+				<script>libraries.APPanel.ALTPush();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4186,30 +4039,8 @@
 			<button>3</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<condition>
-					<equals>
-						<property>it-autoflight/config/altitude-dial-mode</property>
-						<value>0</value>
-					</equals>
-				</condition>
-				<command>property-adjust</command>
-				<property>it-autoflight/input/alt</property>
-				<step>100</step>
-				<min>0</min>
-				<max>50000</max>
-			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>it-autoflight/config/altitude-dial-mode</property>
-						<value>1</value>
-					</equals>
-				</condition>
-				<command>property-adjust</command>
-				<property>it-autoflight/input/alt</property>
-				<step>1000</step>
-				<min>0</min>
-				<max>50000</max>
+				<command>nasal</command>
+				<script>libraries.APPanel.ALTAdjust(1);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -4224,30 +4055,8 @@
 			<button>4</button>
 			<repeatable>true</repeatable>
 			<binding>
-				<condition>
-					<equals>
-						<property>it-autoflight/config/altitude-dial-mode</property>
-						<value>0</value>
-					</equals>
-				</condition>
-				<command>property-adjust</command>
-				<property>it-autoflight/input/alt</property>
-				<step>-100</step>
-				<min>0</min>
-				<max>50000</max>
-			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>it-autoflight/config/altitude-dial-mode</property>
-						<value>1</value>
-					</equals>
-				</condition>
-				<command>property-adjust</command>
-				<property>it-autoflight/input/alt</property>
-				<step>-1000</step>
-				<min>0</min>
-				<max>50000</max>
+				<command>nasal</command>
+				<script>libraries.APPanel.ALTAdjust(-1);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -4267,10 +4076,8 @@
 			<button>0</button>
 			<repeatable type="bool">false</repeatable>
 			<binding>
-				<command>property-cycle</command>
+				<command>property-toggle</command>
 				<property>it-autoflight/config/altitude-dial-mode</property>
-				<value>0</value>
-				<value>1</value>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4286,48 +4093,8 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<condition>
-					<equals>
-						<property>it-autoflight/custom/trk-fpa</property>
-						<value>0</value>
-					</equals>
-				</condition>
-				<command>property-assign</command>
-				<property>it-autoflight/input/vert</property>
-				<value>1</value>
-			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>it-autoflight/custom/trk-fpa</property>
-						<value>0</value>
-					</equals>
-				</condition>
-				<command>property-assign</command>
-				<property>it-autoflight/input/vs</property>
-				<value>0</value>
-			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>it-autoflight/custom/trk-fpa</property>
-						<value>1</value>
-					</equals>
-				</condition>
-				<command>property-assign</command>
-				<property>it-autoflight/input/vert</property>
-				<value>5</value>
-			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>it-autoflight/custom/trk-fpa</property>
-						<value>1</value>
-					</equals>
-				</condition>
-				<command>property-assign</command>
-				<property>it-autoflight/input/fpa</property>
-				<value>0.0</value>
+				<command>nasal</command>
+				<script>libraries.APPanel.VSPush();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4339,13 +4106,7 @@
 			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>
-				if (getprop("/it-autoflight/custom/trk-fpa") == 0) {
-					setprop("/it-autoflight/input/vert", 1);
-				} else if (getprop("/it-autoflight/custom/trk-fpa") == 1) {
-					setprop("/it-autoflight/input/vert", 5);
-				}
-				</script>
+				<script>libraries.APPanel.VSPull();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4357,37 +4118,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>
-				if (getprop("/it-autoflight/output/vert") != 1 and getprop("/it-autoflight/custom/trk-fpa") == 0) {
-					setprop("/it-autoflight/input/vert", 1);
-				} else if (getprop("/it-autoflight/output/vert") != 5 and getprop("/it-autoflight/custom/trk-fpa") == 1) {
-					setprop("/it-autoflight/input/vert", 5);
-				}
-				</script>
-			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>it-autoflight/output/vert</property>
-						<value>1</value>
-					</equals>
-				</condition>
-				<command>property-adjust</command>
-				<property>it-autoflight/input/vs</property>
-				<step>100</step>
-				<max>8000</max>
-			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>it-autoflight/output/vert</property>
-						<value>5</value>
-					</equals>
-				</condition>
-				<command>property-adjust</command>
-				<property>it-autoflight/input/fpa</property>
-				<step>0.1</step>
-				<max>20.9</max>
+				<script>libraries.APPanel.VSAdjust(1);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -4403,37 +4134,7 @@
 			<repeatable>true</repeatable>
 			<binding>
 				<command>nasal</command>
-				<script>
-				if (getprop("/it-autoflight/output/vert") != 1 and getprop("/it-autoflight/custom/trk-fpa") == 0) {
-					setprop("/it-autoflight/input/vert", 1);
-				} else if (getprop("/it-autoflight/output/vert") != 5 and getprop("/it-autoflight/custom/trk-fpa") == 1) {
-					setprop("/it-autoflight/input/vert", 5);
-				}
-				</script>
-			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>it-autoflight/output/vert</property>
-						<value>1</value>
-					</equals>
-				</condition>
-				<command>property-adjust</command>
-				<property>it-autoflight/input/vs</property>
-				<step>-100</step>
-				<min>-6000</min>
-			</binding>
-			<binding>
-				<condition>
-					<equals>
-						<property>it-autoflight/output/vert</property>
-						<value>5</value>
-					</equals>
-				</condition>
-				<command>property-adjust</command>
-				<property>it-autoflight/input/fpa</property>
-				<step>-0.1</step>
-				<min>-20.9</min>
+				<script>libraries.APPanel.VSAdjust(-1);</script>
 			</binding>
 			<binding>
 				<command>property-adjust</command>
@@ -4453,9 +4154,8 @@
 			<button>0</button>
 			<repeatable>false</repeatable>
 			<binding>
-				<command>property-assign</command>
-				<property>it-autoflight/input/vert</property>
-				<value>2</value>
+				<command>nasal</command>
+				<script>libraries.APPanel.APPRButton();</script>
 			</binding>
 			<binding>
 				<command>nasal</command>
@@ -4520,7 +4220,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>FlapsLever</object-name>
-		<property>controls/flight/flap-lever</property>
+		<property>fdm/jsbsim/fcs/flap-lever</property>
 		<interpolation>
 			<entry><ind>0</ind><dep> 0</dep></entry>
 			<entry><ind>1</ind><dep>14</dep></entry>
@@ -5567,7 +5267,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>SpdBrk</object-name>
-		<property>fdm/jsbsim/spoilers/speedbrake-nul</property>
+		<property>fdm/jsbsim/spoilers/main-lever</property>
 		<factor>45</factor>
 		<axis>
 			<object-name>SpdBrk.axis</object-name>
@@ -5577,7 +5277,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>SpdBrk</object-name>
-		<property>controls/flight/speedbrake-arm</property>
+		<property>fdm/jsbsim/spoilers/lever-arm</property>
 		<factor>-0.006</factor>
 		<axis>
 			<x>1</x>
@@ -5589,7 +5289,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>SpdBrk</object-name>
-		<property>controls/flight/speedbrake-arm</property>
+		<property>fdm/jsbsim/spoilers/lever-arm</property>
 		<factor>0.006</factor>
 		<axis>
 			<x>0</x>
@@ -5878,7 +5578,7 @@
 		<name>Engine 1 throttle lever</name>
 		<type>rotate</type>
 		<object-name>thr_l</object-name>
-		<property>controls/engines/engine[0]/throttle-lever</property>
+		<property>fdm/jsbsim/fcs/throttle-lever[0]</property>
 		<interpolation>
 			<entry><ind>0.00000</ind><dep> 0</dep></entry>
 			<entry><ind>0.00999</ind><dep> 0</dep></entry>
@@ -5903,7 +5603,7 @@
 		<name>Engine 1 throttle lever rev</name>
 		<type>rotate</type>
 		<object-name>thr_l</object-name>
-		<property>controls/engines/engine[0]/reverser</property>
+		<property>fdm/jsbsim/fcs/reverse-lever[0]</property>
 		<factor>-3.5</factor> 
 		<axis>
 			<object-name>trim.axis</object-name>
@@ -5913,7 +5613,7 @@
 		<name>Engine 1 throttle lever rev 2</name>
 		<type>rotate</type>
 		<object-name>thr_l</object-name>
-		<property>controls/engines/engine[0]/throttle-rev</property>
+		<property>fdm/jsbsim/fcs/reverse-thr-lever[0]</property>
 		<interpolation>
 			<entry><ind>0.00</ind><dep>  0</dep></entry>
 			<entry><ind>0.50</ind><dep>-20</dep></entry>
@@ -5953,7 +5653,7 @@
 		<name>Engine 2 throttle lever</name>
 		<type>rotate</type>
 		<object-name>thr_r</object-name>
-		<property>controls/engines/engine[1]/throttle-lever</property>
+		<property>fdm/jsbsim/fcs/throttle-lever[1]</property>
 		<interpolation>
 			<entry><ind>0.00000</ind><dep> 0</dep></entry>
 			<entry><ind>0.00999</ind><dep> 0</dep></entry>
@@ -5978,7 +5678,7 @@
 		<name>Engine 2 throttle lever rev</name>
 		<type>rotate</type>
 		<object-name>thr_r</object-name>
-		<property>controls/engines/engine[1]/reverser</property>
+		<property>fdm/jsbsim/fcs/reverse-lever[1]</property>
 		<factor>-3.5</factor> 
 		<axis>
 			<object-name>trim.axis</object-name>
@@ -5988,7 +5688,7 @@
 		<name>Engine 2 throttle lever rev 2</name>
 		<type>rotate</type>
 		<object-name>thr_r</object-name>
-		<property>controls/engines/engine[1]/throttle-rev</property>
+		<property>fdm/jsbsim/fcs/reverse-thr-lever[1]</property>
 		<interpolation>
 			<entry><ind>0.00</ind><dep> 0</dep></entry>
 			<entry><ind>0.50</ind><dep>-20</dep></entry>

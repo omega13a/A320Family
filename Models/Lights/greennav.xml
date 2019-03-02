@@ -13,10 +13,10 @@
 		<type>select</type>
 		<object-name>Light</object-name>
 		<condition>
-			<greater-than>
-				<property>controls/lighting/nav-lights-switch</property>
-				<value>0</value>
-			</greater-than>
+			<equals>
+				<property>/sim/model/lights/nav-lights</property>
+				<value>1</value>
+			</equals>
 		</condition>
 	</animation>
 

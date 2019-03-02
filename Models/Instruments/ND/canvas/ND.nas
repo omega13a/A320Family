@@ -379,7 +379,7 @@ setlistener("/flight-management/control/capture-leg", func(n) {
 }, 0, 0);
 
 var showNd = func(nd = nil) {
-	if(nd == nil) nd = "main";
-	var dlg = canvas.Window.new([512, 512], "dialog");
+	if (nd == nil) nd = "main";
+	var dlg = canvas.Window.new([512, 512], "dialog").set("resize", 1);
 	dlg.setCanvas(nd_display[nd]);
 }

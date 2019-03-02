@@ -88,7 +88,7 @@ var at_input_spd_kts = props.globals.getNode("/it-autoflight/input/spd-kts", 1);
 var fd_roll = props.globals.getNode("/it-autoflight/fd/roll-bar", 1);
 var fd_pitch = props.globals.getNode("/it-autoflight/fd/pitch-bar", 1);
 var decision = props.globals.getNode("/instrumentation/mk-viii/inputs/arinc429/decision-height", 1);
-var skid_slip = props.globals.getNode("/instrumentation/slip-skid-ball/indicated-slip-skid", 1);
+var slip_skid = props.globals.getNode("/instrumentation/pfd/slip-skid", 1);
 var FMGCphase = props.globals.getNode("/FMGC/status/phase", 1);
 var loc = props.globals.getNode("/instrumentation/nav[0]/heading-needle-deflection-norm", 1);
 var gs = props.globals.getNode("/instrumentation/nav[0]/gs-needle-deflection-norm", 1);
@@ -732,7 +732,7 @@ var canvas_PFD_base = {
 		me.AI_horizon_ground_rot.setRotation(-roll_cur * D2R, me["AI_center"].getCenter());
 		me.AI_horizon_sky_rot.setRotation(-roll_cur * D2R, me["AI_center"].getCenter());
 		
-		me["AI_slipskid"].setTranslation(math.clamp(skid_slip.getValue(), -7, 7) * -15, 0);
+		me["AI_slipskid"].setTranslation(math.clamp(slip_skid.getValue(), -15, 15) * 7, 0);
 		me["AI_bank"].setRotation(-roll_cur * D2R);
 		
 		if (fbw_law.getValue() == 0) {
