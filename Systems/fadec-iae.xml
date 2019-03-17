@@ -670,10 +670,16 @@
 							<value>MAN</value>
 						</equals>
 					</or>
-					<equals>
-						<property>/it-autoflight/output/thr-mode</property>
-						<value>0</value>
-					</equals>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/thr-mode</property>
+							<value>0</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/mode/thr</property>
+							<value>RETARD</value>
+						</equals>
+					</or>
 				</and>
 			</condition>
 			<value>0.3</value>
@@ -882,10 +888,16 @@
 							<value>MAN</value>
 						</equals>
 					</or>
-					<equals>
-						<property>/it-autoflight/output/thr-mode</property>
-						<value>0</value>
-					</equals>
+					<or>
+						<equals>
+							<property>/it-autoflight/output/thr-mode</property>
+							<value>0</value>
+						</equals>
+						<equals>
+							<property>/it-autoflight/mode/thr</property>
+							<value>RETARD</value>
+						</equals>
+					</or>
 				</and>
 			</condition>
 			<value>0.3</value>

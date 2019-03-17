@@ -313,6 +313,10 @@ var LowerECAM = {
 			return;
 		}
 		
+		if (b == "clr" and getprop("/ECAM/Lower/man-select") == 0 and getprop("/ECAM/Lower/fault-select") == 0) {
+			ecam.ECAM_controller.clear();
+		}
+		
 		if (getprop("/ECAM/Lower/fault-select") == 0) {
 			if (b != "clr") {
 				if (!man_sel) {

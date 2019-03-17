@@ -52,7 +52,7 @@ var variousReset = func {
 	setprop("/controls/lighting/DU/du6", 1);
 	setprop("/controls/lighting/DU/mcdu1", 1);
 	setprop("/controls/lighting/DU/mcdu2", 1);
-	setprop("/modes/fcu/hdg-time", 0);
+	setprop("/modes/fcu/hdg-time", -45);
 	setprop("/controls/switching/ATTHDG", 0);
 	setprop("/controls/switching/AIRDATA", 0);
 	setprop("/controls/switches/no-smoking-sign", 1);
@@ -358,10 +358,8 @@ var APPanel = {
 			if (fd1.getBoolValue() or fd2.getBoolValue() or ap1.getBoolValue() or ap2.getBoolValue()) {
 				if (latMode.getValue() == 0 or !showHDG.getBoolValue()) {
 					setprop("/it-autoflight/input/lat", 3);
-					showHDG.setBoolValue(1);
 				} else {
 					setprop("/it-autoflight/input/lat", 0);
-					showHDG.setBoolValue(1);
 				}
 			}
 		}
@@ -399,26 +397,26 @@ var APPanel = {
 				if (latMode.getValue() == 2) {
 					setprop("/it-autoflight/input/lat", 0);
 				} else {
-					fmgc.disarmLOC();
+					fmgc.ITAF.disarmLOC();
 				}
 				if (vertTemp == 2 or vertTemp == 6) {
 					me.VSPull();
 				} else {
-					fmgc.disarmGS();
+					fmgc.ITAF.disarmGS();
 				}
 			} else {
 				setprop("/it-autoflight/input/lat", 2);
 				if (vertTemp == 2 or vertTemp == 6) {
 					me.VSPull();
 				} else {
-					fmgc.disarmGS();
+					fmgc.ITAF.disarmGS();
 				}
 			}
 		}
 	},
 	TRKFPA: func() {
 		if (dcEss.getValue() >= 25) {
-			fmgc.toggle_trkfpa();
+			fmgc.ITAF.toggleTrkFpa();
 		}
 	},
 	ALTPush: func() {
@@ -535,12 +533,12 @@ var APPanel = {
 				if (latMode.getValue() == 2) {
 					setprop("/it-autoflight/input/lat", 0);
 				} else {
-					fmgc.disarmLOC();
+					fmgc.ITAF.disarmLOC();
 				}
 				if (vertTemp == 2 or vertTemp == 6) {
 					me.VSPull();
 				} else {
-					fmgc.disarmGS();
+					fmgc.ITAF.disarmGS();
 				}
 			} else {
 				setprop("/it-autoflight/input/vert", 2);

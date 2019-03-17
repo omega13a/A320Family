@@ -1584,7 +1584,7 @@
 		</condition>
 	</animation>
 
-	<!--<animation>
+	<animation>
 		<type>pick</type>
 		<object-name>ecam_rcl</object-name>
 		<action>
@@ -1598,10 +1598,10 @@
 					</greater-than-equals>
 				</condition>
 				<command>nasal</command>
-				<script>ecam.rclBTN();</script>
+				<script>ecam.ECAM_controller.recall();</script>
 			</binding>
 		</action>
-	</animation>-->
+	</animation>
 	
 	<animation>
 		<type>pick</type>
@@ -3226,7 +3226,7 @@
 					<value>1</value>
 				</equals>
 				<equals>
-					<property>it-autoflight/input/lat-arm</property>
+					<property>it-autoflight/output/lnav-armed</property>
 					<value>1</value>
 				</equals>
 			</or>
@@ -5028,6 +5028,10 @@
 				<script>
 					if (getprop("/it-autoflight/output/athr-warning") == 1) {
 						setprop("/it-autoflight/output/athr-warning", 0);
+					}
+					
+					if (getprop("/sim/sound/warnings/chime") == 1) {
+						setprop("/sim/sound/warnings/chime", 0);
 					}
 				</script>
 			</binding>

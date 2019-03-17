@@ -284,7 +284,7 @@
 		</input>
 		<input>0</input>
 		<output>/fdm/jsbsim/fbw/fmgc/yaw-cmd</output> <!-- Inputs to the FBW Yaw -->
-		<max-rate-of-change>0.6</max-rate-of-change>
+		<max-rate-of-change>1.2</max-rate-of-change>
 	</filter>
 
 </PropertyList>

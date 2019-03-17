@@ -143,16 +143,6 @@
 							<property>/it-autoflight/output/vert</property>
 							<value>7</value>
 						</equals>
-						<and>
-							<equals>
-								<property>/it-autoflight/output/vert</property>
-								<value>8</value>
-							</equals>
-							<equals>
-								<property>/it-autoflight/output/vert-mng</property>
-								<value>4</value>
-							</equals>
-						</and>
 					</or>
 					<or>
 						<equals>
@@ -352,22 +342,10 @@
 		<gain>1.0</gain>
 		<input>
 			<condition>
-				<or>
-					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>0</value>
-					</equals>
-					<and>
-						<equals>
-							<property>/it-autoflight/output/vert</property>
-							<value>8</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/vert-mng</property>
-							<value>0</value>
-						</equals>
-					</and>
-				</or>
+				<equals>
+					<property>/it-autoflight/output/vert</property>
+					<value>0</value>
+				</equals>
 			</condition>
 			<property>/it-autoflight/internal/target-fpm</property>
 		</input>
@@ -391,16 +369,6 @@
 						<property>/it-autoflight/output/vert</property>
 						<value>7</value>
 					</equals>
-					<and>
-						<equals>
-							<property>/it-autoflight/output/vert</property>
-							<value>8</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/vert-mng</property>
-							<value>4</value>
-						</equals>
-					</and>
 				</or>
 			</condition>
 			<property>/it-autoflight/internal/target-fpm-b</property>
@@ -501,22 +469,10 @@
 		<input>/it-autoflight/internal/vert-speed-fpm</input>
 		<reference>
 			<condition>
-				<or>
-					<equals>
-						<property>/it-autoflight/output/vert</property>
-						<value>0</value>
-					</equals>
-					<and>
-						<equals>
-							<property>/it-autoflight/output/vert</property>
-							<value>8</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/vert-mng</property>
-							<value>0</value>
-						</equals>
-					</and>
-				</or>
+				<equals>
+					<property>/it-autoflight/output/vert</property>
+					<value>0</value>
+				</equals>
 			</condition>
 			<property>/it-autoflight/internal/target-fpm</property>
 		</reference>
@@ -540,16 +496,6 @@
 						<property>/it-autoflight/output/vert</property>
 						<value>7</value>
 					</equals>
-					<and>
-						<equals>
-							<property>/it-autoflight/output/vert</property>
-							<value>8</value>
-						</equals>
-						<equals>
-							<property>/it-autoflight/output/vert-mng</property>
-							<value>4</value>
-						</equals>
-					</and>
 				</or>
 			</condition>
 			<property>/it-autoflight/internal/target-fpm-b</property>

@@ -9,6 +9,7 @@
 	<property value="0">fbw/pitch/pid</property>
 	<property value="0">fbw/yaw/tc-pd</property>
 	<property value="0">fbw/spoiler-output</property>
+	<property value="1">fbw/mixer/sidestick-gain-feedback</property>
 	
 	<!-- Default gains for tuning -->
 	<property value="0">fbw/roll/p-gain</property>
@@ -78,8 +79,8 @@
 					<independentVar lookup="column">fbw/roll/gain-switch</independentVar>
 					<tableData>
 						     0     1  
-						140 -26.2  0.0
-						350  -9.5  0.0
+						140 -20.0  0.0
+						350  -5.0  0.0
 					</tableData>
 				</table>
 			</function>
@@ -92,8 +93,8 @@
 					<independentVar lookup="column">fbw/roll/gain-switch</independentVar>
 					<tableData>
 						     0     1
-						140 -45.5  0.0
-						350 -29.0  0.0
+						140 -35.0  0.0
+						350 -10.0  0.0
 					</tableData>
 				</table>
 			</function>
@@ -106,8 +107,8 @@
 					<independentVar lookup="column">fbw/roll/gain-switch</independentVar>
 					<tableData>
 						     0    1
-						140 -2.1  0.0
-						350 -0.2  0.0
+						140 -2.5  0.0
+						350 -0.5  0.0
 					</tableData>
 				</table>
 			</function>
@@ -121,7 +122,7 @@
 					<tableData>
 						     0   1  
 						140  28  0
-						350  23  0
+						350  20  0
 					</tableData>
 				</table>
 			</function>
@@ -134,8 +135,8 @@
 					<independentVar lookup="column">fbw/pitch/gain-switch</independentVar>
 					<tableData>
 						     0   1
-						140  61  0
-						350  45  0
+						140  60  0
+						350  40  0
 					</tableData>
 				</table>
 			</function>
@@ -148,8 +149,8 @@
 					<independentVar lookup="column">fbw/pitch/gain-switch</independentVar>
 					<tableData>
 						     0    1
-						140  2.4  0.0
-						350  0.6  0.0
+						140  2.0  0.0
+						350  0.4  0.0
 					</tableData>
 				</table>
 			</function>
@@ -175,9 +176,9 @@
 					<independentVar lookup="row">velocities/vc-kts</independentVar>
 					<independentVar lookup="column">fbw/yaw/gain-switch</independentVar>
 					<tableData>
-						     0   1
-						140  13  0
-						350   5  0
+						     0    1
+						140  3.0  0.0
+						350  1.5  0.0
 					</tableData>
 				</table>
 			</function>
@@ -189,9 +190,9 @@
 					<independentVar lookup="row">velocities/vc-kts</independentVar>
 					<independentVar lookup="column">fbw/yaw/gain-switch</independentVar>
 					<tableData>
-						     0   1
-						140  16  0
-						350   9  0
+						     0    1
+						140  6.0  0.0
+						350  3.0  0.0
 					</tableData>
 				</table>
 			</function>
@@ -210,6 +211,40 @@
 			<c1>1.0</c1>
 		</lag_filter>
 		
+		<switch name="fbw/mixer/rate-limit">
+			<default value="fbw/mixer/rate-limit"/>
+			<test logic="AND" value="0.5"> <!-- 2 seconds -->
+				position/wow eq 1
+				fbw/mixer/sidestick-gain-feedback eq 1
+			</test>
+			<test logic="AND" value="100"> <!-- Unlimited -->
+				position/wow eq 1
+				fbw/mixer/sidestick-gain-feedback ne 1
+			</test>
+			<test logic="AND" value="100"> <!-- Unlimited -->
+				position/wow eq 0
+				fbw/mixer/sidestick-gain-feedback eq 0
+			</test>
+		</switch>
+		
+		<actuator name="fbw/mixer/sidestick-gain">
+			<input>position/wow</input>
+			<rate_limit>fbw/mixer/rate-limit</rate_limit>
+			<output>fbw/mixer/sidestick-gain-feedback</output>
+		</actuator>
+		
+		<fcs_function name="fbw/mixer/computer-gain">
+			<function>
+				<table>
+					<independentVar lookup="row">fbw/mixer/sidestick-gain</independentVar>
+					<tableData>
+						0  1
+						1  0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+	
 	</channel>
 	
 	<channel name="FBW: Roll">
@@ -504,9 +539,28 @@
 			</function>
 		</fcs_function>
 		
+		<pure_gain name="fbw/mixer/roll/computer-demand">
+			<input>fbw/roll/pid</input>
+			<gain>fbw/mixer/computer-gain</gain>
+		</pure_gain>
+		
+		<pure_gain name="fbw/mixer/roll/sidestick-demand">
+			<input>fbw/roll/a-i-f</input>
+			<gain>fbw/mixer/sidestick-gain</gain>
+		</pure_gain>
+		
+		<summer name="fbw/mixer/roll/output">
+			<input>fbw/mixer/roll/computer-demand</input>
+			<input>fbw/mixer/roll/sidestick-demand</input>
+			<clipto>
+				<min>-1.0</min>
+				<max>1.0</max>
+			</clipto>
+		</summer>
+		
 		<switch name="fbw/aileron-output">
 			<default value="0"/>
-			<test logic="AND" value="fbw/roll/pid">
+			<test logic="AND" value="fbw/mixer/roll/output"> <!-- Mix stick and control law for transition from ground law -->
 				position/wow eq 0
 				/it-fbw/law eq 0
 			</test>
@@ -993,9 +1047,28 @@
 			</test>
 		</switch>
 		
+		<pure_gain name="fbw/mixer/pitch/computer-demand">
+			<input>fbw/pitch/pid-switched</input>
+			<gain>fbw/mixer/computer-gain</gain>
+		</pure_gain>
+		
+		<pure_gain name="fbw/mixer/pitch/sidestick-demand">
+			<input>fbw/pitch/e-i-f</input>
+			<gain>fbw/mixer/sidestick-gain</gain>
+		</pure_gain>
+		
+		<summer name="fbw/mixer/pitch/output">
+			<input>fbw/mixer/pitch/computer-demand</input>
+			<input>fbw/mixer/pitch/sidestick-demand</input>
+			<clipto>
+				<min>-1.0</min>
+				<max>1.0</max>
+			</clipto>
+		</summer>
+		
 		<switch name="fbw/elevator-output">
 			<default value="0"/>
-			<test logic="AND" value="fbw/pitch/pid-switched">
+			<test logic="AND" value="fbw/mixer/pitch/output"> <!-- Mix stick and control law for transition from ground law -->
 				position/wow eq 0
 				fbw/pitch/law-switch eq 1
 			</test>
@@ -1214,12 +1287,15 @@
 			</test>
 		</switch>
 		
+		<washout_filter name="fbw/yaw/r-washout">
+			<input>velocities/r-rad_sec</input>
+			<c1>0.5</c1>
+		</washout_filter>
+		
 		<switch name="fbw/yaw/r-r_s-s">
-			<default value="velocities/r-rad_sec"/>
+			<default value="fbw/yaw/r-washout"/>
 			<test logic="OR" value="0">
 				position/wow eq 1
-				fbw/yaw/rudder-nul gt 0
-				fbw/yaw/rudder-nul lt 0
 				/position/gear-agl-ft lt 50
 				fbw/yaw/autoland-switch eq 1
 			</test>
@@ -1229,8 +1305,8 @@
 			<input>fbw/yaw/r-r_s-s</input>
 			<gain>fbw/yaw/yd-p-gain</gain>
 			<clipto>
-				<min>-0.1</min>
-				<max>0.1</max>
+				<min>-0.5</min>
+				<max>0.5</max>
 			</clipto>
 		</pure_gain>
 		
@@ -1408,10 +1484,11 @@
 			</range>
 		</aerosurface_scale>
 		
-		<actuator name="hydraulics/aileron-l/final-deg">
+		<actuator name="hydraulics/aileron-l/final-actuator">
 			<input>hydraulics/aileron-l/cmd-deg</input>
-			<rate_limit>150</rate_limit>
+			<rate_limit>82</rate_limit>
 			<lag>26.5</lag>
+			<output>hydraulics/aileron-l/final-deg</output>
 		</actuator>
 	
 	</channel>
@@ -1483,10 +1560,11 @@
 			</range>
 		</aerosurface_scale>
 		
-		<actuator name="hydraulics/aileron-r/final-deg">
+		<actuator name="hydraulics/aileron-r/final-actuator">
 			<input>hydraulics/aileron-r/cmd-deg</input>
-			<rate_limit>150</rate_limit>
+			<rate_limit>82</rate_limit>
 			<lag>26.5</lag>
+			<output>hydraulics/aileron-r/final-deg</output>
 		</actuator>
 	
 	</channel>
@@ -1540,10 +1618,11 @@
 			</range>
 		</aerosurface_scale>
 		
-		<actuator name="hydraulics/elevator-l/final-deg">
+		<actuator name="hydraulics/elevator-l/final-actuator">
 			<input>hydraulics/elevator-l/cmd-deg</input>
-			<rate_limit>150</rate_limit>
+			<rate_limit>82</rate_limit>
 			<lag>26.5</lag>
+			<output>hydraulics/elevator-l/final-deg</output>
 		</actuator>
 	
 	</channel>
@@ -1578,10 +1657,11 @@
 			</range>
 		</aerosurface_scale>
 		
-		<actuator name="hydraulics/elevator-r/final-deg">
+		<actuator name="hydraulics/elevator-r/final-actuator">
 			<input>hydraulics/elevator-r/cmd-deg</input>
-			<rate_limit>150</rate_limit>
+			<rate_limit>82</rate_limit>
 			<lag>26.5</lag>
+			<output>hydraulics/elevator-r/final-deg</output>
 		</actuator>
 	
 	</channel>
@@ -1607,10 +1687,11 @@
 			</range>
 		</aerosurface_scale>
 		
-		<actuator name="hydraulics/elevator-trim/final-deg">
+		<actuator name="hydraulics/elevator-trim/final-actuator">
 			<input>hydraulics/elevator-trim/cmd-deg</input>
 			<rate_limit>hydraulics/elevator-trim/rate</rate_limit>
 			<lag>22.5</lag>
+			<output>hydraulics/elevator-trim/final-deg</output>
 		</actuator>
 	
 	</channel>
@@ -1675,10 +1756,11 @@
 			</range>
 		</aerosurface_scale>
 		
-		<actuator name="hydraulics/rudder/final-deg">
+		<actuator name="hydraulics/rudder/final-actuator">
 			<input>hydraulics/rudder/cmd-deg</input>
-			<rate_limit>150</rate_limit>
+			<rate_limit>80</rate_limit>
 			<lag>25.5</lag>
+			<output>hydraulics/rudder/final-deg</output>
 		</actuator>
 	
 	</channel>
@@ -1949,17 +2031,18 @@
 					</eq>
 					<product>
 						<property>hydraulics/tiller/autopush-cmd</property>
-						<value>70</value>
+						<value>75</value>
 					</product>
 					<table>
 						<independentVar lookup="row">/velocities/groundspeed-kt</independentVar>
 						<independentVar lookup="column">hydraulics/tiller/switch</independentVar>
 						<tableData>
-								   -1     0    1
-							 0.500  00.0  0.0  00.0
-							 1.000 -70.0  0.0  70.0
-							30.000 -70.0  0.0  70.0
-							30.001 -10.0  0.0  10.0
+							         -1  0   1
+							  0.500   0  0   0
+							  1.000 -75  0  75
+							 30.000 -47  0  47
+							 30.001  -6  0   6
+							135.000   0  0   0
 						</tableData>
 					</table>
 				</ifthen>
@@ -1968,7 +2051,7 @@
 		
 		<actuator name="fcs/steer-deg">
 			<input>hydraulics/tiller/function</input>
-			<rate_limit>70</rate_limit>
+			<rate_limit>75</rate_limit>
 			<output>fcs/steer-pos-deg[0]</output>
 		</actuator>
 		

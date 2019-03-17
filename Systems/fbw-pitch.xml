@@ -3,7 +3,6 @@
 <!-- Copyright (c) 2019 Joshua Davidson (it0uchpods) -->
 
 <!-- Airbus A3XX FBW System -->
-<!-- Joshua Davidson (it0uchpods) -->
 <!-- I didn't see an easy way to do this controller in JSBsim, so I keep it here -->
 
 <PropertyList>

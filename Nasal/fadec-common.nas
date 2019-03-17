@@ -222,7 +222,7 @@ var thrust_loop = maketimer(0.04, func {
 	gs = getprop("/velocities/groundspeed-kt");
 	if (getprop("/FMGC/internal/flex-set") == 1 and getprop("/systems/fadec/n1mode1") == 0 and getprop("/systems/fadec/n1mode2") == 0 and getprop("/gear/gear[1]/wow") == 1 and getprop("/gear/gear[2]/wow") == 1 and gs < 40) {
 		setprop("/systems/thrust/lim-flex", 1);
-	} else if (getprop("/FMGC/internal/flex-set") == 0 and engstate1 != 3 and engstate2 != 3) {
+	} else if (getprop("/FMGC/internal/flex-set") == 0 or engstate1 != 3 or engstate2 != 3) {
 		setprop("/systems/thrust/lim-flex", 0);
 	}
 	if (getprop("/controls/engines/engine[0]/reverser") == "1" or getprop("/controls/engines/engine[1]/reverser") == "1") {
