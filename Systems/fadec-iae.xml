@@ -183,7 +183,7 @@
 			<expression>
 				<table>
 					<property>/fdm/jsbsim/atmosphere/density-altitude</property> 
-					<entry><ind>    0</ind><dep>0.6738</dep></entry>
+					<entry><ind>    0</ind><dep>0.6740</dep></entry>
 					<entry><ind>42000</ind><dep>0.7570</dep></entry>
 				</table>
 			</expression>
@@ -205,7 +205,7 @@
 			<property>/fdm/jsbsim/aero/alpha-deg</property>
 		</input>
 		<input>0</input>
-		<output>/fdm/jsbsim/aero/alpha-deg-norm</output>
+		<output>/fdm/jsbsim/aero/alpha-deg-fixed</output>
 	</filter>
 	
 	<filter>
@@ -217,7 +217,7 @@
 				<difference>
 					<table>
 						<property>/fdm/jsbsim/atmosphere/density-altitude</property> 
-						<entry><ind>    0</ind><dep>0.9867</dep></entry>
+						<entry><ind>    0</ind><dep>0.9857</dep></entry>
 						<entry><ind>43000</ind><dep>0.8584</dep></entry>
 					</table>
 					<table>
@@ -229,7 +229,7 @@
 						<entry><ind>1.00</ind><dep>0.010</dep></entry>
 					</table>
 					<table>
-						<property>/fdm/jsbsim/aero/alpha-deg-norm</property>
+						<property>/fdm/jsbsim/aero/alpha-deg-fixed</property>
 						<entry><ind> 0.0</ind><dep>0.00</dep></entry>
 						<entry><ind> 7.5</ind><dep>0.01</dep></entry>
 						<entry><ind>17.0</ind><dep>0.03</dep></entry>

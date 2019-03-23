@@ -625,6 +625,7 @@
 			<brake-parking type="bool">0</brake-parking>
 			<tiller-cmd-norm type="double">0</tiller-cmd-norm>
 			<tiller-enabled type="bool">0</tiller-enabled>
+			<nws-switch type="double">1</nws-switch>
 		</gear>
 		<lighting>
 			<DU>
