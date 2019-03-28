@@ -2022,26 +2022,6 @@
 			</test>
 		</switch>
 		
-		<switch name="hydraulics/tiller/hyd-pwr">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				position/wow eq 1
-				hydraulics/tiller/elec-pwr eq 1
-				/systems/hydraulic/yellow-psi ge 1500
-				/sim/model/pushback/connected eq 0
-				/controls/gear/nws-switch eq 1
-				/engines/engine[0]/state eq 3
-			</test>
-			<test logic="AND" value="1">
-				position/wow eq 1
-				hydraulics/tiller/elec-pwr eq 1
-				/systems/hydraulic/yellow-psi ge 1500
-				/sim/model/pushback/connected eq 0
-				/controls/gear/nws-switch eq 1
-				/engines/engine[1]/state eq 3
-			</test>
-		</switch>
-		
 		<switch name="hydraulics/tiller/elec-pwr">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -2052,11 +2032,31 @@
 			</test>
 		</switch>
 		
+		<switch name="hydraulics/tiller/hyd-pwr">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				position/wow eq 1
+				hydraulics/tiller/elec-pwr eq 1
+				/systems/hydraulic/yellow-psi ge 1500
+				/sim/model/autopush/connected eq 0
+				/controls/gear/nws-switch eq 1
+				/engines/engine[0]/state eq 3
+			</test>
+			<test logic="AND" value="1">
+				position/wow eq 1
+				hydraulics/tiller/elec-pwr eq 1
+				/systems/hydraulic/yellow-psi ge 1500
+				/sim/model/autopush/connected eq 0
+				/controls/gear/nws-switch eq 1
+				/engines/engine[1]/state eq 3
+			</test>
+		</switch>
+		
 		<fcs_function name="hydraulics/tiller/function">
 			<function>
 				<ifthen>
 					<eq>
-						<property>/sim/model/pushback/connected</property>
+						<property>/sim/model/autopush/connected</property>
 						<value>1</value>
 					</eq>
 					<product>
@@ -2083,7 +2083,7 @@
 			<default value="0"/>
 			<test logic="OR" value="75">
 				hydraulics/tiller/hyd-pwr eq 1
-				/sim/model/pushback/connected eq 1
+				/sim/model/autopush/connected eq 1
 				/systems/acconfig/autoconfig-running eq 1
 			</test>
 		</switch>
@@ -2097,7 +2097,7 @@
 		<switch name="fcs/pushback-steer-deg">
 			<default value="0"/>
 			<test value="fcs/steer-deg">
-				/sim/model/pushback/connected eq 1
+				/sim/model/autopush/connected eq 1
 			</test>
 		</switch>
 	

@@ -384,7 +384,7 @@ var messages_right_memo = func {
 		rat.colour = "g";
 	}
 	
-	if (getprop("/sim/model/pushback/enabled") == 1) { # this message is only on when towing - not when disc with switch
+	if (getprop("/sim/model/autopush/enabled") == 1) { # this message is only on when towing - not when disc with switch
 		nw_strg_disc.active = 1;
 	} else {
 		nw_strg_disc.active = 0;

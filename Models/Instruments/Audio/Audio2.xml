@@ -1,14 +1,10 @@
 <?xml version="1.0"?>
 
-<!--
-##############################################
-# Copyright (c) Joshua Davidson (it0uchpods) #
-##############################################
--->
+<!-- Copyright (c) 2019 Joshua Davidson (it0uchpods) -->
 
 <PropertyList>
 
-	<path>res/Audio1.ac</path>
+	<path>res/Audio.ac</path>
 
 	<!-- INT/RAD switch -->
 	<animation>
@@ -118,10 +114,37 @@
 				<property>systems/audio/acp[1]/call_chan</property>
 				<value>vhf1</value>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<not-equals>
+							<property>systems/audio/acp[1]/call_chan</property>
+							<value>vhf1</value>
+						</not-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+			</binding>
+		</action>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>systems/audio/acp[1]/call_chan</property>
+				<value></value>
+				<condition>
+					<and>
+						<equals>
+							<property>systems/audio/acp[1]/call_chan</property>
+							<value>vhf1</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
 				</condition>
 			</binding>
 		</action>
@@ -139,10 +162,37 @@
 				<property>systems/audio/acp[1]/call_chan</property>
 				<value>vhf2</value>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<not-equals>
+							<property>systems/audio/acp[1]/call_chan</property>
+							<value>vhf2</value>
+						</not-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+			</binding>
+		</action>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>systems/audio/acp[1]/call_chan</property>
+				<value></value>
+				<condition>
+					<and>
+						<equals>
+							<property>systems/audio/acp[1]/call_chan</property>
+							<value>vhf2</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
 				</condition>
 			</binding>
 		</action>
@@ -160,10 +210,37 @@
 				<property>systems/audio/acp[1]/call_chan</property>
 				<value>vhf3</value>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<not-equals>
+							<property>systems/audio/acp[1]/call_chan</property>
+							<value>vhf3</value>
+						</not-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+			</binding>
+		</action>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>systems/audio/acp[1]/call_chan</property>
+				<value></value>
+				<condition>
+					<and>
+						<equals>
+							<property>systems/audio/acp[1]/call_chan</property>
+							<value>vhf3</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
 				</condition>
 			</binding>
 		</action>
@@ -181,10 +258,37 @@
 				<property>systems/audio/acp[1]/call_chan</property>
 				<value>hf1</value>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<not-equals>
+							<property>systems/audio/acp[1]/call_chan</property>
+							<value>hf1</value>
+						</not-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+			</binding>
+		</action>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>systems/audio/acp[1]/call_chan</property>
+				<value></value>
+				<condition>
+					<and>
+						<equals>
+							<property>systems/audio/acp[1]/call_chan</property>
+							<value>hf1</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
 				</condition>
 			</binding>
 		</action>
@@ -202,10 +306,37 @@
 				<property>systems/audio/acp[1]/call_chan</property>
 				<value>hf2</value>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<not-equals>
+							<property>systems/audio/acp[1]/call_chan</property>
+							<value>hf2</value>
+						</not-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+			</binding>
+		</action>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>systems/audio/acp[1]/call_chan</property>
+				<value></value>
+				<condition>
+					<and>
+						<equals>
+							<property>systems/audio/acp[1]/call_chan</property>
+							<value>hf2</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
 				</condition>
 			</binding>
 		</action>
@@ -223,10 +354,37 @@
 				<property>systems/audio/acp[1]/call_chan</property>
 				<value>mech</value>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<not-equals>
+							<property>systems/audio/acp[1]/call_chan</property>
+							<value>mech</value>
+						</not-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+			</binding>
+		</action>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>systems/audio/acp[1]/call_chan</property>
+				<value></value>
+				<condition>
+					<and>
+						<equals>
+							<property>systems/audio/acp[1]/call_chan</property>
+							<value>mech</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
 				</condition>
 			</binding>
 		</action>
@@ -244,10 +402,37 @@
 				<property>systems/audio/acp[1]/call_chan</property>
 				<value>att</value>
 				<condition>
-					<greater-than-equals>
-						<property>systems/electrical/bus/dc-ess</property>
-						<value>25</value>
-					</greater-than-equals>
+					<and>
+						<not-equals>
+							<property>systems/audio/acp[1]/call_chan</property>
+							<value>att</value>
+						</not-equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
+				</condition>
+			</binding>
+		</action>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>property-assign</command>
+				<property>systems/audio/acp[1]/call_chan</property>
+				<value></value>
+				<condition>
+					<and>
+						<equals>
+							<property>systems/audio/acp[1]/call_chan</property>
+							<value>att</value>
+						</equals>
+						<greater-than-equals>
+							<property>systems/electrical/bus/dc-ess</property>
+							<value>25</value>
+						</greater-than-equals>
+					</and>
 				</condition>
 			</binding>
 		</action>
@@ -957,7 +1142,7 @@
 			<factor-prop>sim/model/lights/dome-light</factor-prop>
 		</emission>
 	</animation>
-	
+
 	<effect>
 		<inherits-from>Aircraft/IDG-A32X/Models/Effects/cockpit-irradiance</inherits-from>
 		<object-name>audio_body</object-name>
@@ -1471,5 +1656,4 @@
 			<object-name>audio_adf2.axis</object-name>
 		</axis>
 	</animation>
-
 </PropertyList>

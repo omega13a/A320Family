@@ -94,6 +94,8 @@ setprop("/systems/acconfig/options/nd-rate", 1);
 setprop("/systems/acconfig/options/uecam-rate", 1);
 setprop("/systems/acconfig/options/lecam-rate", 1);
 setprop("/systems/acconfig/options/iesi-rate", 1);
+setprop("/systems/acconfig/options/autopush/show-route", 1);
+setprop("/systems/acconfig/options/autopush/show-wingtip", 1);
 var main_dlg = gui.Dialog.new("sim/gui/dialogs/acconfig/main/dialog", "Aircraft/IDG-A32X/AircraftConfig/main.xml");
 var welcome_dlg = gui.Dialog.new("sim/gui/dialogs/acconfig/welcome/dialog", "Aircraft/IDG-A32X/AircraftConfig/welcome.xml");
 var ps_load_dlg = gui.Dialog.new("sim/gui/dialogs/acconfig/psload/dialog", "Aircraft/IDG-A32X/AircraftConfig/psload.xml");
@@ -215,12 +217,17 @@ var readSettings = func {
 	setprop("/options/system/keyboard-mode", getprop("/systems/acconfig/options/keyboard-mode"));
 	setprop("/options/system/laptop-mode", getprop("/systems/acconfig/options/laptop-mode"));
 	setprop("/controls/adirs/skip", getprop("/systems/acconfig/options/adirs-skip"));
+	setprop("/sim/model/autopush/route/show", getprop("/systems/acconfig/options/autopush/show-route"));
+	setprop("/sim/model/autopush/route/show-wingtip", getprop("/systems/acconfig/options/autopush/show-wingtip"));
+	
 }
 
 var writeSettings = func {
 	setprop("/systems/acconfig/options/keyboard-mode", getprop("/options/system/keyboard-mode"));
 	setprop("/systems/acconfig/options/laptop-mode", getprop("/options/system/laptop-mode"));
 	setprop("/systems/acconfig/options/adirs-skip", getprop("/controls/adirs/skip"));
+	setprop("/systems/acconfig/options/autopush/show-route", getprop("/sim/model/autopush/route/show"));
+	setprop("/systems/acconfig/options/autopush/show-wingtip", getprop("/sim/model/autopush/route/show-wingtip"));
 	io.write_properties(getprop("/sim/fg-home") ~ "/Export/IDG-A32X-config.xml", "/systems/acconfig/options");
 }
 
