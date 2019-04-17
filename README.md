@@ -12,3 +12,7 @@ Present pack includes the following Airbus A320 Family variants:
 - A320-232
 - A320-251N
 - A320-271N
+
+
+## Frequently Asked Questions
+For answers on frequently asked questions, refer to our [FAQ page](./FAQ.md).
