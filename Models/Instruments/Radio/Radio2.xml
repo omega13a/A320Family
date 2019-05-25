@@ -219,7 +219,7 @@
 		<object-name>radio_exchange</object-name>
 		<action>
 			<button>0</button>
-			<repeatable>true</repeatable>
+			<repeatable>false</repeatable>
 			<binding>
 				<command>nasal</command>
 				<script>rmp.transfer(2);</script>
@@ -1555,7 +1555,6 @@
 		<name>Panel lighting</name>
 		<type>material</type>
 		<object-name>radio_body</object-name>
-		<object-name>radio_glare</object-name>
 		<object-name>radio_rot0</object-name>
 		<object-name>radio_rot1</object-name>
 		<object-name>radio_on</object-name>

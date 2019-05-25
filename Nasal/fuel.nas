@@ -1,7 +1,7 @@
 # A3XX Fuel System
-# Joshua Davidson (it0uchpods)
+# Joshua Davidson (Octal450)
 
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 var xfeed_sw = getprop("/controls/fuel/x-feed");
 var tank0pump1_sw = 0;

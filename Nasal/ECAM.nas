@@ -1,7 +1,7 @@
 # A3XX ECAM
-# Joshua Davidson (it0uchpods)
+# Joshua Davidson (Octal450)
 
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 var stateL = 0;
 var stateR = 0;

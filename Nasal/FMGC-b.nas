@@ -1,6 +1,6 @@
 # A3XX FMGC Autopilot
 # Based off IT-AUTOFLIGHT System Controller V4.0.X
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 # Initialize all used variables and property nodes
 # Sim

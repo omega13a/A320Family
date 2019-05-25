@@ -1,6 +1,6 @@
 # A3XX PFD
 
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 var PFD_1 = nil;
 var PFD_2 = nil;
@@ -758,7 +758,7 @@ var canvas_PFD_base = {
 		
 		gear_agl_cur = gear_agl.getValue();
 		
-		me["AI_agl"].setText(sprintf("%s", math.round(gear_agl_cur)));
+		me["AI_agl"].setText(sprintf("%s", math.round(math.clamp(gear_agl_cur, 0, 2500))));
 		
 		if (gear_agl_cur <= decision.getValue()) {
 			me["AI_agl"].setColor(0.7333,0.3803,0);

@@ -1,6 +1,6 @@
 # A3XX ND Canvas
 
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 io.include("A3XX_ND.nas");
 

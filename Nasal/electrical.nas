@@ -1,7 +1,7 @@
 # A3XX Electrical System
-# Joshua Davidson (it0uchpods) and Jonathan Redpath (legoboyvdlp)
+# Joshua Davidson (Octal450) and Jonathan Redpath (legoboyvdlp)
 
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 var ac_volt_std = 115;
 var ac_volt_min = 110;

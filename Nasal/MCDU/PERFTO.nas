@@ -1,6 +1,6 @@
-# A3XX mCDU by Joshua Davidson (it0uchpods) and Jonathan Redpath
+# A3XX mCDU by Joshua Davidson (Octal450) and Jonathan Redpath
 
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 var perfTOInput = func(key, i) {
 	var scratchpad = getprop("/MCDU[" ~ i ~ "]/scratchpad");

@@ -1,6 +1,6 @@
 # A3XX FADEC/Throttle Control System
 
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 if (getprop("/options/eng") == "IAE") {
 	io.include("fadec-iae.nas");

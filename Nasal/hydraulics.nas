@@ -1,7 +1,7 @@
 # A3XX Hydraulic System
-# Joshua Davidson (it0uchpods)
+# Joshua Davidson (Octal450)
 
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 var eng1_pump_sw = 0;
 var eng2_pump_sw = 0;

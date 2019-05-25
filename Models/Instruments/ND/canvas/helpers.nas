@@ -1,8 +1,8 @@
 # A3XX ND Canvas
-# Joshua Davidson (it0uchpods)
+# Joshua Davidson (Octal450)
 # Based on work by artix
 
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 var SymbolPainter = {
     aircraft_dir: nil,

@@ -1,6 +1,6 @@
 # A3XX IESI
 
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 var IESI = nil;
 var IESI_display = nil;

@@ -1,7 +1,7 @@
 # A3XX Buttons
-# Joshua Davidson (it0uchpods)
+# Joshua Davidson (Octal450)
 
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 # Resets buttons to the default values
 var variousReset = func {

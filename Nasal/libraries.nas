@@ -1,10 +1,10 @@
 # A320 Main Libraries
-# Joshua Davidson (it0uchpods)
+# Joshua Davidson (Octal450)
 
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 print("-----------------------------------------------------------------------------");
-print("Copyright (c) 2016-2019 Joshua Davidson (it0uchpods)");
+print("Copyright (c) 2016-2019 Joshua Davidson (Octal450)");
 print("-----------------------------------------------------------------------------");
 
 setprop("/sim/replay/was-active", 0);

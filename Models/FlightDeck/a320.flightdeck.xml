@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<!-- Copyright (c) 2019 Joshua Davidson (it0uchpods) -->
+<!-- Copyright (c) 2019 Joshua Davidson (Octal450) -->
 
 <PropertyList>
 
@@ -459,6 +459,10 @@
 		<object-name>ecam_c_b_led</object-name>
 		<object-name>ecam_el_dc_led</object-name>
 		<object-name>ecam_sts_led</object-name>
+		<object-name>engine_fault_1</object-name>
+		<object-name>engine_fault_2</object-name>
+		<object-name>engine_fire_1</object-name>
+		<object-name>engine_fire_2</object-name>
 		<object-name>exped_led</object-name>
 		<object-name>hdg-text-test</object-name>
 		<object-name>qnh-test</object-name>
@@ -536,6 +540,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>RudderTrim</object-name>
+		<object-name>RudderTrim.mark</object-name>
 		<property>controls/switches/rudder-trim</property>
 		<factor>-30</factor>
 		<axis>
@@ -922,6 +927,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>pfd_brt_cpt</object-name>
+		<object-name>pfd_brt_cpt.mark</object-name>
 		<property>controls/lighting/DU/du1</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>-129</dep></entry>
@@ -980,6 +986,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>brightness_nd_2_cpt</object-name>
+		<object-name>brightness_nd_2_cpt.mark</object-name>
 		<property>controls/lighting/DU/du2</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>-129</dep></entry>
@@ -1021,6 +1028,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>brightness_nd_2_fo</object-name>
+		<object-name>brightness_nd_2_fo.mark</object-name>
 		<property>controls/lighting/DU/du5</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>-129</dep></entry>
@@ -1079,6 +1087,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>pfd_brt_fo</object-name>
+		<object-name>pfd_brt_fo.mark</object-name>
 		<property>controls/lighting/DU/du6</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>-129</dep></entry>
@@ -1120,6 +1129,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>ecam_brt_upper</object-name>
+		<object-name>ecam_brt_upper.mark</object-name>
 		<property>controls/lighting/DU/du3</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>-129</dep></entry>
@@ -1160,6 +1170,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>ecam_brt_lower</object-name>
+		<object-name>ecam_brt_lower.mark</object-name>
 		<property>controls/lighting/DU/du4</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>-129</dep></entry>
@@ -4589,6 +4600,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>flood_lt_main</object-name>
+		<object-name>flood_lt_main.mark</object-name>
 		<property>controls/lighting/main-flood-knb</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>-129</dep></entry>
@@ -4628,6 +4640,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>flood_lt_ped</object-name>
+		<object-name>flood_lt_ped.mark</object-name>
 		<property>controls/lighting/ped-flood-knb</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>-129</dep></entry>
@@ -4667,6 +4680,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>integ_lt</object-name>
+		<object-name>integ_lt.mark</object-name>
 		<property>controls/lighting/main-panel-knb</property>
 		<interpolation>
 			<entry><ind>0</ind><dep>-129</dep></entry>
@@ -5938,6 +5952,9 @@
 		<object-name>sfl.011</object-name>
 		<object-name>sfl.012</object-name>
 		<object-name>sfl.014</object-name>
+		<object-name>rear_breakers</object-name>
+		<object-name>seat4.001</object-name>
+		<object-name>seat4.002</object-name>
 		<object-name>WindowCpt</object-name>
 		<object-name>WindowFo</object-name>
 		<object-name>ohpanel2</object-name>

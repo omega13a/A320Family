@@ -1,6 +1,6 @@
 # A3XX MCDU
 
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 var MCDU_1 = nil;
 var MCDU_2 = nil;

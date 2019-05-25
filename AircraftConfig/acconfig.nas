@@ -1,7 +1,7 @@
 # Aircraft Config Center
-# Joshua Davidson (it0uchpods)
+# Joshua Davidson (Octal450)
 
-# Copyright (c) 2019 Joshua Davidson (it0uchpods)
+# Copyright (c) 2019 Joshua Davidson (Octal450)
 
 var spinning = maketimer(0.05, func {
 	var spinning = getprop("/systems/acconfig/spinning");
@@ -114,7 +114,7 @@ var rendering_dlg = gui.Dialog.new("sim/gui/dialogs/rendering/dialog", "Aircraft
 spinning.start();
 init_dlg.open();
 
-http.load("https://raw.githubusercontent.com/it0uchpods/IDG-A32X/master/revision.txt").done(func(r) setprop("/systems/acconfig/new-revision", r.response));
+http.load("https://raw.githubusercontent.com/Octal450/IDG-A32X/master/revision.txt").done(func(r) setprop("/systems/acconfig/new-revision", r.response));
 var revisionFile = (getprop("/sim/aircraft-dir") ~ "/revision.txt");
 var current_revision = io.readfile(revisionFile);
 print("IDG A32X Revision: " ~ current_revision);
