@@ -49,17 +49,15 @@
 			</color>
 		</hrule>
 		
-		<group>
-			<layout>vbox</layout>
-			<halign>center</halign>
+		<text>
+			<halign>left</halign>
+			<label>If you get this aircraft from anywhere but Octal450's repo you are not getting the aircraft from IDG, but from a 3rd party distributor.</label>
+		</text>
 		
-			<text>
-				<label>If you get this aircraft from anywhere but Octal450's repo you are not getting the aircraft from IDG, but from a 3rd party distributor.</label>
-			</text>
-			<text>
-				<label>This is strongly discouraged and you will not receive any support from IDG!</label>
-			</text>
-		</group>
+		<text>
+			<halign>left</halign>
+			<label>This is strongly discouraged and you will not receive any support from IDG!</label>
+		</text>
 	</group>
 	
 	<hrule>
@@ -82,7 +80,7 @@
 			</color>
 			<halign>left</halign>
 			<legend>Official Download</legend>
-			<pref-width>550</pref-width>
+			<pref-width>275</pref-width>
 			<binding>
 				<command>open-browser</command>
 				<path>https://github.com/Octal450/IDG-A32X</path>
@@ -97,7 +95,7 @@
 			</color>
 			<halign>right</halign>
 			<legend>Continue (at own risk)</legend>
-			<pref-width>550</pref-width>
+			<pref-width>275</pref-width>
 			<binding>
 				<command>dialog-close</command>
 			</binding>
