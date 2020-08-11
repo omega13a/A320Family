@@ -8,118 +8,94 @@
 
 	<name>aircraft-config-welcome</name>
 	<layout>vbox</layout>
+	<color>
+		<red>0.5</red>
+		<green>0</green>
+		<blue>0</blue>
+		<alpha>0.95</alpha>
+	</color>
 
-    <group>
-        <layout>hbox</layout>
-        <text>
-            <halign>left</halign>
-            <label>Welcome!</label>
-        </text>
-		<empty><stretch>1</stretch></empty>
-		<button>
-			<row>0</row>
-			<col>0</col>
-			<halign>right</halign>
-			<pref-width>20</pref-width>
-			<pref-height>20</pref-height>
-			<legend>?</legend>
-			<binding>
-				<command>nasal</command>
-				<script>
-				acconfig.help_dlg.open();
-				</script>
-			</binding>
-		</button>
-        <button>
-            <halign>right</halign>
-            <pref-width>20</pref-width>
-            <pref-height>20</pref-height>
-            <legend>X</legend>
-            <key>Esc</key>
-            <binding>
-                <command>dialog-close</command>
-            </binding>
-        </button>
-    </group>
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<halign>left</halign>
+			<label>Something Happened!</label>
+		</text>
+	</group>
 	
-    <hrule/>
+	<hrule>
+		<color>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+			<alpha>0.95</alpha>
+		</color>
+	</hrule>
 	
 	<group>
 		<layout>vbox</layout>
 		
 		<text>
-			<halign>center</halign>
-			<label>Welcome to the IDG A32X Series!</label>
-		</text>
-		<text>
-			<halign>center</halign>
-			<label>This is a complex simulation of these amazing Airbus Aircraft.</label>
-		</text>
-		<text>
-			<halign>center</halign>
-			<label>They are currently still under development, and therefore are not complete yet.</label>
-		</text>
-		<text>
-			<halign>center</halign>
-			<label>Use the Aircraft Config to select livery, manage panel states, and more!</label>
-		</text>
-		<text>
-			<halign>center</halign>
-			<label>Please report bugs on GitHub Issues! Enjoy!</label>
+			<halign>left</halign>
+			<label>Unofficial Distributor Detected</label>
 		</text>
 		
-	</group>
-	
-	<hrule/>
-	
-	<group>
-		<layout>hbox</layout>
-	
-		<checkbox>
-			<label>Do not show this screen at FlightGear startup</label>
-			<halign>center</halign>
-			<property>/systems/acconfig/options/welcome-skip</property>
-			<binding>
-				<command>property-toggle</command>
-				<property>/systems/acconfig/options/welcome-skip</property>
-			</binding>
-			<binding>
-				<command>dialog-apply</command>
-			</binding>
-			<binding>
-				<command>nasal</command>
-				<script>
-				acconfig.writeSettings();
-				</script>
-			</binding>
-			<live>true</live>
-		</checkbox>
+		<hrule>
+			<color>
+				<red>1.0</red>
+				<green>1.0</green>
+				<blue>1.0</blue>
+				<alpha>0.95</alpha>
+			</color>
+		</hrule>
 		
+		<text>
+			<halign>left</halign>
+			<label>If you get this aircraft from anywhere but Octal450's repo you are not getting the aircraft from IDG, but from a 3rd party distributor.</label>
+		</text>
+		
+		<text>
+			<halign>left</halign>
+			<label>This is strongly discouraged and you will not receive any support from IDG!</label>
+		</text>
 	</group>
 	
-	<hrule/>
+	<hrule>
+		<color>
+			<red>1.0</red>
+			<green>1.0</green>
+			<blue>1.0</blue>
+			<alpha>0.95</alpha>
+		</color>
+	</hrule>
 
 	<group>
 		<layout>hbox</layout>
-		
 		<button>
-			<halign>center</halign>
-			<legend>Open A/C Config</legend>
-			<pref-width>210</pref-width>
+			<color>
+				<red>0.0</red>
+				<green>0.5</green>
+				<blue>0</blue>
+				<alpha>0.95</alpha>
+			</color>
+			<halign>left</halign>
+			<legend>Official Download</legend>
+			<pref-width>275</pref-width>
 			<binding>
-				<command>nasal</command>
-				<script>
-				acconfig.main_dlg.open();
-				</script>
-			</binding>
-			<binding>
-				<command>dialog-close</command>
+				<command>open-browser</command>
+				<path>https://github.com/Octal450/IDG-A32X</path>
 			</binding>
 		</button>
 		<button>
-			<halign>center</halign>
-			<legend>Go Away</legend>
-			<pref-width>210</pref-width>
+			<color>
+				<red>0.6</red>
+				<green>0</green>
+				<blue>0</blue>
+				<alpha>0.95</alpha>
+			</color>
+			<halign>right</halign>
+			<legend>Continue (at own risk)</legend>
+			<pref-width>275</pref-width>
 			<binding>
 				<command>dialog-close</command>
 			</binding>
